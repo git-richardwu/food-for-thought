@@ -1,0 +1,29 @@
+Team name: Diamond
+
+URL of your GitHub repo: https://github.com/CSE410HCI/diamond 
+
+URL of your ZenHub board: https://app.zenhub.com/workspaces/cse-370-group-project-diamond-60231b717d2271001f982eb2/board?repos=337266885 
+
+Describe your team's alternate dispute resolution approach. Your team will be required to use these when you just cannot agree on a decision. 
+Your mechanism must be fast, simple, and as silly/fun as possible to limit the bad feelings that can result. Voting is NOT allowed for this.
+    Rock paper scissors
+
+Write 1 or 2 paragraphs describing the completed version of your project. (Developing estimates is very, very hard and takes years to do well. 
+These descriptions are only to help your project manager understand your goals and prioritize the work to be done).
+    The completed version of the application will allow subscribers to follow healthy food enthusiasts who share easy and tasty diet based recipes. 
+    Recipes would be rated and top recipes would be featured in their specific diet category. 
+    If a user would like to try completely random recipes without any bias in rating, they can select the “Are you feeling lucky ?” 
+    button that would propose a completely new recipe to you.
+
+Write 1 or 2 paragraphs describing a typical user of your project and how they would use it.
+    A typical user goes to the app and can sign in or create an account. After creating an account, they will input their preferred diet (i.e., vegan). 
+    Their profile page shows all of their posts, comments, likes, followers, and following. On the profile page, users can select types of diets that fit their lifestyle. 
+    These diets help filter posts they can see to be those from the filter and those that they can follow in their feed. 
+    The user can filter posts by diet categories, allergy restrictions, and diet calories(There will be a gauge of low to high calories such as 1- 5 to estimate the 
+    calories of the recipe). There can also be the option for users to filter based on whether or not the original poster has attached a video to it.
+    A typical user can post a video or photo and a recipe including the number of calories or other dietary restrictions (ie: low sodium diets). 
+    They can also write on another text field below those to say anything else they would like to say about the recipe. These posts can be liked, 
+    commented, rated, and shared by other users. There will be a tab to open the comment section for the post; ordered by relevance (comments can be liked or disliked) 
+    or by recency.
+    The user can open up a direct text conversation with the uploader of the post. 
+    The posts will be presented in a top to bottom list like order, the user can scroll down for the next post on the list.
