@@ -13,6 +13,7 @@ import Profile from "./Component/Profile.jsx";
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
+import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import {
   BrowserRouter as Router, Route, Switch
 } from 'react-router-dom';
@@ -71,6 +72,7 @@ class App extends React.Component {
 
           <div className="maincontent" id="mainContent">
             <Switch>
+            <Route path='/settings/general/aboutus/andrew' component={AboutAndrew}/>
             <Route path="/settings">
               <div className="settings">
                 <p>Settings</p>
@@ -84,6 +86,7 @@ class App extends React.Component {
                 <FriendList userid={sessionStorage.getItem("user")} />
               </div>
             </Route>
+            <Route path='/settings/general/aboutus/andrew' component={AboutAndrew}/>
             <Route path={["/posts","/"]}>
               <div>
                 <p>Social Media Test Harness</p>
