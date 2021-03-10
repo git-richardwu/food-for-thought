@@ -9,12 +9,13 @@ import "./App.css";
 import PostForm from "./Component/PostForm.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
-import Profile from "./Component/Profile.jsx";
+import Profile from "./Component/Settings/Profile.jsx";
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
+import Settings from "./Component/Settings/Settings.js"
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -68,6 +69,11 @@ class App extends React.Component {
 
             <div className="maincontent" id="mainContent">
               <Switch>
+                <Route path="/settings/account">
+                <div className="settings">
+                    <Profile userid={sessionStorage.getItem("user")} />
+                  </div>
+                </Route>
                 <Route
                   path="/settings/general/aboutus/andrew"
                   component={AboutAndrew}
@@ -76,12 +82,7 @@ class App extends React.Component {
                   path="/settings/general/aboutus/william"
                   component={AboutWilliam}
                 />
-                <Route path="/settings">
-                  <div className="settings">
-                    <p>Settings</p>
-                    <Profile userid={sessionStorage.getItem("user")} />
-                  </div>
-                </Route>
+                <Route path="/settings" component={Settings}/>
                 <Route path="/friends">
                   <div>
                     <p>Friends</p>
@@ -89,10 +90,6 @@ class App extends React.Component {
                     <FriendList userid={sessionStorage.getItem("user")} />
                   </div>
                 </Route>
-                <Route
-                  path="/settings/general/aboutus/andrew"
-                  component={AboutAndrew}
-                />
                 <Route path={["/posts", "/"]}>
                   <div>
                     <p>Social Media Test Harness</p>

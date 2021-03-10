@@ -1,0 +1,15 @@
+.button {
+    background-color: #6FD397;
+    border: none;
+    color: black;
+    padding: 15px 32px;
+    margin-bottom: 30px;
+    text-align: left;
+    display: inline-block;
+    font-size: 22px;
+    cursor: pointer;
+    width: 75%;
+    border-radius: 4px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
