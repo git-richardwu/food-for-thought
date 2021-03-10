@@ -1,15 +1,184 @@
-.button {
+.settingsMenuButton {
     background-color: #6FD397;
     border: none;
     color: black;
-    padding: 15px 32px;
+    padding: 10px 32px;
     margin-bottom: 30px;
     text-align: left;
     display: inline-block;
     font-size: 22px;
     cursor: pointer;
-    width: 75%;
+    width: 50%;
     border-radius: 4px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
+}
+
+.backButton {
+    background-color: #6FD397;
+    border: none;
+    color: black;
+    padding: 7px 20px;
+    text-align: left;
+    font-size: 12px;
+    cursor: pointer;
+    width: auto;
+    border-radius: 4px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    position: absolute; 
+    top: 20%; 
+    left: 21%;
+}
+
+.redButton {
+    background-color: #E85555;
+    border: none;
+    color: black;
+    padding: 7px 20px;
+    text-align: left;
+    font-size: 12px;
+    cursor: pointer;
+    width: auto;
+    border-radius: 4px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+}
+
+.resetButton {
+    background-color: #6FD397;
+    border: none;
+    color: black;
+    padding: 12px;
+    text-align: left;
+    font-size: 12px;
+    cursor: pointer;
+    width: auto;
+    border-radius: 4px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    float: left;
+    vertical-align: middle;
+}
+
+/*https://www.w3schools.com/howto/howto_css_shapes.asp*/
+.triangle-right {
+	width: 0;
+	height: 0;
+	border-top: 10px solid transparent;
+	border-left: 20px solid #fff;
+	border-bottom: 10px solid transparent;
+    margin-top: 3px;
+    float: right;
+    vertical-align: middle;
+}
+
+/*https://www.w3schools.com/howto/howto_css_arrows.asp*/
+.arrow {
+    border: solid black;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    margin-bottom: 1px;
+    margin-right: 4px;
+    padding: 2px;
+  }
+  
+  .right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+  }
+  
+  .left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+  }
+  
+  .up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+  }
+  
+  .down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+  }
+
+.profileform label{
+    padding: 4px 8px 4px 0;
+    display: flex;
+    color: white;
+    float: right;
+    border-radius: 4px;
+}
+
+ .profileform input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.profileform input[type="submit"] {
+    background-color: #6FD397;
+    border: none;
+    color: black;
+    padding: 7px 20px;
+    margin-bottom: 30px;
+    text-align: left;
+    font-size: 12px;
+    cursor: pointer;
+    width: auto;
+    border-radius: 4px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-weight: bold;
+    box-shadow: inset 0 0px 0px;
+}
+
+/* https://www.w3schools.com/howto/howto_css_responsive_form.asp */
+.row{
+    margin-left: 100px;
+}
+
+/* Floating column for labels: 25% width */
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+  }
+
+/* Floating column for inputs: 75% width */
+.col-50 {
+    float: left;
+    width: 50%;
+    margin-top: 6px;
+    box-sizing: border-box;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+  
+  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+    .col-25, .col-75, input[type=submit] {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .profileform label {
+        float: left;
+    }
+
+    .backButton {
+        top: 3%;
+    }
+}
+
+@media screen and (max-height: 700px){
+    .backButton {
+        top: 5%;
+    }
 }

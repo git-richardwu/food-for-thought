@@ -6,39 +6,45 @@ const Settings = () => {
     return (
         <div>
             <h1>Settings</h1>
-            <ul id="side-menu-items">
-                <li className="pm admin student">
+            <ul>
+                <li>
                     <Link to="/settings/account">
-                        <button className="button">
+                        <button className="settingsMenuButton">
                             Account
+                            <div class="triangle-right"/>
                         </button>
+                        
                     </Link>
                 </li>
-                <li className="pm admin student">
+                <li>
                     <Link to="/settings/privacy">
-                        <button className="button">
+                        <button className="settingsMenuButton">
                             Privacy
+                            <div class="triangle-right"/>
                         </button>
                     </Link>
                 </li>
-                <li className="pm admin student">
+                <li>
                     <Link to="/settings/notifications">
-                        <button className="button">
+                        <button className="settingsMenuButton">
                             Notifications
+                            <div class="triangle-right"/>
                         </button>
                     </Link>
                 </li>
-                <li className="pm admin student">
+                <li>
                     <Link to="/settings/preferences">
-                        <button className="button">
+                        <button className="settingsMenuButton">
                             Preferences
+                            <div class="triangle-right"/>
                         </button>
                     </Link>
                 </li>
-                <li className="pm admin student">
+                <li>
                     <Link to="/settings/general">
-                        <button className="button">
+                        <button className="settingsMenuButton">
                             General
+                            <div class="triangle-right"/>
                         </button>
                     </Link>
                 </li>
