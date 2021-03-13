@@ -71,7 +71,7 @@ class App extends React.Component {
               <Switch>
                 <Route path="/settings/account">
                 <div className="settings">
-                    <Profile userid={sessionStorage.getItem("user")} />
+                    <Profile />
                   </div>
                 </Route>
                 <Route

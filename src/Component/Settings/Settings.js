@@ -11,7 +11,7 @@ const Settings = () => {
                     <Link to="/settings/account">
                         <button className="settingsMenuButton">
                             Account
-                            <div class="triangle-right"/>
+                            <div className="triangle-right"/>
                         </button>
                         
                     </Link>
@@ -20,7 +20,7 @@ const Settings = () => {
                     <Link to="/settings/privacy">
                         <button className="settingsMenuButton">
                             Privacy
-                            <div class="triangle-right"/>
+                            <div className="triangle-right"/>
                         </button>
                     </Link>
                 </li>
@@ -28,7 +28,7 @@ const Settings = () => {
                     <Link to="/settings/notifications">
                         <button className="settingsMenuButton">
                             Notifications
-                            <div class="triangle-right"/>
+                            <div className="triangle-right"/>
                         </button>
                     </Link>
                 </li>
@@ -36,7 +36,7 @@ const Settings = () => {
                     <Link to="/settings/preferences">
                         <button className="settingsMenuButton">
                             Preferences
-                            <div class="triangle-right"/>
+                            <div className="triangle-right"/>
                         </button>
                     </Link>
                 </li>
@@ -44,7 +44,7 @@ const Settings = () => {
                     <Link to="/settings/general">
                         <button className="settingsMenuButton">
                             General
-                            <div class="triangle-right"/>
+                            <div className="triangle-right"/>
                         </button>
                     </Link>
                 </li>

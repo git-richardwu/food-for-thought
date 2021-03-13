@@ -1,6 +1,7 @@
 import React from "react";
 import "./Settings.css";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from "react-router-dom";
+
 
 export default class Profile extends React.Component {
   constructor(props) {
@@ -9,6 +10,7 @@ export default class Profile extends React.Component {
       username: "",
       email: "",
       responseMessage: "",
+      deletePressed: false,
     };
     this.fieldChangeHandler.bind(this);
   }
@@ -100,25 +102,212 @@ export default class Profile extends React.Component {
       sessionStorage.removeItem("user");
   }
 
-  deleteAccount(){
-    // TODO: add all fetches for deleting account
+    deleteAccount() {
+        var dialogResult = window.confirm("Are you sure you want to delete your account?");
+        var promises = [];
+        if (dialogResult){
+            promises.push(this.deleteGeneral("/user-preferences", "?userID=",sessionStorage.getItem("user"))); // user-preferences
+            promises.push(this.deleteGeneral("/user-artifacts", "?ownerID=",sessionStorage.getItem("user"))); // user-artifacts
+            promises.push(this.deleteGeneral("/connections", "?userID=",sessionStorage.getItem("user"))); // following
+            promises.push(this.deleteGeneral("/connections", "?connectedUserID=",sessionStorage.getItem("user"))); // followers
+            promises.push(this.deletePosts()); // posts
+            promises.push(this.deleteGeneral("/post-tags", "?userID=",sessionStorage.getItem("user"))); // post-tags
+            promises.push(this.deleteGroups()); // groups
+            promises.push(this.deleteGeneral("/group-members", "?userID=",sessionStorage.getItem("user"))); // group member
+            promises.push(this.deleteGeneral("/messages", "?authorID=",sessionStorage.getItem("user"))); // messages
+
+            
+            Promise.all(promises).then(() => {
+                var promises2 = [];
+                var requestOptionsDelete = {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    },
+                };
+                promises2.push(fetch(process.env.REACT_APP_API_PATH + "/users/"+sessionStorage.getItem("user"), requestOptionsDelete)
+                    .then(response => response.json())
+                    .then(result =>console.log(result))
+                    .catch(error => console.log(error)));
+                Promise.all(promises2).then(() => {
+
+                    this.logout();
+                    this.setState({
+                        deletePressed: true
+                        });
+                });
+            });       
+        }
+    }
+
+    deleteSession = () => {
+
+    }
+
+    deleteGeneral(path, query, id){
+        var requestOptions = {
+            method: 'GET',
+            headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            },
+        };
+        
+        return fetch(process.env.REACT_APP_API_PATH + path+query+id, requestOptions)
+            .then(response => response.json())
+            .then(result => {
+                if (result){
+                    console.log(result);
+                    var requestOptionsDelete = {
+                        method: 'DELETE',
+                        headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                        },
+                    };
+                    for (var i = 0; i < result[1]; i++){
+                        fetch(process.env.REACT_APP_API_PATH + path+"/"+result[0][i].id, requestOptionsDelete)
+                            .then(response => response.json())
+                            .then(result =>console.log(result))
+                            .catch(error => console.log(error));
+                    }
+                }
+            })
+            .catch(error => console.log(error));
+    }
+
+  deletePosts(){
+    var requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        },
+      };
+      
+      fetch(process.env.REACT_APP_API_PATH + "/posts?userID="+sessionStorage.getItem("user"), requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (result){
+                console.log(result);
+                var requestOptionsDelete = {
+                    method: 'DELETE',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    },
+                  };
+                for (var i = 0; i < result[1]; i++){
+                    // delete all tags for comment
+                    this.deleteGeneral("/post-tags", "?postID=", result[0][1].id)
+                    
+                    // delete comments
+                    this.deleteCommentsRecursive(result[0][1].id)
+                    // delete comment
+                    fetch(process.env.REACT_APP_API_PATH + "/posts/"+result[0][i].id, requestOptionsDelete)
+                        .then(response => response.json())
+                        .then(result =>console.log(result))
+                        .catch(error => console.log(error));
+                }
+            }
+        })
+        .catch(error => console.log(error));
+  }
+
+  deleteCommentsRecursive(id){
+    var requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        },
+      };
+      
+      fetch(process.env.REACT_APP_API_PATH + "/posts?parentID="+id, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (result){
+                console.log(result);
+                var requestOptionsDelete = {
+                    method: 'DELETE',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    },
+                  };
+                for (var i = 0; i < result[1]; i++){
+                    // delete all tags for comment
+                    this.deleteGeneral("/post-tags", "?postID=", result[0][1].id)
+                    
+                    // deleteComments
+                    this.deleteCommentsRecursive(result[0][1].id)
+                    // delete post
+                    fetch(process.env.REACT_APP_API_PATH + "/posts/"+result[0][i].id, requestOptionsDelete)
+                        .then(response => response.json())
+                        .then(result =>console.log(result))
+                        .catch(error => console.log(error));
+                }
+            }
+        })
+        .catch(error => console.log(error));
+  }
+
+  deleteGroups(){
+    var requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        },
+      };
+      
+      fetch(process.env.REACT_APP_API_PATH + "/groups?ownerID="+sessionStorage.getItem("user"), requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (result){
+                console.log(result);
+                var requestOptionsDelete = {
+                    method: 'DELETE',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    },
+                  };
+                for (var i = 0; i < result[1]; i++){
+                    // delete all members for group
+                    this.deleteGeneral("/group-members", "?groupID=", result[0][1].id)
+                    
+                    // delete group
+                    fetch(process.env.REACT_APP_API_PATH + "/groups/"+result[0][i].id, requestOptionsDelete)
+                        .then(response => response.json())
+                        .then(result =>console.log(result))
+                        .catch(error => console.log(error));
+                }
+            }
+        })
+        .catch(error => console.log(error));
   }
 
   render() {
+    let isRedirect = this.state.deletePressed;
+    if(isRedirect){
+        return <Redirect to='/' />
+    }
     return (
         <div>
             <Link to="/settings/">
                 <button className="backButton">
-                    <i class="arrow left"></i>
+                    <i className="arrow left"></i>
                     Back
                 </button>      
             </Link>
             <form onSubmit={this.submitHandler} className="profileform">
                 <div className="row">
-                    <div class="col-25">
+                    <div className="col-25">
                         <label id="emailID">Email:</label>
                     </div>
-                    <div class="col-50">
+                    <div className="col-50">
                         <input
                             id="emailID"
                             type="email"
@@ -128,10 +317,10 @@ export default class Profile extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div class="col-25">
+                    <div className="col-25">
                         <label id="usernameID">Username:</label>
                     </div>
-                    <div class="col-50">
+                    <div className="col-50">
                         <input
                             id="usernameID"
                             type="text"
@@ -141,13 +330,16 @@ export default class Profile extends React.Component {
                     </div>
                 </div>
                 <div className="row">
-                    <div class="col-25">
+                    <div className="col-25">
                         <label>Password:</label>
                     </div>
-                    <div class="col-50">
-                    <Link to="/passwordReset">
-                        <button className="resetButton">Reset<i class="arrow right"></i></button>  
-                    </Link>
+                    <div className="col-50">
+                        <Link to="/passwordReset"> {/* Li choose what page to redirect here  */}
+                            <button className="resetButton">
+                                Reset
+                                <i className="arrow right"></i>
+                            </button>  
+                        </Link>
                     </div>
                 </div>
                 <br/>
@@ -159,9 +351,8 @@ export default class Profile extends React.Component {
             </Link>
             <br/>
             <br/>
-            <Link to="/">
-                <button className="redButton" onClick={this.deleteAccount}>Delete Account</button>
-            </Link>
+            
+            <button className="redButton" onClick={this.deleteAccount.bind(this)}>Delete Account</button>
         </div>
       
     );

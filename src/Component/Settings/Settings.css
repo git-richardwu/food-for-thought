@@ -50,15 +50,13 @@
     border: none;
     color: black;
     padding: 12px;
-    text-align: left;
+    margin-top: 6px;
     font-size: 12px;
     cursor: pointer;
-    width: auto;
     border-radius: 4px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
     float: left;
-    vertical-align: middle;
 }
 
 /*https://www.w3schools.com/howto/howto_css_shapes.asp*/
@@ -79,18 +77,19 @@
     border-width: 0 2px 2px 0;
     display: inline-block;
     margin-bottom: 1px;
-    margin-right: 4px;
     padding: 2px;
   }
   
   .right {
     transform: rotate(-45deg);
     -webkit-transform: rotate(-45deg);
+    margin-left: 4px;
   }
   
   .left {
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
+    margin-right: 4px;
   }
   
   .up {
