@@ -186,7 +186,7 @@ export default class Profile extends React.Component {
         },
       };
       
-      fetch(process.env.REACT_APP_API_PATH + "/posts?userID="+sessionStorage.getItem("user"), requestOptions)
+      fetch(process.env.REACT_APP_API_PATH + "/posts?authorID="+sessionStorage.getItem("user"), requestOptions)
         .then(response => response.json())
         .then(result => {
             if (result){
