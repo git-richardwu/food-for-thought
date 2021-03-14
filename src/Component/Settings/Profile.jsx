@@ -141,10 +141,6 @@ export default class Profile extends React.Component {
         }
     }
 
-    deleteSession = () => {
-
-    }
-
     deleteGeneral(path, query, id){
         var requestOptions = {
             method: 'GET',
@@ -199,12 +195,11 @@ export default class Profile extends React.Component {
                     },
                   };
                 for (var i = 0; i < result[1]; i++){
-                    // delete all tags for comment
-                    this.deleteGeneral("/post-tags", "?postID=", result[0][1].id)
-                    
+                    // delete all tags for post
+                    this.deleteGeneral("/post-tags", "?postID=", result[0][i].id)
                     // delete comments
-                    this.deleteCommentsRecursive(result[0][1].id)
-                    // delete comment
+                    this.deleteCommentsRecursive(result[0][i].id)
+                    // delete post
                     fetch(process.env.REACT_APP_API_PATH + "/posts/"+result[0][i].id, requestOptionsDelete)
                         .then(response => response.json())
                         .then(result =>console.log(result))
@@ -238,10 +233,10 @@ export default class Profile extends React.Component {
                   };
                 for (var i = 0; i < result[1]; i++){
                     // delete all tags for comment
-                    this.deleteGeneral("/post-tags", "?postID=", result[0][1].id)
+                    this.deleteGeneral("/post-tags", "?postID=", result[0][i].id)
                     
                     // deleteComments
-                    this.deleteCommentsRecursive(result[0][1].id)
+                    this.deleteCommentsRecursive(result[0][i].id)
                     // delete post
                     fetch(process.env.REACT_APP_API_PATH + "/posts/"+result[0][i].id, requestOptionsDelete)
                         .then(response => response.json())
@@ -276,7 +271,7 @@ export default class Profile extends React.Component {
                   };
                 for (var i = 0; i < result[1]; i++){
                     // delete all members for group
-                    this.deleteGeneral("/group-members", "?groupID=", result[0][1].id)
+                    this.deleteGeneral("/group-members", "?groupID=", result[0][i].id)
                     
                     // delete group
                     fetch(process.env.REACT_APP_API_PATH + "/groups/"+result[0][i].id, requestOptionsDelete)
