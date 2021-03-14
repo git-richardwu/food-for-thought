@@ -13,19 +13,37 @@ function UserProfile() {
       </div>
 
       <div className={styles.mainContent}>
+        {/* Side menu buttons view */}
         <div className={styles.sideMenu}>Menu buttons go here</div>
-
-        <div className = {styles.innerContent}>
-
+        {/* Everything else goes in this view */}
+        <div className={styles.innerContent}>
+          {/* Pic and info container */}
+          <div className={styles.picAndInfo}>
           <div>
-            <ProfilePictureButton name={"Place  holder"} />
+            <ProfilePictureButton name={"Picture Place Holder"} />
           </div>
-
+          {/* User info container */}
           <div className={styles.infoContainer}>
-            <InfoContainer name={"William"} username={"UltraChefWIll"} />
+            <InfoContainer
+              name={"Name Place Holder"}
+              username={"Username Placeholders"}
+              bio={"Bio"}
+              dietTag1={"dietTag1"}
+              dietTag2={"dietTag2"}
+              dietTag3={"dietTag3"}
+              dietTag4={"dietTag4"}
+              calories={"calories go here"}
+              pounds={"pounds go here"}
+            />
           </div>
+          </div>
+          {/* End of pic and info container*/}
 
+          <div >
+            hello
+          </div>
         </div>
+        {/* End of innner container */}
       </div>
     </div>
   );
