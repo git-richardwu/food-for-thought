@@ -102,46 +102,41 @@ export default class Profile extends React.Component {
       sessionStorage.removeItem("user");
   }
 
-    deleteAccount() {
+    async deleteAccount() {
         var dialogResult = window.confirm("Are you sure you want to delete your account?");
         var promises = [];
         if (dialogResult){
-            promises.push(this.deleteGeneral("/user-preferences", "?userID=",sessionStorage.getItem("user"))); // user-preferences
-            promises.push(this.deleteGeneral("/user-artifacts", "?ownerID=",sessionStorage.getItem("user"))); // user-artifacts
-            promises.push(this.deleteGeneral("/connections", "?userID=",sessionStorage.getItem("user"))); // following
-            promises.push(this.deleteGeneral("/connections", "?connectedUserID=",sessionStorage.getItem("user"))); // followers
-            promises.push(this.deletePosts()); // posts
-            promises.push(this.deleteGeneral("/post-tags", "?userID=",sessionStorage.getItem("user"))); // post-tags
-            promises.push(this.deleteGroups()); // groups
-            promises.push(this.deleteGeneral("/group-members", "?userID=",sessionStorage.getItem("user"))); // group member
-            promises.push(this.deleteGeneral("/messages", "?authorID=",sessionStorage.getItem("user"))); // messages
-
-            
-            Promise.all(promises).then(() => {
-                var promises2 = [];
-                var requestOptionsDelete = {
-                    method: 'DELETE',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                    },
-                };
-                promises2.push(fetch(process.env.REACT_APP_API_PATH + "/users/"+sessionStorage.getItem("user"), requestOptionsDelete)
+            var requestOptionsDelete = {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                },
+            };
+            await this.deleteGeneral("/user-preferences", "?userID=",sessionStorage.getItem("user")) // user-preferences
+                .then(await this.deleteGeneral("/user-artifacts", "?ownerID=",sessionStorage.getItem("user"))) // user-artifacts
+                .then(await this.deleteGeneral("/connections", "?userID=",sessionStorage.getItem("user"))) // following
+                .then(await this.deleteGeneral("/connections", "?connectedUserID=",sessionStorage.getItem("user"))) // followers
+                .then(await this.deletePosts()) // posts
+                .then(await this.deleteGeneral("/post-tags", "?userID=",sessionStorage.getItem("user"))) // post-tags
+                .then(await this.deleteGroups()) // groups
+                .then(await this.deleteGeneral("/group-members", "?userID=",sessionStorage.getItem("user"))) // group member
+                .then(await this.deleteGeneral("/messages", "?authorID=",sessionStorage.getItem("user"))) // messages
+                .then(await fetch(process.env.REACT_APP_API_PATH + "/users/"+sessionStorage.getItem("user"), requestOptionsDelete)
                     .then(response => response.json())
                     .then(result =>console.log(result))
-                    .catch(error => console.log(error)));
-                Promise.all(promises2).then(() => {
-
-                    this.logout();
+                    .catch(error => console.log(error)))
+                .then(() => {              
+                    sessionStorage.removeItem("token");
+                    sessionStorage.removeItem("user");
                     this.setState({
                         deletePressed: true
                         });
                 });
-            });       
         }
     }
 
-    deleteGeneral(path, query, id){
+    async deleteGeneral(path, query, id){
         var requestOptions = {
             method: 'GET',
             headers: {
@@ -149,12 +144,11 @@ export default class Profile extends React.Component {
             'Authorization': 'Bearer '+sessionStorage.getItem("token")
             },
         };
-        
-        return fetch(process.env.REACT_APP_API_PATH + path+query+id, requestOptions)
+
+        return await fetch(process.env.REACT_APP_API_PATH + path+query+id, requestOptions)
             .then(response => response.json())
             .then(result => {
                 if (result){
-                    console.log(result);
                     var requestOptionsDelete = {
                         method: 'DELETE',
                         headers: {
@@ -173,7 +167,7 @@ export default class Profile extends React.Component {
             .catch(error => console.log(error));
     }
 
-  deletePosts(){
+  async deletePosts(){
     var requestOptions = {
         method: 'GET',
         headers: {
@@ -182,11 +176,10 @@ export default class Profile extends React.Component {
         },
       };
       
-      fetch(process.env.REACT_APP_API_PATH + "/posts?authorID="+sessionStorage.getItem("user"), requestOptions)
+      return fetch(process.env.REACT_APP_API_PATH + "/posts?authorID="+sessionStorage.getItem("user"), requestOptions)
         .then(response => response.json())
-        .then(result => {
+        .then(async result => {
             if (result){
-                console.log(result);
                 var requestOptionsDelete = {
                     method: 'DELETE',
                     headers: {
@@ -194,28 +187,21 @@ export default class Profile extends React.Component {
                       'Authorization': 'Bearer '+sessionStorage.getItem("token")
                     },
                   };
-                
-                var promises = [];
+            
                 for (var i = 0; i < result[1]; i++){
-                    // delete all tags for post
-                    promises.push(this.deleteGeneral("/post-tags", "?postID=", result[0][i].id));
-                    // delete comments
-                    promises.push(this.deleteCommentsRecursive(result[0][i].id));
-                    var id = result[0][i].id;
-                    Promise.all(promises).then(() => {
-                        // delete post
-                        fetch(process.env.REACT_APP_API_PATH + "/posts/"+id, requestOptionsDelete)
+                    await this.deleteGeneral("/post-tags", "?postID=", result[0][i].id) // delete all tags for post
+                        .then(await this.deleteCommentsRecursive(result[0][i].id)) // delete comments
+                        .then(await fetch(process.env.REACT_APP_API_PATH + "/posts/"+result[0][i].id, requestOptionsDelete) // delete post
                             .then(response => response.json())
                             .then(result =>console.log(result))
-                            .catch(error => console.log(error));
-                    });
+                            .catch(error => console.log(error)));
                 }
             }
         })
         .catch(error => console.log(error));
   }
 
-  deleteCommentsRecursive(id){
+  async deleteCommentsRecursive(id){
     var requestOptions = {
         method: 'GET',
         headers: {
@@ -226,7 +212,7 @@ export default class Profile extends React.Component {
       
       return fetch(process.env.REACT_APP_API_PATH + "/posts?parentID="+id, requestOptions)
         .then(response => response.json())
-        .then(result => {
+        .then(async result => {
             if (result){
                 console.log(result);
                 var requestOptionsDelete = {
@@ -237,28 +223,20 @@ export default class Profile extends React.Component {
                     },
                   };
 
-                var promises = [];
                 for (var i = 0; i < result[1]; i++){
-                    // delete all tags for comment
-                    promises.push(this.deleteGeneral("/post-tags", "?postID=", result[0][i].id));
-                    
-                    // deleteComments
-                    promises.push(this.deleteCommentsRecursive(result[0][i].id));
-                    var id = result[0][i].id;
-                    Promise.all(promises).then(() => {
-                        // delete comment
-                        fetch(process.env.REACT_APP_API_PATH + "/posts/"+id, requestOptionsDelete)
+                    await this.deleteGeneral("/post-tags", "?postID=", result[0][i].id) // delete all tags for comment
+                        .then(await this.deleteCommentsRecursive(result[0][i].id)) // delete comments
+                        .then(await fetch(process.env.REACT_APP_API_PATH + "/posts/"+result[0][i].id, requestOptionsDelete) // delete comment
                             .then(response => response.json())
                             .then(result =>console.log(result))
-                            .catch(error => console.log(error));
-                    });
+                            .catch(error => console.log(error)));
                 }
             }
         })
         .catch(error => console.log(error));
   }
 
-  deleteGroups(){
+  async deleteGroups(){
     var requestOptions = {
         method: 'GET',
         headers: {
@@ -267,11 +245,10 @@ export default class Profile extends React.Component {
         },
       };
       
-      fetch(process.env.REACT_APP_API_PATH + "/groups?ownerID="+sessionStorage.getItem("user"), requestOptions)
+      return fetch(process.env.REACT_APP_API_PATH + "/groups?ownerID="+sessionStorage.getItem("user"), requestOptions)
         .then(response => response.json())
-        .then(result => {
+        .then(async result => {
             if (result){
-                console.log(result);
                 var requestOptionsDelete = {
                     method: 'DELETE',
                     headers: {
@@ -280,19 +257,12 @@ export default class Profile extends React.Component {
                     },
                   };
                 
-                var promises = [];
                 for (var i = 0; i < result[1]; i++){
-                    // delete all members for group
-                    promises.push(this.deleteGeneral("/group-members", "?groupID=", result[0][i].id));
-                    
-                    var id = result[0][i].id;
-                    Promise.all(promises).then(() => {
-                        // delete group
-                        fetch(process.env.REACT_APP_API_PATH + "/groups/"+id, requestOptionsDelete)
-                            .then(response => response.json())
-                            .then(result =>console.log(result))
-                            .catch(error => console.log(error));
-                    });
+                    let response = await this.deleteGeneral("/group-members", "?groupID=", result[0][i].id); // delete all members for group
+                    await fetch(process.env.REACT_APP_API_PATH + "/groups/"+result[0][i].id, requestOptionsDelete) // delete group
+                        .then(response => response.json())
+                        .then(result =>console.log(result))
+                        .catch(error => console.log(error));
                 }
             }
         })
