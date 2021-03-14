@@ -121,7 +121,8 @@ export default class Profile extends React.Component {
                 .then(await this.deleteGeneral("/post-tags", "?userID=",sessionStorage.getItem("user"))) // post-tags
                 .then(await this.deleteGroups()) // groups
                 .then(await this.deleteGeneral("/group-members", "?userID=",sessionStorage.getItem("user"))) // group member
-                .then(await this.deleteGeneral("/messages", "?authorID=",sessionStorage.getItem("user"))) // messages
+                .then(await this.deleteGeneral("/messages", "?authorID=",sessionStorage.getItem("user"))) // messages sent
+                .then(await this.deleteGeneral("/messages", "?recipientUserID=", sessionStorage.getItem("user"))) // messages recieved
                 .then(await fetch(process.env.REACT_APP_API_PATH + "/users/"+sessionStorage.getItem("user"), requestOptionsDelete)
                     .then(response => response.json())
                     .then(result =>console.log(result))
@@ -258,7 +259,8 @@ export default class Profile extends React.Component {
                   };
                 
                 for (var i = 0; i < result[1]; i++){
-                    let response = await this.deleteGeneral("/group-members", "?groupID=", result[0][i].id); // delete all members for group
+                    let response = await this.deleteGeneral("/group-members", "?groupID=", result[0][i].id) // delete all members for group
+                        .then(await this.deleteGeneral("/messages", "?recipientGroupID=", result[0][i].id)); // delete all messages from group
                     await fetch(process.env.REACT_APP_API_PATH + "/groups/"+result[0][i].id, requestOptionsDelete) // delete group
                         .then(response => response.json())
                         .then(result =>console.log(result))
