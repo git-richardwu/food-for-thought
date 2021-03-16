@@ -96,6 +96,7 @@
 
 }
 
+
 .App-link {
   color: #09d3ac;
 }
@@ -194,7 +195,7 @@
   align-items: center;
   justify-content: flex-start;
 
-  background-color: blue;
+  background-color: #6FD397;
 }
 
 .sidenav ul{

@@ -13,6 +13,7 @@ import Profile from "./Component/Profile.jsx";
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
+import SignUp from "./Component/SignUp_Page/SignUp.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
 
@@ -64,6 +65,7 @@ class App extends React.Component {
       <Router basename={process.env.PUBLIC_URL}>
         <div className="App">
           <header className="App-header">
+            {/* <Switch></Switch> */}
             <Navbar toggleModal={(e) => toggleModal(this, e)} />
 
             <div className="maincontent" id="mainContent">
@@ -75,6 +77,14 @@ class App extends React.Component {
                 <Route
                   path="/settings/general/aboutus/william"
                   component={AboutWilliam}
+                />
+                {/* <Route path="/signup">
+                  <p>Sign-Up</p>
+                  <SignUp/>
+                </Route> */}
+                <Route 
+                  path="/signup"
+                  component={SignUp}
                 />
                 <Route path="/settings">
                   <div className="settings">
@@ -95,7 +105,8 @@ class App extends React.Component {
                 />
                 <Route path={["/posts", "/"]}>
                   <div>
-                    <p>Social Media Test Harness</p>
+                    { sessionStorage.getItem("token") ? <p>Thank you for signing up!</p> : <p>Social Media Test Harness</p>}
+                    
                     <LoginForm refreshPosts={this.doRefreshPosts} />
                     <PostForm refresh={this.state.refreshPosts} />
                   </div>
