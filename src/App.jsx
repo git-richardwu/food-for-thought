@@ -15,6 +15,8 @@ import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
+import PasswordReset from "./Component/PasswordReset.jsx"
+import NewPassword from "./Component/NewPassword.jsx"
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -75,6 +77,14 @@ class App extends React.Component {
                 <Route
                   path="/settings/general/aboutus/william"
                   component={AboutWilliam}
+                />
+                  <Route
+                  path="/passwordreset"
+                  component={PasswordReset}
+                />
+                  <Route
+                  path="/newpassword"
+                  component={NewPassword}
                 />
                 <Route path="/settings">
                   <div className="settings">
