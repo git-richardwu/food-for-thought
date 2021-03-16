@@ -1,7 +1,7 @@
 .infoContainer{
     display: flex;
     width: 100%;
-    background-color: red;
+    background-color: #6FD397;
 }
 
 .nameContainer{
@@ -13,26 +13,30 @@
 }
 .name{
     width: 100%;
+    font-size: 20px;
+    /* font-family: "Roboto"; */
+    font-family: 'Roboto', sans-serif;    
+
 }
 
 .leftsideOfInfoContainer{
     width: 50%;
     height: 100%;
-    background-color: khaki;
+    /* background-color: khaki; */
 }
 .bioAndButtonsContainer{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    background-color: blueviolet;
-    height: 79.5%;
+    /* background-color: blueviolet; */
+    height:  78.1%;
 }
 .editBio_Photo_Container{
     display: flex;
     flex-direction: row;
     width: 100%;
-    background-color:darkgrey;
-    justify-content: space-evenly;
+    /* background-color:darkgrey; */
+    justify-content:flex-start;
     /* margin-left: 20px; */
 
 }
@@ -42,7 +46,7 @@
     
 }
 .rightSideOfInforContainer{
-    background-color: darkorange;
+    /* background-color: darkorange; */
     width: 50%;
     display: flex;
     flex-direction: column;
@@ -51,7 +55,7 @@
 .dietTagContainer{
     display: flex;
     flex-direction: column;
-    background-color: darkslateblue;
+    /* background-color: darkslateblue; */
     width: 100%;
     
 
@@ -63,7 +67,7 @@
     flex-direction: row;
     width: 100%;
     height: fit-content;
-    background-color: darkorchid;
+    /* background-color: darkorchid; */
     justify-content: space-around;
 
 }
@@ -73,7 +77,33 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    background-color: deepskyblue;
+    /* background-color: deepskyblue; */
     height: 100%;
+
+}
+
+.bioText{
+    font-size: 20px;
+}
+
+.invisibleText{
+     color: #6FD397;
+
+}
+
+.dietInterestStyle{
+
+    font-family: 'Rubik Mono One', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    
+}
+
+.calorieAndWeightStyle{
+    font-family: 'Rubik Mono One', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
 
 }
