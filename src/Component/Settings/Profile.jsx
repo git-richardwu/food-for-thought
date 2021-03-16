@@ -11,6 +11,7 @@ export default class Profile extends React.Component {
       email: "",
       responseMessage: "",
       deletePressed: false,
+      clickedSubmit: false,
     };
     this.fieldChangeHandler.bind(this);
   }
@@ -75,7 +76,8 @@ export default class Profile extends React.Component {
       .then(
         result => {
           this.setState({
-            responseMessage: result.Status
+            responseMessage: result.Status,
+            clickedSubmit: true,
           });
         },
         error => {
@@ -275,6 +277,10 @@ export default class Profile extends React.Component {
     let isRedirect = this.state.deletePressed;
     if(isRedirect){
         return <Redirect to='/' />
+    }
+
+    if (this.state.clickedSubmit){
+        return <Redirect to='/settings'/>
     }
     return (
         <div>
