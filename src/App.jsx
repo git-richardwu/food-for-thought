@@ -9,14 +9,17 @@ import "./App.css";
 import PostForm from "./Component/PostForm.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
-import Profile from "./Component/Settings/Profile.jsx";
+import Profile from "./Component/Settings/AccountSettings.jsx";
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
 import Settings from "./Component/Settings/Settings.js"
-import UserProfile from "./Component/UserProfile/UserProfile"
+import UserProfile from "./Component/UserProfile/UserProfile";
+import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
+import styles from "./Component/UserProfile/UserProfile.module.css";
+import Banner from "./Component/atoms/atomComponents/banner";
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -64,50 +67,63 @@ class App extends React.Component {
       // expressions, and would otherwise capture all the routes.  Ask me how I
       // know this.
       <Router basename={process.env.PUBLIC_URL}>
-        <div className="App">
-          <header className="App-header">
-            <Navbar toggleModal={(e) => toggleModal(this, e)} />
+        <div className={styles.container}>
+            <div className={styles.mainContent}>
+                {/* Side menu buttons view */}
+                <SideMenu/>
 
-            <div className="maincontent" id="mainContent">
-              <Switch>
-                <Route path="/settings/account">
-                <div className="settings">
-                    <Profile />
-                  </div>
-                </Route>
-                <Route
-                  path="/settings/general/aboutus/andrew"
-                  component={AboutAndrew}
-                />
-                <Route
-                  path="/settings/general/aboutus/william"
-                  component={AboutWilliam}
-                />
-                <Route path="/settings" component={Settings}/>
-                <Route path="/friends">
-                  <div>
-                    <p>Friends</p>
-                    <FriendForm userid={sessionStorage.getItem("user")} />
-                    <FriendList userid={sessionStorage.getItem("user")} />
-                  </div>
-                </Route>
-                <Route path={["/posts", "/"]}>
-                  <div>
-                    <p>Social Media Test Harness</p>
-                    <LoginForm refreshPosts={this.doRefreshPosts} />
-                    <PostForm refresh={this.state.refreshPosts} />
-                  </div>
-                </Route>
-              </Switch>
+                <div className="maincontent" id="mainContent">
+                <Switch>
+                    <Route path="/settings/account">
+                        <Banner title ={"Account Settings"}/>
+                        <div className={styles.innerContent}>
+                            <Profile/>
+                        </div>
+                    </Route>
+                    <Route
+                        path="/settings/general/aboutus/andrew"
+                        component={AboutAndrew}
+                        />
+                    <Route
+                        path="/settings/general/aboutus/william"
+                        component={AboutWilliam}
+                        />
+                    <Route path="/settings">
+                        <Banner title ={"Settings"}/>
+                        <div className={styles.innerContent}>
+                            <Settings/>
+                        </div>
+                    </Route>
+                    <Route path="/friends">
+                        <div>
+                            <p>Friends</p>
+                            <FriendForm userid={sessionStorage.getItem("user")} />
+                            <FriendList userid={sessionStorage.getItem("user")} />
+                        </div>
+                    </Route>
+                    <Route path="/profile">
+                        <Banner title ={"Profile"}/>
+                        <div className={styles.innerContent}>
+                            <UserProfile/>
+                        </div>
+                    </Route>
+                    <Route path={["/posts", "/"]}>
+                        <div>
+                            <p>Social Media Test Harness</p>
+                            <LoginForm refreshPosts={this.doRefreshPosts} />
+                            <PostForm refresh={this.state.refreshPosts} />
+                        </div>
+                    </Route>
+                </Switch>
             </div>
-          </header>
 
-          <Modal
-            show={this.state.openModal}
-            onClose={(e) => toggleModal(this, e)}
-          >
-            This is a modal dialog!
-          </Modal>
+            <Modal
+                show={this.state.openModal}
+                onClose={(e) => toggleModal(this, e)}
+            >
+                This is a modal dialog!
+            </Modal>
+            </div>
         </div>
       </Router>
     );

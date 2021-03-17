@@ -2,8 +2,7 @@ import React from "react";
 import "./Settings.css";
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from "react-router-dom";
 
-
-export default class Profile extends React.Component {
+export default class AccountSettings extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -106,7 +105,6 @@ export default class Profile extends React.Component {
 
     async deleteAccount() {
         var dialogResult = window.confirm("Are you sure you want to delete your account?");
-        var promises = [];
         if (dialogResult){
             var requestOptionsDelete = {
                 method: 'DELETE',
@@ -283,19 +281,19 @@ export default class Profile extends React.Component {
         return <Redirect to='/settings'/>
     }
     return (
-        <div>
-            <Link to="/settings/">
-                <button className="backButton">
-                    <i className="arrow left"></i>
-                    Back
-                </button>      
-            </Link>
+        <div className="accountSettingsContainer">
             <form onSubmit={this.submitHandler} className="profileform">
+                <Link to="/settings/">
+                    <button className="backButton">
+                        <i className="arrow left"/>
+                        Back
+                    </button>      
+                </Link>
                 <div className="row">
                     <div className="col-25">
                         <label id="emailID">Email:</label>
                     </div>
-                    <div className="col-50">
+                    <div className="col-75">
                         <input
                             id="emailID"
                             type="email"
@@ -308,7 +306,7 @@ export default class Profile extends React.Component {
                     <div className="col-25">
                         <label id="usernameID">Username:</label>
                     </div>
-                    <div className="col-50">
+                    <div className="col-75">
                         <input
                             id="usernameID"
                             type="text"
@@ -321,8 +319,8 @@ export default class Profile extends React.Component {
                     <div className="col-25">
                         <label>Password:</label>
                     </div>
-                    <div className="col-50">
-                        <Link to="/passwordReset"> {/* Li choose what page to redirect here  */}
+                    <div className="col-75">
+                        <Link to="/passwordreset">
                             <button className="resetButton">
                                 Reset
                                 <i className="arrow right"></i>

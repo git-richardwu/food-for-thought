@@ -14,21 +14,36 @@
     font-weight: bold;
 }
 
+.settingsContainer {
+    display: flex;
+    flex-direction: column;
+    margin-left: 25%;
+    margin-top: 10%;
+    width: 100%;
+}
+
+.accountSettingsContainer {
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    width: 90%;
+}
+
 .backButton {
     background-color: #6FD397;
     border: none;
     color: black;
     padding: 7px 20px;
+    margin-bottom: 20px;
+    margin-top: 100px;
     text-align: left;
-    font-size: 12px;
+    font-size: 20px;
     cursor: pointer;
     width: auto;
     border-radius: 4px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
-    position: absolute; 
-    top: 20%; 
-    left: 21%;
+    box-shadow: inset 0 0px 0px;
 }
 
 .redButton {
@@ -37,7 +52,7 @@
     color: black;
     padding: 7px 20px;
     text-align: left;
-    font-size: 12px;
+    font-size: 20px;
     cursor: pointer;
     width: auto;
     border-radius: 4px;
@@ -51,7 +66,7 @@
     color: black;
     padding: 12px;
     margin-top: 6px;
-    font-size: 12px;
+    font-size: 20px;
     cursor: pointer;
     border-radius: 4px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -74,9 +89,9 @@
 /*https://www.w3schools.com/howto/howto_css_arrows.asp*/
 .arrow {
     border: solid black;
-    border-width: 0 2px 2px 0;
+    border-width: 0 3px 3px 0;
     display: inline-block;
-    margin-bottom: 1px;
+    margin-bottom: 3px;
     padding: 2px;
   }
   
@@ -102,19 +117,23 @@
     -webkit-transform: rotate(45deg);
   }
 
+
 .profileform label{
-    padding: 4px 8px 4px 0;
-    display: flex;
-    color: white;
+    color: black;
     float: right;
     border-radius: 4px;
+    padding: 12px 12px 12px 0;
+    display: flex;
+    font-size: 20px;
 }
 
  .profileform input {
-    width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+    font-size: 20px;
 }
 
 .profileform input[type="submit"] {
@@ -122,11 +141,11 @@
     border: none;
     color: black;
     padding: 7px 20px;
-    margin-bottom: 30px;
-    text-align: left;
-    font-size: 12px;
-    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 60px;
+    font-size: 20px;
     width: auto;
+    cursor: pointer;
     border-radius: 4px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     font-weight: bold;
@@ -134,9 +153,6 @@
 }
 
 /* https://www.w3schools.com/howto/howto_css_responsive_form.asp */
-.row{
-    margin-left: 100px;
-}
 
 /* Floating column for labels: 25% width */
 .col-25 {
@@ -146,9 +162,9 @@
   }
 
 /* Floating column for inputs: 75% width */
-.col-50 {
+.col-75 {
     float: left;
-    width: 50%;
+    width: 75%;
     margin-top: 6px;
     box-sizing: border-box;
   }
@@ -169,15 +185,5 @@
 
     .profileform label {
         float: left;
-    }
-
-    .backButton {
-        top: 3%;
-    }
-}
-
-@media screen and (max-height: 700px){
-    .backButton {
-        top: 5%;
     }
 }
