@@ -21,4 +21,5 @@
     /* opacity: 0; */
     width: fit-content;
     height: fit-content;
+    cursor: pointer;
 }

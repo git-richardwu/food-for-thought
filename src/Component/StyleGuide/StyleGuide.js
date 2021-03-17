@@ -1,5 +1,11 @@
 import React from "react";
-import image from "../../Images/logo.jpg"
+import image from "../../Images/logo.jpg";
+import mainToProfile from "../../Videos/mainToProfile.mp4";
+import mainToSettings from "../../Videos/mainToSettings.mp4";
+import feedback from "../../Videos/feedback.mp4";
+import layout from "../../Videos/layout.mp4";
+import inlineError from "../../Videos/inlineError.mp4";
+import popup from "../../Videos/popup.mp4";
 import "./StyleGuide.css"
 
 const StyleGuide = () => {
@@ -70,8 +76,12 @@ const StyleGuide = () => {
                 Clicking the person gets the user to their profile.<br/>
                 Clicking the gear gets the user to the settings page.<br/>
                 Friends List on the side allows access to friend’s profiles and access to friend’s chats.</p>
-            <h2>SIDE BAR NAVIGATION TO PROFILE</h2>
-            <h2>SIDE BAR NAVIGATION TO SETTINGS</h2>
+            <video width="750" height="500" controls>
+                <source src={mainToProfile} type="video/mp4"/>
+            </video>
+            <video width="750" height="500" controls>
+                <source src={mainToSettings} type="video/mp4"/>
+            </video>
 
             <h3 className="layoutSubHeader">Positioning Guidelines</h3>
             <p>
@@ -82,20 +92,27 @@ const StyleGuide = () => {
                 Text is left-aligned.<br/>
                 Scroll-bars are right-aligned.<br/>
             </p>
-            <h2>VIDEO</h2>
+            <video width="750" height="500" controls>
+                <source src={layout} type="video/mp4"/>
+            </video>
 
             <h3 className="layoutSubHeader">Styles for Popups</h3>
             <p>
                 Entry Animation: Slide in pop ups for errors and confirming deleting account come from top of screen.<br/>
                 Exit Animation: Popups slide up on exit.
             </p>
-            <h2>POPUP PICTURE</h2>
+            <video width="750" height="500" controls>
+                <source src={popup} type="video/mp4"/>
+            </video>
 
             <h3 className="layoutSubHeader">Inline Error Messages</h3>
             <p>
                 Login, Sign Up, and editing account information have inline error messages for when the user does not enter a valid email or password fields do not match.
             </p>
-            <h2>Inline Error Picture</h2>
+            <video width="750" height="500" controls>
+                <source src={inlineError} type="video/mp4"/>
+            </video>
+
             <h3 className="layoutSubHeader">Feedback</h3>
             <p>
                 On all buttons, we switch from mouse to a hand cursor.<br/>
@@ -104,7 +121,9 @@ const StyleGuide = () => {
                 Buttons that go to a another page have an arrow pointing right.<br/>
                 The scroll bar provides measured feedback to user and provides the length of the content that has been scrolled within a webpage.<br/>
             </p>
-            <h2>Feedback Picture</h2>
+            <video width="750" height="500" controls>
+                <source src={feedback} type="video/mp4"/>
+            </video>
         </div>
     )
 
