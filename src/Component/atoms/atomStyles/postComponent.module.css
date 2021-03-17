@@ -1,0 +1,12 @@
+.postContainer{
+    margin-top: 15px;
+    width: 50%;
+    background-color: #9FE7AE;
+}
+.post{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    font-family: 'Reem Kufi', sans-serif;
+
+}

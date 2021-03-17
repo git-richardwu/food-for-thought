@@ -1,0 +1,23 @@
+.icon{
+    height: 100px;
+    width: 100px;
+}
+
+.sideMenu{
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    background-color:  #6FD397;
+    width: 191px;
+    border: 5px;
+    border-width:thick;
+    border-color: black;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.button{
+    /* opacity: 0; */
+    width: fit-content;
+    height: fit-content;
+}
