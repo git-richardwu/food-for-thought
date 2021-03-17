@@ -55,7 +55,6 @@ class App extends React.Component {
 
   render() {
     return (
-      <UserProfile/>
       // the app is wrapped in a router component, that will render the
       // appropriate content based on the URL path.  Since this is a
       // single page app, it allows some degree of direct linking via the URL
@@ -63,7 +62,7 @@ class App extends React.Component {
       // the same effect as /posts, needs to go last, because it uses regular
       // expressions, and would otherwise capture all the routes.  Ask me how I
       // know this.
-    /*  <Router basename={process.env.PUBLIC_URL}>
+      <Router basename={process.env.PUBLIC_URL}>
         <div className="App">
           <header className="App-header">
             <Navbar toggleModal={(e) => toggleModal(this, e)} />
@@ -113,7 +112,7 @@ class App extends React.Component {
             This is a modal dialog!
           </Modal>
         </div>
-      </Router>*/
+      </Router>
     );
   }
 }
