@@ -1,0 +1,15 @@
+.followerContainer{
+    width: 20%;
+    height: fit-content;
+    background-color: #6FD397;
+    display: flex;
+    flex-direction: column;
+}
+
+.subTitleText{
+    margin-left: 10px;
+    font-family: 'Rubik Mono One', sans-serif;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+}

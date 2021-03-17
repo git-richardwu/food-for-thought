@@ -6,6 +6,10 @@
   height: 40vmin;
 }
 
+.profileform1 label{
+    display:block;
+ }
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -89,11 +93,6 @@
 
 .suggestions li:not(:last-of-type) {
   border-bottom: 1px solid #999;
-}
-
-.profileform label{
-   display:block;
-
 }
 
 .App-link {

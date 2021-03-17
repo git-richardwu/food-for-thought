@@ -1,0 +1,19 @@
+.activityContainer{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: center;
+}
+
+.activityLog{
+    height: fit-content;
+    width: 50%;
+    background: #6FD397;}
+
+.title{
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    font-family: 'Rubik Mono One', sans-serif;
+
+}
