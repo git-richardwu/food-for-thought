@@ -20,6 +20,7 @@ import UserProfile from "./Component/UserProfile/UserProfile";
 import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
 import styles from "./Component/UserProfile/UserProfile.module.css";
 import Banner from "./Component/atoms/atomComponents/banner";
+import StyleGuide from "./Component/StyleGuide/StyleGuide"
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -73,49 +74,57 @@ class App extends React.Component {
                 <SideMenu/>
 
                 <div className="maincontent" id="mainContent">
-                <Switch>
-                    <Route path="/settings/account">
-                        <Banner title ={"Account Settings"}/>
-                        <div className={styles.innerContent}>
-                            <Profile/>
-                        </div>
-                    </Route>
-                    <Route
-                        path="/settings/general/aboutus/andrew"
-                        component={AboutAndrew}
-                        />
-                    <Route
-                        path="/settings/general/aboutus/william"
-                        component={AboutWilliam}
-                        />
-                    <Route path="/settings">
-                        <Banner title ={"Settings"}/>
-                        <div className={styles.innerContent}>
-                            <Settings/>
-                        </div>
-                    </Route>
-                    <Route path="/friends">
-                        <div>
-                            <p>Friends</p>
-                            <FriendForm userid={sessionStorage.getItem("user")} />
-                            <FriendList userid={sessionStorage.getItem("user")} />
-                        </div>
-                    </Route>
-                    <Route path="/profile">
-                        <Banner title ={"Profile"}/>
-                        <div className={styles.innerContent}>
-                            <UserProfile/>
-                        </div>
-                    </Route>
-                    <Route path={["/posts", "/"]}>
-                        <div>
-                            <p>Social Media Test Harness</p>
-                            <LoginForm refreshPosts={this.doRefreshPosts} />
-                            <PostForm refresh={this.state.refreshPosts} />
-                        </div>
-                    </Route>
-                </Switch>
-            </div>
+                    <Switch>
+                        <Route path="/settings/account">
+                            <Banner title ={"Account"}/>
+                            <div className={styles.innerContent}>
+                                <Profile/>
+                            </div>
+                        </Route>
+                        <Route
+                            path="/settings/general/aboutus/andrew"
+                            component={AboutAndrew}
+                            />
+                        <Route
+                            path="/settings/general/aboutus/william"
+                            component={AboutWilliam}
+                            />
+                        <Route path="/settings">
+                            <Banner title ={"Settings"}/>
+                            <div className={styles.innerContent}>
+                                <Settings/>
+                            </div>
+                        </Route>
+                        <Route path="/styleguide">
+                            <Banner title ={"Style Guide"}/>
+                            <div className={styles.innerContent}>
+                                <StyleGuide/>
+                            </div>
+                        </Route>
+                        <Route path="/friends">
+                            <div>
+                                <p>Friends</p>
+                                <FriendForm userid={sessionStorage.getItem("user")} />
+                                <FriendList userid={sessionStorage.getItem("user")} />
+                            </div>
+                        </Route>
+                        <Route path="/profile">
+                            <Banner title ={"Profile"}/>
+                            <div className={styles.innerContent}>
+                                <UserProfile/>
+                            </div>
+                        </Route>
+                        <Route path={["/posts", "/"]}>
+                            <Banner title ={"Food For Thought"}/>
+                            <div className={styles.innerContent}>
+                                <div className="container">
+                                    <LoginForm refreshPosts={this.doRefreshPosts} />
+                                    <PostForm refresh={this.state.refreshPosts} />
+                                </div>
+                            </div>
+                        </Route>
+                    </Switch>
+                </div>
 
             <Modal
                 show={this.state.openModal}

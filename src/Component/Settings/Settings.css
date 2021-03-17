@@ -10,8 +10,8 @@
     cursor: pointer;
     width: 50%;
     border-radius: 4px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    font-weight: bold;
+    font-family: ReemKufi;
+    font-weight: bolder;
 }
 
 .settingsContainer {
@@ -20,6 +20,7 @@
     margin-left: 25%;
     margin-top: 10%;
     width: 100%;
+    background-color: #FEFFF6;
 }
 
 .accountSettingsContainer {
@@ -27,6 +28,7 @@
     flex-direction: column;
     align-items:center;
     width: 90%;
+    background-color: #FEFFF6;
 }
 
 .backButton {
@@ -41,7 +43,7 @@
     cursor: pointer;
     width: auto;
     border-radius: 4px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: ReemKufi;
     font-weight: bold;
     box-shadow: inset 0 0px 0px;
 }
@@ -56,7 +58,7 @@
     cursor: pointer;
     width: auto;
     border-radius: 4px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: ReemKufi;
     font-weight: bold;
 }
 
@@ -69,7 +71,7 @@
     font-size: 20px;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: ReemKufi;
     font-weight: bold;
     float: left;
 }
@@ -123,7 +125,8 @@
     float: right;
     border-radius: 4px;
     padding: 12px 12px 12px 0;
-    display: flex;
+    display: flex;    
+    font-family: ReemKufi;
     font-size: 20px;
 }
 
@@ -132,6 +135,7 @@
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    font-family: ReemKufi;
     resize: vertical;
     font-size: 20px;
 }
@@ -147,7 +151,7 @@
     width: auto;
     cursor: pointer;
     border-radius: 4px;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: ReemKufi;
     font-weight: bold;
     box-shadow: inset 0 0px 0px;
 }

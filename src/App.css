@@ -280,3 +280,7 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.container {
+    background-color: #FEFFF6;
+}

@@ -14,10 +14,12 @@
     border-color: black;
     align-items: center;
     justify-content: space-evenly;
+    position: fixed;
 }
 
 .button{
     /* opacity: 0; */
     width: fit-content;
     height: fit-content;
+    cursor: pointer;
 }
