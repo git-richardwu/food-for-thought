@@ -15,14 +15,12 @@ import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
-import StyleGuide from "./Component/StyleGuide/StyleGuide.js"
-=======
+import StyleGuide from "./Component/StyleGuide/StyleGuide.js";
 import Settings from "./Component/Settings/Settings.js"
 import UserProfile from "./Component/UserProfile/UserProfile";
 import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
 import styles from "./Component/UserProfile/UserProfile.module.css";
 import Banner from "./Component/atoms/atomComponents/banner";
->>>>>>> develop
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
