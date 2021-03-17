@@ -4,9 +4,7 @@ import "./StyleGuide.css"
 
 const StyleGuide = () => {
     return (
-        <div>
-
-            <h1> Style Guide </h1>
+        <div className="container">
             <h2> Logo &#x26; Icon </h2>
             <img src = {image} alt = "logo" className = "logosize"/>
 
@@ -63,7 +61,7 @@ const StyleGuide = () => {
             <br/>
             <h2>Layout</h2>
 
-            <h3 className="layoutSubHeader">Transition between Pages:</h3>
+            <h3 className="layoutSubHeader">Transition between Pages</h3>
             <p>
                 Based on the side navbar: Home (Feed), Notifcations, Profile, Settings.<br/>
                 The navbar is the starting point for navigation.<br/>
@@ -75,7 +73,7 @@ const StyleGuide = () => {
             <h2>SIDE BAR NAVIGATION TO PROFILE</h2>
             <h2>SIDE BAR NAVIGATION TO SETTINGS</h2>
 
-            <h3 className="layoutSubHeader">Positioning Guidelines:</h3>
+            <h3 className="layoutSubHeader">Positioning Guidelines</h3>
             <p>
                 The Navbar is on the left hand side, bottom if on mobile.<br/>
                 Headers areat the top left-aligned.<br/>
@@ -86,19 +84,19 @@ const StyleGuide = () => {
             </p>
             <h2>VIDEO</h2>
 
-            <h3 className="layoutSubHeader">Styles for Popups:</h3>
+            <h3 className="layoutSubHeader">Styles for Popups</h3>
             <p>
                 Entry Animation: Slide in pop ups for errors and confirming deleting account come from top of screen.<br/>
                 Exit Animation: Popups slide up on exit.
             </p>
             <h2>POPUP PICTURE</h2>
 
-            <h3 className="layoutSubHeader">Inline Error Messages:</h3>
+            <h3 className="layoutSubHeader">Inline Error Messages</h3>
             <p>
                 Login, Sign Up, and editing account information have inline error messages for when the user does not enter a valid email or password fields do not match.
             </p>
             <h2>Inline Error Picture</h2>
-            <h3 className="layoutSubHeader">Feedback:</h3>
+            <h3 className="layoutSubHeader">Feedback</h3>
             <p>
                 On all buttons, we switch from mouse to a hand cursor.<br/>
                 On text fields, we switch from mouse to I-beam pointer.<br/>

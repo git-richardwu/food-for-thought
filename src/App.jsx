@@ -15,12 +15,12 @@ import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
-import StyleGuide from "./Component/StyleGuide/StyleGuide.js";
 import Settings from "./Component/Settings/Settings.js"
 import UserProfile from "./Component/UserProfile/UserProfile";
 import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
 import styles from "./Component/UserProfile/UserProfile.module.css";
 import Banner from "./Component/atoms/atomComponents/banner";
+import StyleGuide from "./Component/StyleGuide/StyleGuide"
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -76,7 +76,7 @@ class App extends React.Component {
                 <div className="maincontent" id="mainContent">
                     <Switch>
                         <Route path="/settings/account">
-                            <Banner title ={"Account Settings"}/>
+                            <Banner title ={"Account"}/>
                             <div className={styles.innerContent}>
                                 <Profile/>
                             </div>
@@ -95,10 +95,12 @@ class App extends React.Component {
                                 <Settings/>
                             </div>
                         </Route>
-                        <Route
-                            path="/styleguide"
-                            component={StyleGuide}
-                            />
+                        <Route path="/styleguide">
+                            <Banner title ={"Style Guide"}/>
+                            <div className={styles.innerContent}>
+                                <StyleGuide/>
+                            </div>
+                        </Route>
                         <Route path="/friends">
                             <div>
                                 <p>Friends</p>
@@ -113,10 +115,12 @@ class App extends React.Component {
                             </div>
                         </Route>
                         <Route path={["/posts", "/"]}>
-                            <div>
-                                <p>Social Media Test Harness</p>
-                                <LoginForm refreshPosts={this.doRefreshPosts} />
-                                <PostForm refresh={this.state.refreshPosts} />
+                            <Banner title ={"Food For Thought"}/>
+                            <div className={styles.innerContent}>
+                                <div className="container">
+                                    <LoginForm refreshPosts={this.doRefreshPosts} />
+                                    <PostForm refresh={this.state.refreshPosts} />
+                                </div>
                             </div>
                         </Route>
                     </Switch>
