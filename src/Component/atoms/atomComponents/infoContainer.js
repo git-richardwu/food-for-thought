@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "../atomStyles/infoContainer.module.css";
 import DietTag from "../atomComponents/dietTag"
+import moreIcon from "../../../assets/more_horiz-white-18dp.svg"
 // import GoogleFontLoader from 'react-google-font-loader';
 
 function InfoContainer({
@@ -53,13 +54,14 @@ function InfoContainer({
               {/* First row of buttons */}
               <DietTag dietTag={dietTag1}/>
               <DietTag dietTag= {dietTag2}/>
-              <p className={styles.invisibleText}>more</p>
+              <div className={styles.invisibleButton}> </div>
             </div>
             <div className={styles.dietTagRow}>
               {/* Second row of buttons */}
               <DietTag dietTag={dietTag3}/>
               <DietTag dietTag= {dietTag4}/>
-              <button><p>more</p></button>
+
+              <button className={styles.button}> <img className={styles.icon} src = {moreIcon}></img></button>
             </div>
             {/* End of diet tag container */}
           </div>

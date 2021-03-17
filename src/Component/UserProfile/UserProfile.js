@@ -4,40 +4,18 @@ import ProfilePictureButton from "../atoms/atomComponents/profilePictureButton";
 import InfoContainer from "../atoms/atomComponents/infoContainer";
 import FollowerComponent from "../atoms/atomComponents/followerComponent";
 import ActivityComponent from "../atoms/atomComponents/activityComponent";
-import homeIcon from "../../assets/home-white-18dp.svg";
-import personIcon from "../../assets/person-white-18dp.svg";
-import settingsIcon from "../../assets/settings-white-18dp.svg";
-import notificationsIcon from "../../assets/circle_notifications-white-18dp.svg";
+import Banner from "../atoms/atomComponents/banner"
+import SideMenu from "../atoms/atomComponents/sideMenu"
 function UserProfile() {
   return (
     //The parent container
     <div className={styles.container}>
       {/* The banner container */}
-      <div className={styles.banner}>
-        <h1 className={styles.titleStyle}>Profile</h1>
-      </div>
-
+      <Banner title ={"Profile"}/>
       <div className={styles.mainContent}>
         {/* Side menu buttons view */}
-        <div className={styles.sideMenu}>
-        <button className={styles.button}>
-            <img className = {styles.icon } src = {homeIcon}></img>
-          </button>
-          
-          <button className={styles.button}>
-            <img className = {styles.icon } src = {notificationsIcon}></img>
-          </button>
+        <SideMenu/>
 
-          <button className={styles.button}>
-            <img className = {styles.icon } src = {personIcon}></img>
-          </button>
-
-          <button className={styles.button}>
-            <img className = {styles.icon } src = {settingsIcon}></img>
-          </button>
-
-          
-         </div>
         {/* Everything else goes in this view */}
         <div className={styles.innerContent}>
           {/* Pic and info container */}
@@ -64,6 +42,7 @@ function UserProfile() {
 
           <div className={styles.followAndActivityContainer}>
             <FollowerComponent
+            
               numOfFollowers={"{Number of followers go here}"}
               numOfFollowing={
                 "{Number of people current user follows goes here}"

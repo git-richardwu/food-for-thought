@@ -86,8 +86,10 @@
     font-size: 20px;
 }
 
-.invisibleText{
-     color: #6FD397;
+.invisibleButton{
+    
+     height: 45px;
+     width: 45px;
 
 }
 
@@ -106,4 +108,13 @@
     font-weight: normal;
     font-size: 20px;
 
+}
+.icon{
+    height: 45px;
+    width: 45px;
+}
+
+.button{
+    height: fit-content;
+    width: fit-content;
 }
