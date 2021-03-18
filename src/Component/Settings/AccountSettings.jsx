@@ -73,14 +73,20 @@ export default class AccountSettings extends React.Component {
     fetch(process.env.REACT_APP_API_PATH + "/users?email="+this.state.email, requestOptions)
         .then(response => response.json())
         .then(result => {
-            if (result[1] != 0 && this.state.email != this.state.originalEmail){
+            if (this.state.email == ""){
+                message += "ERROR: Email cannot be empty! Please enter an email!\n"
+            }
+            else if (result[1] != 0 && this.state.email != this.state.originalEmail){
                 message += "ERROR: Email: \""+this.state.email+"\" already exists! Please try another email!\n"
             }
 
             fetch(process.env.REACT_APP_API_PATH + "/users?username="+this.state.username, requestOptions)
                 .then(response => response.json())
                 .then(result2 => {
-                    if (result2[1] != 0 && this.state.username != this.state.originalUsername){
+                    if (this.state.username == ""){
+                        message += "ERROR: Username cannot be empty! Please enter an username!\n"
+                    }
+                    else if (result2[1] != 0 && this.state.username != this.state.originalUsername){
                         message += "ERROR: Username: \"" + this.state.username +"\" already exists! Please try another username!\n"
                     }
 
