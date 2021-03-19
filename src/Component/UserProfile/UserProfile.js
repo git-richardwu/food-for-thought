@@ -12,16 +12,7 @@ function UserProfile() {
   const [userBio, editUserBio] = React.useState("Bio");
 
   return (
-    //The parent container
-    <div className={styles.container}>
-      {/* The banner container */}
-      <Banner title ={"Profile"}/>
-      <div className={styles.mainContent}>
-        {/* Side menu buttons view */}
-        <SideMenu/>
-
-        {/* Everything else goes in this view */}
-        <div className={styles.innerContent}>
+        <div >
           {/* Pic and info container */}
           <div className={styles.picAndInfo}>
             <div>
@@ -56,9 +47,6 @@ function UserProfile() {
             <ActivityComponent activity={"{post goes here}"}/>
           </div>
         </div>
-        {/* End of innner container */}
-      </div>
-    </div>
   );
 }
 
