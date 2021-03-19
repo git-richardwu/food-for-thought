@@ -11,6 +11,8 @@ export default class AccountSettings extends React.Component {
       responseMessage: "",
       deletePressed: false,
       clickedSubmit: false,
+      originalUsername: "",
+      originalEmail: "",
     };
     this.fieldChangeHandler.bind(this);
   }
@@ -45,7 +47,8 @@ export default class AccountSettings extends React.Component {
               // try and make the form component uncontrolled, which plays havoc with react
               username: result.username || "",
               email: result.email || "",
-
+              originalUsername: result.username || "",
+              originalEmail: result.email || "",
             });
           }
         },
@@ -58,31 +61,68 @@ export default class AccountSettings extends React.Component {
   submitHandler = event => {
     //keep the form from actually submitting
     event.preventDefault();
-
-    //make the api call to the user controller
-    fetch(process.env.REACT_APP_API_PATH+"/users/"+sessionStorage.getItem("user"), {
-      method: "PATCH",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        username: this.state.username,
-        email: this.state.email,
-      })
-    })
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            responseMessage: result.Status,
-            clickedSubmit: true,
-          });
+    var message = "";
+    var requestOptions = {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
         },
-        error => {
-          alert("error!");
-        }
-      );
+      };
+      
+    fetch(process.env.REACT_APP_API_PATH + "/users?email="+this.state.email, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            if (this.state.email == ""){
+                message += "ERROR: Email cannot be empty! Please enter an email!\n"
+            }
+            else if (result[1] != 0 && this.state.email != this.state.originalEmail){
+                message += "ERROR: Email: \""+this.state.email+"\" already exists! Please try another email!\n"
+            }
+
+            fetch(process.env.REACT_APP_API_PATH + "/users?username="+this.state.username, requestOptions)
+                .then(response => response.json())
+                .then(result2 => {
+                    if (this.state.username == ""){
+                        message += "ERROR: Username cannot be empty! Please enter an username!\n"
+                    }
+                    else if (result2[1] != 0 && this.state.username != this.state.originalUsername){
+                        message += "ERROR: Username: \"" + this.state.username +"\" already exists! Please try another username!\n"
+                    }
+
+                    if (message.length != 0){
+                        alert(message);
+                        return;
+                    }else{
+                        //make the api call to the user controller
+                        fetch(process.env.REACT_APP_API_PATH+"/users/"+sessionStorage.getItem("user"), {
+                            method: "PATCH",
+                            headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                            },
+                            body: JSON.stringify({
+                            username: this.state.username,
+                            email: this.state.email,
+                            })
+                        })
+                            .then(res => res.json())
+                            .then(
+                            result3 => {
+                                this.setState({
+                                responseMessage: result3.Status,
+                                clickedSubmit: true,
+                                });
+                            },
+                            error => {
+                                alert("error!");
+                            }
+                            );
+                    }
+            })
+            .catch(error => alert('error'));
+        })
+        .catch(error => alert('error'));
   };
 
   logout(){
