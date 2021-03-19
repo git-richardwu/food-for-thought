@@ -1,6 +1,7 @@
 import React from "react";
 
 import "../App.css";
+import { Redirect } from "react-router-dom";
 
 // the login form will display if there is no session token stored.  This will display
 // the login form, and call the API to authenticate the user and store the token in
@@ -109,12 +110,13 @@ export default class LoginForm extends React.Component {
         </form>
       );
     } else {
-      console.log("Returning welcome message");
-      if (this.state.username) {
-        return <p>Welcome, {this.state.username}</p>;
-      } else {
-        return <p>{this.state.alanmessage}</p>;
-      }
+      return <Redirect to='/main'/>
+      // console.log("Returning welcome message");
+      // if (this.state.username) {
+      //   return <p>Welcome, {this.state.username}</p>;
+      // } else {
+      //   return <p>{this.state.alanmessage}</p>;
+      // }
     }
   }
 }

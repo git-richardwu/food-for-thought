@@ -142,7 +142,7 @@ export default class SignUp extends React.Component {
 
         const { redirect } = this.state;
         if(redirect){
-           return <Redirect to='/posts'/>
+           return <Redirect to='/main'/>
         }
 
         return (
