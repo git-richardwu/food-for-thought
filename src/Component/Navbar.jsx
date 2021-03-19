@@ -4,10 +4,12 @@ import {
    Link
 } from 'react-router-dom';
 // pull in the images for the menu items
-import postIcon from "../assets/post.svg";
+// import postIcon from "../assets/post.svg";
 import friendIcon from "../assets/friends.svg";
 import settingIcon from "../assets/settings.svg";
-import helpIcon from "../assets/help.svg";
+// import helpIcon from "../assets/help.svg";
+import homeIcon from "../assets/home.svg"
+import notificationIcon from "../assets/notification.svg"
 
 /* The Navbar class provides navigation through react router links.  Note the callback
    to the parent app class in the last entry... this is an example of calling a function
@@ -21,12 +23,23 @@ class Navbar extends React.Component {
         <li className="pm admin student">
           <Link to="/posts">
             <img
-              src={postIcon}
+              src={homeIcon}
               className="sidenav-icon"
-              alt="Posts"
-              title="Posts"
+              alt="Home"
+              title="Home"
             />
           </Link>
+        </li>
+        <li className="pm admin">
+            <Link>
+            <img
+              src={notificationIcon}
+              className="sidenav-icon"
+              alt="Notifications"
+              title="Notifications"
+            />
+            </Link>
+          
         </li>
         <li className="pm admin">
           <Link to="/friends">
@@ -47,19 +60,6 @@ class Navbar extends React.Component {
               title="Settings"
             />
           </Link>
-        </li>
-        <li className="pm admin">
-          <button
-            className="link-button"
-            onClick={e => this.props.toggleModal(e)}
-          >
-            <img
-              src={helpIcon}
-              className="sidenav-icon"
-              alt="Settings"
-              title="Settings"
-            />
-          </button>
         </li>
       </ul>
     </div>

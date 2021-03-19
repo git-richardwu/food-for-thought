@@ -10,6 +10,8 @@ import PostForm from "./Component/PostForm.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
 import Profile from "./Component/Settings/AccountSettings.jsx";
+import Preferences from "./Component/Settings/Preferences.js"
+import Diet from "./Component/Diet.jsx"
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
@@ -72,7 +74,6 @@ class App extends React.Component {
             <div className={styles.mainContent}>
                 {/* Side menu buttons view */}
                 <SideMenu/>
-
                 <div className="maincontent" id="mainContent">
                     <Switch>
                         <Route path="/settings/account">
@@ -89,6 +90,19 @@ class App extends React.Component {
                             path="/settings/general/aboutus/william"
                             component={AboutWilliam}
                             />
+                          <Route path="/settings/preferences/diet">
+                            <Banner title ={"Diet"}/>
+                            <div className="diet">
+                              <p>Diet</p>
+                              <Diet/>
+                            </div>
+                          </Route>   
+                        <Route path="/settings/preferences">
+                          <Banner title ={"Preferences"}/>
+                            <div className={styles.innerContent}>
+                              <Preferences/>
+                            </div>
+                          </Route>                     
                         <Route path="/settings">
                             <Banner title ={"Settings"}/>
                             <div className={styles.innerContent}>
