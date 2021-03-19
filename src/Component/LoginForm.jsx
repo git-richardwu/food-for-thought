@@ -1,6 +1,7 @@
 import React from "react";
 
 import "../App.css";
+import {Redirect} from "react-router-dom";
 
 // the login form will display if there is no session token stored.  This will display
 // the login form, and call the API to authenticate the user and store the token in
@@ -13,7 +14,8 @@ export default class LoginForm extends React.Component {
       username: "",
       password: "",
       alanmessage: "",
-      sessiontoken: ""
+      sessiontoken: "",
+      redirect: false
     };
     this.refreshPostsFromLogin = this.refreshPostsFromLogin.bind(this);
   }
@@ -89,12 +91,23 @@ export default class LoginForm extends React.Component {
       );
   };
 
+  rdReset = event => {
+    this.setState({
+      redirect: true
+    })
+  }
   render() {
     // console.log("Rendering login, token is " + sessionStorage.getItem("token"));
 
+    const { redirect } = this.state;
+    if ( redirect ){
+      return <Redirect to='/reset'/>
+    }
+
     if (!sessionStorage.getItem("token")) {
       return (
-        <form onSubmit={this.submitHandler}>
+        // <form onSubmit={this.submitHandler}>
+        <div>
           <label>
             Username
             <input type="text" onChange={this.myChangeHandler} />
@@ -104,9 +117,12 @@ export default class LoginForm extends React.Component {
             Password
             <input type="password" onChange={this.passwordChangeHandler} />
           </label>
-          <input type="submit" value="submit" />
+          <button onClick = {this.submitHandler}>submit</button>
           <p>{this.state.alanmessage}</p>
-        </form>
+        
+          <button onClick = {this.rdReset}> Forgot Password </button>
+        </div>
+        
       );
     } else {
       console.log("Returning welcome message");
