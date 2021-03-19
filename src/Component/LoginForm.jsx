@@ -1,7 +1,8 @@
 import React from "react";
 
 import "../App.css";
-import {Redirect} from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import "./SignUp_Page/foobar.css"
 
 // the login form will display if there is no session token stored.  This will display
 // the login form, and call the API to authenticate the user and store the token in
@@ -107,30 +108,33 @@ export default class LoginForm extends React.Component {
     if (!sessionStorage.getItem("token")) {
       return (
         // <form onSubmit={this.submitHandler}>
-        <div>
+        <div className="center">
+          <h2>Login</h2>
+        <form onSubmit={this.submitHandler}>
           <label>
             Username
-            <input type="text" onChange={this.myChangeHandler} />
+            <input className="textbox" type="text" onChange={this.myChangeHandler} />
           </label>
           <br />
           <label>
             Password
-            <input type="password" onChange={this.passwordChangeHandler} />
+            <input className="textbox" type="password" onChange={this.passwordChangeHandler} />
           </label>
-          <button onClick = {this.submitHandler}>submit</button>
+          <br />
+          <input className="buttonStyle1" type="submit" value="submit" />
+          <button onClick = {this.rdReset} className = "buttonStyle1"> Forgot Password </button>
           <p>{this.state.alanmessage}</p>
-        
-          <button onClick = {this.rdReset}> Forgot Password </button>
+        </form>
         </div>
-        
       );
     } else {
-      console.log("Returning welcome message");
-      if (this.state.username) {
-        return <p>Welcome, {this.state.username}</p>;
-      } else {
-        return <p>{this.state.alanmessage}</p>;
-      }
+      return <Redirect to='/main'/>
+      // console.log("Returning welcome message");
+      // if (this.state.username) {
+      //   return <p>Welcome, {this.state.username}</p>;
+      // } else {
+      //   return <p>{this.state.alanmessage}</p>;
+      // }
     }
   }
 }

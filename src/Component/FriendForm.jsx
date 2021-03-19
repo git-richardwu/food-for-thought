@@ -96,7 +96,7 @@ export default class FriendForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.submitHandler} className="profileform">
+      <form onSubmit={this.submitHandler} className="profileform1">
         <label>
           Find a Friend!
           <br />
