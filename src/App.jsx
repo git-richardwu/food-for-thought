@@ -22,6 +22,7 @@ import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
 import styles from "./Component/UserProfile/UserProfile.module.css";
 import Banner from "./Component/atoms/atomComponents/banner";
 import StyleGuide from "./Component/StyleGuide/StyleGuide"
+import PasswordReset from "./Component/PasswordReset.jsx"
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import LandingPage from "./Component/LandingPage";
@@ -91,6 +92,10 @@ class App extends React.Component {
                             path="/settings/general/aboutus/william"
                             component={AboutWilliam}
                             />
+                        <Route
+                            path="/reset"
+                            component={PasswordReset}
+                        />
                         <Route path="/settings">
                             <Banner title ={"Settings"}/>
                             <div className={styles.innerContent}>

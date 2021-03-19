@@ -15,7 +15,8 @@ export default class LoginForm extends React.Component {
       username: "",
       password: "",
       alanmessage: "",
-      sessiontoken: ""
+      sessiontoken: "",
+      redirect: false
     };
     this.refreshPostsFromLogin = this.refreshPostsFromLogin.bind(this);
   }
@@ -91,10 +92,22 @@ export default class LoginForm extends React.Component {
       );
   };
 
+  rdReset = event => {
+    this.setState({
+      redirect: true
+    })
+  }
   render() {
     // console.log("Rendering login, token is " + sessionStorage.getItem("token"));
+
+    const { redirect } = this.state;
+    if ( redirect ){
+      return <Redirect to='/reset'/>
+    }
+
     if (!sessionStorage.getItem("token")) {
       return (
+        // <form onSubmit={this.submitHandler}>
         <div className="center">
           <h2>Login</h2>
         <form onSubmit={this.submitHandler}>
@@ -109,6 +122,7 @@ export default class LoginForm extends React.Component {
           </label>
           <br />
           <input className="buttonStyle1" type="submit" value="submit" />
+          <button onClick = {this.rdReset} className = "buttonStyle1"> Forgot Password </button>
           <p>{this.state.alanmessage}</p>
         </form>
         </div>
