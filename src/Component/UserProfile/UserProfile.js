@@ -7,6 +7,10 @@ import ActivityComponent from "../atoms/atomComponents/activityComponent";
 import Banner from "../atoms/atomComponents/banner"
 import SideMenu from "../atoms/atomComponents/sideMenu"
 function UserProfile() {
+
+  //need to pull userbio from database and store it in userBio variable
+  const [userBio, editUserBio] = React.useState("Bio");
+
   return (
     //The parent container
     <div className={styles.container}>
@@ -28,13 +32,14 @@ function UserProfile() {
               <InfoContainer
                 name={"Name Place Holder"}
                 username={"Username Placeholders"}
-                bio={"Bio"}
+                bio={userBio}
                 dietTag1={"dietTag1"}
                 dietTag2={"dietTag2"}
                 dietTag3={"dietTag3"}
                 dietTag4={"dietTag4"}
                 calories={"calories go here"}
                 pounds={"pounds go here"}
+                setUserBio = { editUserBio}
               />
             </div>
           </div>
