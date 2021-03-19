@@ -9,8 +9,6 @@ export default class PasswordReset extends React.Component {
       email: "",
       token: "",
       password: "",
-      emailErrorStatus: false,
-      pwErrorStatus: false,
       redirect: false
     };
   }
@@ -42,10 +40,9 @@ export default class PasswordReset extends React.Component {
 
     const email = this.state.email
 
-    if (!email.includes("@") || !email.includes(".com")){
-        this.setState({
-          emailErrorStatus: true
-        })
+    if (email == "" || (!email.includes("@") || !email.includes(".com"))){
+        alert("Please enter a valid email!")
+        return;
     }
 
     else {
@@ -60,8 +57,6 @@ export default class PasswordReset extends React.Component {
         email: email
       })
     })
-      // test if taking out line 64 changes anything <- yes taking it out runs the lines after, line 64 does nothing
-    // .then(response => response.json()) 
     .then(
       result => {
         console.log(result);
@@ -73,15 +68,14 @@ export default class PasswordReset extends React.Component {
   submitHandler2 = (event) => {
     //keep the form from actually submitting
     event.preventDefault();
-    // console.log("called")
+
 
     const token = this.state.token
     const password = this.state.password
 
     if(password == "" || password.length < 6){
-      this.setState({
-          pwErrorStatus: true
-      })
+      alert("Please enter a valid password")
+      return;
     }
 
     else {
@@ -96,7 +90,7 @@ export default class PasswordReset extends React.Component {
         })
       })
 
-    // .then(response => response.json())
+
       .then(
       result => {
         console.log(result);
@@ -113,7 +107,7 @@ export default class PasswordReset extends React.Component {
   render() {
       const { redirect } = this.state;
       if ( redirect ){
-        return <Redirect to='/posts'/>
+        return <Redirect to='/'/>
       }
 
       return (
@@ -124,21 +118,17 @@ export default class PasswordReset extends React.Component {
                   <input name = 'email' type='email' onChange ={this.emailHandler} value = {this.state.email}></input>
                 </p>
                 <button onClick = {this.submitHandler}>Get One Time Password!</button>
-                { this.state.emailErrorStatus ? <p>Error: Please enter a valid email!</p> : <div/> }
-
 
                 <p>
                   <label> Token </label>
                   <input name = 'token' type='token' onChange ={this.tokenHandler} value = {this.state.token}></input>
                 </p>
-                <p>(Make sure your token is typed correctly, otherwise the su)</p>
                 
                 <p>
                   <label> New Password </label>
                   <input name = 'new password' type='password' onChange ={this.passwordHandler} value = {this.state.password}></input>
                 </p>
                 <button onClick = {this.submitHandler2}>Submit New Password!</button>
-                { this.state.pwErrorStatus ? <p>Error: Please enter a valid password! (Min. Length of 6)</p> : <div/> }
 
                 <p>Note: </p>
                 <p>Make sure your token is typed correctly, otherwise the submitted password will not reset the old password.</p>
