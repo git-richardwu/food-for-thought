@@ -1,7 +1,20 @@
+/* @font-face{
+    font-family: RubikMonoOne;
+    src: url(../fonts/RubikMonoOne-Regular.ttf)
+}
+
 .foobar {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: RubikMonoOne;
 }
 
 h2 {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: RubikMonoOne;
+} */
+
+.foobar {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+h2 {
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
