@@ -1,5 +1,6 @@
 import React from "react";
-import image from "../../Images/logo.jpg";
+import logoimage from "../../Images/logo.jpg";
+import iconimage from "../../Images/Icon.jpg"
 import mainToProfile from "../../Videos/mainToProfile.mp4";
 import mainToSettings from "../../Videos/mainToSettings.mp4";
 import feedback from "../../Videos/feedback.mp4";
@@ -11,9 +12,11 @@ import "./StyleGuide.css"
 const StyleGuide = () => {
     return (
         <div className="container">
-            <h2> Logo &#x26; Icon </h2>
-            <img src = {image} alt = "logo" className = "logosize"/>
+            <h2> Logo </h2>
+            <img src = {logoimage} alt = "logo" className = "logosize"/>
 
+            <h2> Icon </h2>
+            <img src = {iconimage} alt = "icon" className = "iconsize"/>
 
             <h2> Fonts</h2>
 
