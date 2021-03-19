@@ -13,6 +13,7 @@ import Profile from "./Component/Settings/AccountSettings.jsx";
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
+import SignUp from "./Component/SignUp_Page/SignUp.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
 import Settings from "./Component/Settings/Settings.js"
@@ -23,6 +24,7 @@ import Banner from "./Component/atoms/atomComponents/banner";
 import StyleGuide from "./Component/StyleGuide/StyleGuide"
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import LandingPage from "./Component/LandingPage";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -95,6 +97,9 @@ class App extends React.Component {
                                 <Settings/>
                             </div>
                         </Route>
+                        <Route path={["/signup"]}>
+                          <SignUp/>
+                        </Route>
                         <Route path="/styleguide">
                             <Banner title ={"Style Guide"}/>
                             <div className={styles.innerContent}>
@@ -114,15 +119,23 @@ class App extends React.Component {
                                 <UserProfile/>
                             </div>
                         </Route>
-                        <Route path={["/posts", "/"]}>
+                        <Route path={["/main"]}>
                             <Banner title ={"Food For Thought"}/>
                             <div className={styles.innerContent}>
                                 <div className="container">
-                                    <LoginForm refreshPosts={this.doRefreshPosts} />
                                     <PostForm refresh={this.state.refreshPosts} />
                                 </div>
                             </div>
                         </Route>
+
+                        <Route path={["/login"]}>
+                            <LoginForm refreshPosts={this.doRefreshPosts} />
+                        </Route>
+
+                        <Route path={["/"]}>
+                            <LandingPage/>
+                        </Route>
+
                     </Switch>
                 </div>
 

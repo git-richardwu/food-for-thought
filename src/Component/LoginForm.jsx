@@ -1,6 +1,8 @@
 import React from "react";
 
 import "../App.css";
+import { Redirect } from "react-router-dom";
+import "./SignUp_Page/foobar.css"
 
 // the login form will display if there is no session token stored.  This will display
 // the login form, and call the API to authenticate the user and store the token in
@@ -91,30 +93,34 @@ export default class LoginForm extends React.Component {
 
   render() {
     // console.log("Rendering login, token is " + sessionStorage.getItem("token"));
-
     if (!sessionStorage.getItem("token")) {
       return (
+        <div className="center">
+          <h2>Login</h2>
         <form onSubmit={this.submitHandler}>
           <label>
             Username
-            <input type="text" onChange={this.myChangeHandler} />
+            <input className="textbox" type="text" onChange={this.myChangeHandler} />
           </label>
           <br />
           <label>
             Password
-            <input type="password" onChange={this.passwordChangeHandler} />
+            <input className="textbox" type="password" onChange={this.passwordChangeHandler} />
           </label>
-          <input type="submit" value="submit" />
+          <br />
+          <input className="buttonStyle1" type="submit" value="submit" />
           <p>{this.state.alanmessage}</p>
         </form>
+        </div>
       );
     } else {
-      console.log("Returning welcome message");
-      if (this.state.username) {
-        return <p>Welcome, {this.state.username}</p>;
-      } else {
-        return <p>{this.state.alanmessage}</p>;
-      }
+      return <Redirect to='/main'/>
+      // console.log("Returning welcome message");
+      // if (this.state.username) {
+      //   return <p>Welcome, {this.state.username}</p>;
+      // } else {
+      //   return <p>{this.state.alanmessage}</p>;
+      // }
     }
   }
 }
