@@ -16,7 +16,7 @@ import Navbar from "./Component/Navbar.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
 import PasswordReset from "./Component/PasswordReset.jsx"
-import NewPassword from "./Component/NewPassword.jsx"
+
 
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
@@ -78,13 +78,9 @@ class App extends React.Component {
                   path="/settings/general/aboutus/william"
                   component={AboutWilliam}
                 />
-                  <Route
-                  path="/passwordreset"
+                <Route
+                  path="/reset"
                   component={PasswordReset}
-                />
-                  <Route
-                  path="/newpassword"
-                  component={NewPassword}
                 />
                 <Route path="/settings">
                   <div className="settings">
