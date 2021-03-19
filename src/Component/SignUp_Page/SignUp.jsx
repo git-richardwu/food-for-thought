@@ -147,25 +147,25 @@ export default class SignUp extends React.Component {
 
         return (
 
-            <div className="foobar">
+            <div className="center">
                 <h2>Sign Up</h2>
                 <label>
                 Username
-                <input onChange={this.updateUsername} value={this.state.username}/>
+                <input className="textbox" onChange={this.updateUsername} value={this.state.username}/>
                 </label>
                 <br />
                 <label>
                 Email
-                <input type="email" onChange={this.updateEmail} value={this.state.email} />
+                <input className="textbox" type="email" onChange={this.updateEmail} value={this.state.email} />
                 </label>
                 <br />
                 <label>
                 Password
-                <input type="password" onChange={this.updatePassword} value={this.state.password}/>
+                <input className="textbox" type="password" onChange={this.updatePassword} value={this.state.password}/>
                 <br />
                 </label>
 
-                <button onClick={this.submission}>Sign Up!</button>
+                <button className="buttonStyle1" onClick={this.submission}>Sign Up!</button>
                 {/* { this.state.errorStatus ? <p>Error: Please enter a valid email!</p> : <div/> }
                 { this.state.errorStatus2 ? <p>Error: Please enter a valid password! (Min. Length of 6)</p> : <div/> } */}
             </div>

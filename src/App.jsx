@@ -98,12 +98,7 @@ class App extends React.Component {
                             </div>
                         </Route>
                         <Route path={["/signup"]}>
-                            
-                            <div className={styles.innerContent}>
-                                <div className="container">
-                                    <SignUp/>
-                                </div>
-                            </div>
+                          <SignUp/>
                         </Route>
                         <Route path="/styleguide">
                             <Banner title ={"Style Guide"}/>
@@ -134,21 +129,13 @@ class App extends React.Component {
                         </Route>
 
                         <Route path={["/login"]}>
-                  
-                            <div className={styles.innerContent}>
-                                <div className="container">
-                                  <LoginForm refreshPosts={this.doRefreshPosts} />
-                                </div>
-                            </div>
+                            <LoginForm refreshPosts={this.doRefreshPosts} />
                         </Route>
 
                         <Route path={["/"]}>
-                            <div className={styles.innerContent}>
-                                <div className="container">
-                                    <LandingPage/>
-                                </div>
-                            </div>
+                            <LandingPage/>
                         </Route>
+
                     </Switch>
                 </div>
 

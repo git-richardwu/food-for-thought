@@ -1,20 +1,44 @@
-/* @font-face{
+@font-face{
     font-family: RubikMonoOne;
     src: url(../fonts/RubikMonoOne-Regular.ttf)
 }
 
-.foobar {
+@font-face{
+    font-family: RubikOne;
+    src: url(../fonts/RubikOneRegular-y49d.ttf)
+}
+
+
+.center {
+    text-align: center;
+    padding-left: 10px;
     font-family: RubikMonoOne;
+    font-size: 20px;
 }
 
 h2 {
-    font-family: RubikMonoOne;
-} */
-
-.foobar {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: RubikOne;
 }
 
-h2 {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+.buttonStyle {
+    font-family: RubikMonoOne;
+    color: white;
+    padding: 5px;
+    border-radius: 12px;
+    background-color: #6fd397;
+    font-size: 25px;
+}
+
+.buttonStyle1 {
+    font-family: RubikMonoOne;
+    color: white;
+    padding: 5px;
+    border-radius: 12px;
+    background-color: #6fd397;
+    font-size: 15px;
+}
+
+.textbox {
+    margin-bottom: 10px;
+    border-radius: 5px;
 }
