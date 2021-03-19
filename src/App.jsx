@@ -55,7 +55,6 @@ class App extends React.Component {
 
   render() {
     return (
-      <UserProfile/>
       // the app is wrapped in a router component, that will render the
       // appropriate content based on the URL path.  Since this is a
       // single page app, it allows some degree of direct linking via the URL
@@ -63,57 +62,57 @@ class App extends React.Component {
       // the same effect as /posts, needs to go last, because it uses regular
       // expressions, and would otherwise capture all the routes.  Ask me how I
       // know this.
-      // <Router basename={process.env.PUBLIC_URL}>
-      //   <div className="App">
-      //     <header className="App-header">
-      //       <Navbar toggleModal={(e) => toggleModal(this, e)} />
+      <Router basename={process.env.PUBLIC_URL}>
+        <div className="App">
+          <header className="App-header">
+            <Navbar toggleModal={(e) => toggleModal(this, e)} />
 
-      //       <div className="maincontent" id="mainContent">
-      //         <Switch>
-      //           <Route
-      //             path="/settings/general/aboutus/andrew"
-      //             component={AboutAndrew}
-      //           />
-      //           <Route
-      //             path="/settings/general/aboutus/william"
-      //             component={AboutWilliam}
-      //           />
-      //           <Route path="/settings">
-      //             <div className="settings">
-      //               <p>Settings</p>
-      //               <Profile userid={sessionStorage.getItem("user")} />
-      //             </div>
-      //           </Route>
-      //           <Route path="/friends">
-      //             <div>
-      //               <p>Friends</p>
-      //               <FriendForm userid={sessionStorage.getItem("user")} />
-      //               <FriendList userid={sessionStorage.getItem("user")} />
-      //             </div>
-      //           </Route>
-      //           <Route
-      //             path="/settings/general/aboutus/andrew"
-      //             component={AboutAndrew}
-      //           />
-      //           <Route path={["/posts", "/"]}>
-      //             <div>
-      //               <p>Social Media Test Harness</p>
-      //               <LoginForm refreshPosts={this.doRefreshPosts} />
-      //               <PostForm refresh={this.state.refreshPosts} />
-      //             </div>
-      //           </Route>
-      //         </Switch>
-      //       </div>
-      //     </header>
+            <div className="maincontent" id="mainContent">
+              <Switch>
+                <Route
+                  path="/settings/general/aboutus/andrew"
+                  component={AboutAndrew}
+                />
+                <Route
+                  path="/settings/general/aboutus/william"
+                  component={AboutWilliam}
+                />
+                <Route path="/settings">
+                  <div className="settings">
+                    <p>Settings</p>
+                    <Profile userid={sessionStorage.getItem("user")} />
+                  </div>
+                </Route>
+                <Route path="/friends">
+                  <div>
+                    <p>Friends</p>
+                    <FriendForm userid={sessionStorage.getItem("user")} />
+                    <FriendList userid={sessionStorage.getItem("user")} />
+                  </div>
+                </Route>
+                <Route
+                  path="/settings/general/aboutus/andrew"
+                  component={AboutAndrew}
+                />
+                <Route path={["/posts", "/"]}>
+                  <div>
+                    <p>Social Media Test Harness</p>
+                    <LoginForm refreshPosts={this.doRefreshPosts} />
+                    <PostForm refresh={this.state.refreshPosts} />
+                  </div>
+                </Route>
+              </Switch>
+            </div>
+          </header>
 
-      //     <Modal
-      //       show={this.state.openModal}
-      //       onClose={(e) => toggleModal(this, e)}
-      //     >
-      //       This is a modal dialog!
-      //     </Modal>
-      //   </div>
-      // </Router>
+          <Modal
+            show={this.state.openModal}
+            onClose={(e) => toggleModal(this, e)}
+          >
+            This is a modal dialog!
+          </Modal>
+        </div>
+      </Router>
     );
   }
 }
