@@ -14,9 +14,9 @@ export default class PostForm extends React.Component {
     this.postListing = React.createRef();
   }
 
-  // the handler for submitting a new post.  This will call the API to create a new post.
-  // while the test harness does not use images, if you had an image URL you would pass it
-  // in the thumbnailURL field.
+//   the handler for submitting a new post.  This will call the API to create a new post.
+//   while the test harness does not use images, if you had an image URL you would pass it
+//   in the thumbnailURL field.
   submitHandler = event => {
 
     //keep the form from actually submitting via HTML - we want to handle it in react
@@ -24,7 +24,7 @@ export default class PostForm extends React.Component {
 
     //make the api call to post
     fetch(process.env.REACT_APP_API_PATH+"/posts", {
-      method: "post",
+      method: "POST",
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")

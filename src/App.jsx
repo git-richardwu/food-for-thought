@@ -10,6 +10,8 @@ import PostForm from "./Component/PostForm.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
 import Profile from "./Component/Settings/AccountSettings.jsx";
+import Preferences from "./Component/Settings/Preferences.js"
+import Diet from "./Component/Diet.jsx"
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
@@ -96,6 +98,25 @@ class App extends React.Component {
                                 <PasswordReset/>
                             </div>
                         </Route>
+                        <Route path="/settings/preferences">
+                            <SideMenu/>
+                                <div className="maincontent" id="mainContent">
+                                <Banner title ={"Preferences"}/>
+                                <div className={styles.innerContent}>
+                                <Preferences/>
+                                </div>
+                            </div>
+                          </Route> 
+                        <Route path="/settings/preferences/diet">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Diet"}/>
+                                <div className="diet">
+                                <p>Diet</p>
+                                <Diet/>
+                                </div>
+                            </div>
+                          </Route>   
                         <Route path="/settings">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
