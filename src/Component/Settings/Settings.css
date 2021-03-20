@@ -191,3 +191,12 @@
         float: left;
     }
 }
+
+
+.dietTags_control {
+  height: 50px;
+  background-color: #6FD397;  
+}
+.dietTags{
+  block-size: 0cm;
+}
