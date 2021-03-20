@@ -6,15 +6,19 @@
   height: 40vmin;
 }
 
+.profileform1 label{
+    display:block;
+ }
+
 .App-header {
-  background-color: #282c34;
+  background-color: #f8f8f8;
   min-height: 100vh;
   display: flex;
   flex-direction: row;
   align-items: flex-center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
+  color: rgb(0, 0, 0);
 }
 
 .deletePost{
@@ -28,6 +32,30 @@
 .settings{
   width:100%;
 }
+
+*{
+  box-sizing: border-box;
+}
+
+/* .pref{
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: #6FD397;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+} */
+
+.Back{
+  position: absolute;
+  top: 10px;
+  left: 10px
+}
+
+
+
 
 .link-button {
   background-color: transparent;
@@ -89,11 +117,6 @@
 
 .suggestions li:not(:last-of-type) {
   border-bottom: 1px solid #999;
-}
-
-.profileform label{
-   display:block;
-
 }
 
 .App-link {
@@ -194,7 +217,7 @@
   align-items: center;
   justify-content: flex-start;
 
-  background-color: blue;
+  background-color: #6FD397;
 }
 
 .sidenav ul{
@@ -205,10 +228,11 @@
 }
 
 .sidenav-icon{
+  
   width:40px;
   height:40px;
 
-  margin-bottom:15px;
+  margin-bottom:100px;
 }
 
 .comment-indicator{
@@ -281,3 +305,52 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+.container {
+    background-color: #FEFFF6;
+}
+
+/* Drop down button */
+.dropbtn {
+  background-color: #3498DB;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* Dropdown button on hover & focus */
+.dropbtn:hover, .dropbtn:focus {
+  background-color: #2980B9;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd}
+
+/* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
+.show {display:block;}

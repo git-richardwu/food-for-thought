@@ -9,14 +9,25 @@ import "./App.css";
 import PostForm from "./Component/PostForm.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
-import Profile from "./Component/Profile.jsx";
+import Profile from "./Component/Settings/AccountSettings.jsx";
+import Preferences from "./Component/Settings/Preferences.js"
+import Diet from "./Component/Diet.jsx"
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
+import SignUp from "./Component/SignUp_Page/SignUp.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
+import Settings from "./Component/Settings/Settings.js"
+import UserProfile from "./Component/UserProfile/UserProfile";
+import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
+import styles from "./Component/UserProfile/UserProfile.module.css";
+import Banner from "./Component/atoms/atomComponents/banner";
+import StyleGuide from "./Component/StyleGuide/StyleGuide"
+import PasswordReset from "./Component/PasswordReset.jsx"
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import LandingPage from "./Component/LandingPage";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -62,55 +73,122 @@ class App extends React.Component {
       // expressions, and would otherwise capture all the routes.  Ask me how I
       // know this.
       <Router basename={process.env.PUBLIC_URL}>
-        <div className="App">
-          <header className="App-header">
-            <Navbar toggleModal={(e) => toggleModal(this, e)} />
+        <div className={styles.container}>
+            <div className={styles.mainContent}>
+                    <Switch>
+                        <Route path="/settings/account">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Account"}/>
+                                <div className={styles.innerContent}>
+                                    <Profile/>
+                                </div>
+                            </div>
+                        </Route>
+                        <Route
+                            path="/settings/general/aboutus/andrew"
+                            component={AboutAndrew}
+                            />
+                        <Route
+                            path="/settings/general/aboutus/william"
+                            component={AboutWilliam}
+                            />
+                        <Route path="/reset">
+                            <div className="maincontent" id="mainContent">
+                                <PasswordReset/>
+                            </div>
+                        </Route>
+                        <Route path="/settings/preferences/diet">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Diet"}/>
+                                <div className="diet">
+                                <p>Diet</p>
+                                    <Diet/>
+                                </div>
+                            </div>
+                          </Route> 
+                        <Route path="/settings/preferences">
+                            <SideMenu/>
+                                <div className="maincontent" id="mainContent">
+                                <Banner title ={"Preferences"}/>
+                                <div className={styles.innerContent}>
+                                    <Preferences/>
+                                </div>
+                            </div>
+                          </Route> 
+                        <Route path="/settings">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Settings"}/>
+                                <div className={styles.innerContent}>
+                                    <Settings/>
+                                </div>
+                            </div>
+                        </Route>
+                        <Route path={["/signup"]}>
+                            <div className="maincontent" id="mainContent">
+                                <SignUp/>
+                            </div>
+                        </Route>
+                        <Route path="/styleguide">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Style Guide"}/>
+                                <div className={styles.innerContent}>
+                                    <StyleGuide/>
+                                </div>
+                            </div>
+                        </Route>
+                        <Route path="/friends">
+                            <div>
+                                <p>Friends</p>
+                                <FriendForm userid={sessionStorage.getItem("user")} />
+                                <FriendList userid={sessionStorage.getItem("user")} />
+                            </div>
+                        </Route>
+                        <Route path="/profile">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Profile"}/>
+                                <div className={styles.innerContent}>
+                                    <UserProfile/>
+                                </div>
+                            </div>
+                        </Route>
+                        <Route path={["/main"]}>
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Food For Thought"}/>
+                                <div className={styles.innerContent}>
+                                    <div className="container">
+                                        <PostForm refresh={this.state.refreshPosts} />
+                                    </div>
+                                </div>
+                            </div>
+                        </Route>
 
-            <div className="maincontent" id="mainContent">
-              <Switch>
-                <Route
-                  path="/settings/general/aboutus/andrew"
-                  component={AboutAndrew}
-                />
-                <Route
-                  path="/settings/general/aboutus/william"
-                  component={AboutWilliam}
-                />
-                <Route path="/settings">
-                  <div className="settings">
-                    <p>Settings</p>
-                    <Profile userid={sessionStorage.getItem("user")} />
-                  </div>
-                </Route>
-                <Route path="/friends">
-                  <div>
-                    <p>Friends</p>
-                    <FriendForm userid={sessionStorage.getItem("user")} />
-                    <FriendList userid={sessionStorage.getItem("user")} />
-                  </div>
-                </Route>
-                <Route
-                  path="/settings/general/aboutus/andrew"
-                  component={AboutAndrew}
-                />
-                <Route path={["/posts", "/"]}>
-                  <div>
-                    <p>Social Media Test Harness</p>
-                    <LoginForm refreshPosts={this.doRefreshPosts} />
-                    <PostForm refresh={this.state.refreshPosts} />
-                  </div>
-                </Route>
-              </Switch>
+                        <Route path={["/login"]}>
+                            <div className="maincontent" id="mainContent">
+                                <LoginForm refreshPosts={this.doRefreshPosts} />
+                            </div>
+                        </Route>
+                        <Route path={["/"]}>
+                            <div className="maincontent" id="mainContent">                               
+                                <LandingPage/>
+                            </div>
+                        </Route>
+
+                    </Switch>
+                </div>
+
+            <Modal
+                show={this.state.openModal}
+                onClose={(e) => toggleModal(this, e)}
+            >
+                This is a modal dialog!
+            </Modal>
             </div>
-          </header>
-
-          <Modal
-            show={this.state.openModal}
-            onClose={(e) => toggleModal(this, e)}
-          >
-            This is a modal dialog!
-          </Modal>
-        </div>
       </Router>
     );
   }

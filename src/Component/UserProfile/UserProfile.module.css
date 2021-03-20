@@ -1,0 +1,73 @@
+.container {
+    display: flex;
+    height: 100vh;
+    justify-content:space-between;
+    align-items: center;
+    background-color:#FEFFF6;
+    flex-direction: column;
+}
+
+
+
+.aboutMe{
+    height: 217px;
+    background-color: #6FD397;
+    width: 937px;
+}
+
+.mainContent{
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    align-items: flex-start;
+    height: 100%;
+    width: 100%;
+    background-color: #FEFFF6;
+
+}
+
+
+.innerContent{
+    display: flex;
+    margin-top: 20px;
+    margin-left: 2%;
+    width: 100%;
+    flex-direction: column;
+    height: 100%;
+    margin-right: 2%;
+    margin-left: 200px;
+    
+}
+.infoContainer{
+    display: flex;
+    width: 100%;
+    margin-left: 10px;
+}
+
+.picAndInfo{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+.followAndActivityContainer{
+    display: flex;
+    flex-direction: row;
+    /* background-color: green; */
+    margin-top: 10px;
+    width: 100%;
+    height: 100%;
+}
+.button{
+    /* opacity: 0; */
+    width: fit-content;
+    height: fit-content;
+}
+
+
+
+
+
+    
+
+
+
