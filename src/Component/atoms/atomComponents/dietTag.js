@@ -5,7 +5,7 @@ function DietTag({ dietTag }) {
   return (
     <div className={styles.dietTagContainer}>
         <link rel="preconnect" href="https://fonts.gstatic.com"/>
-<link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik&display=swap" rel="stylesheet"/>
       <button className={styles.dietTageStyle}>
         <p className={styles.buttonTitle}>{dietTag}</p>
       </button>
