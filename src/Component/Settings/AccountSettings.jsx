@@ -360,7 +360,7 @@ export default class AccountSettings extends React.Component {
                         <label>Password:</label>
                     </div>
                     <div className="col-75">
-                        <Link to="/passwordreset">
+                        <Link to="/reset">
                             <button className="resetButton">
                                 Reset
                                 <i className="arrow right"></i>
