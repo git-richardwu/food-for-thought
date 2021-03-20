@@ -2,7 +2,6 @@ import React from "react";
 import styles from "../atomStyles/infoContainer.module.css";
 import DietTag from "../atomComponents/dietTag";
 import moreIcon from "../../../assets/more_horiz-white-18dp.svg";
-import { useEffect } from "react/cjs/react.development";
 // import GoogleFontLoader from 'react-google-font-loader';
 function InfoContainer({
   name,
@@ -19,9 +18,6 @@ function InfoContainer({
 }) {
   //Dont confuse bio with editBio...one is a string one is a boolean
   const [editBio, isEditingBio] = React.useState(false);
-  useEffect(() => {
-
-  });
 
   async function updateUserBio(test) {
     await setUserBio(test)
