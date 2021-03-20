@@ -3,7 +3,7 @@ import { Redirect, Link } from "react-router-dom";
 import "./SignUp_Page/foobar.css"
 
 export default class LandingPage extends React.Component {
-
+    
 render() {
     if(!sessionStorage.getItem("token")){
     return (

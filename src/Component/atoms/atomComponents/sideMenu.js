@@ -7,7 +7,6 @@ import styles from "../atomStyles/sideMenu.module.css";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 function SideMenu() {
-if(sessionStorage.getItem("token")){
     return ( 
         <div className={styles.sideMenu}>
             <Link to="/main">
@@ -32,10 +31,6 @@ if(sessionStorage.getItem("token")){
             </Link>
     </div>
     )
-    }
-    else {
-        return null;
-    }
 }
 
 export default SideMenu;
