@@ -311,7 +311,7 @@ export default class Diet extends React.Component {
         return (
             <div className="pref">
                 <div className="dropdown">
-                    <h2>Diet Tag<i className="arrow down"></i></h2>
+                    <h2>Diet Tag<i className="arrowDiet down"></i></h2>
                     <div className="dropdown-content">
                         <button onClick={e => this.fieldChangeHandler("Vegetarian", e)}>Vegetarian</button>
                         <button onClick={e => this.fieldChangeHandler("Vegan", e)}>Vegan</button>
