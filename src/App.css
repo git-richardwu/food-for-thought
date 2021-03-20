@@ -54,35 +54,7 @@
   left: 10px
 }
 
-.pref{
-  display: flex;
-  /* justify-content: normal; */
-  flex-direction: column;
-  align-items: center;
-  flex-basis: auto;
-  font: Reem Kufi
-}
 
-.pref button { /*https://www.w3schools.com/howto/howto_css_button_group_vertical.asp*/
-  background-color: #6FD397; /* Green background */
-  border: 1px solid green; /* Green border */
-  color: black; /* black text */
-  padding: 10px 24px; /* Some padding */
-  cursor: pointer; /* Pointer/hand icon */
-  width: 50%; 
-  display: block; /* Make the buttons appear below each other */
-  font-size: large;
- 
-}
-
-.pref button:not(:last-child) {
-  border-bottom: none; /* Prevent double borders */
-}
-
-/* Add a background color on hover */
-.pref button:hover {
-  background-color: #3e8e41;
-}
 
 
 .link-button {

@@ -274,33 +274,54 @@
 // export default Diet;
 
 import React,{useState} from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown'
+import "./Diet.css"
 
+export default class Diet extends React.Component {
+    constructor(props) {
+      super(props);
+      this.state = {
+          tags: ""
+      };
+      this.fieldChangeHandler.bind(this);
+    }
 
-function Diet() {
-  const [value,setValue]=useState('');
-  const handleSelect=(e)=>{
-    console.log(e);
-    setValue(e)
-  }
-  return (
-    <div className="pref">
-      
-      <DropdownButton
-      title="Diet Tag"
-      id="dropdown-menu-align-right"
-      onSelect={handleSelect}
-        >
-              <Dropdown.Item eventKey="Vegetarian">Vegetarian</Dropdown.Item>
-              <Dropdown.Item eventKey="Vegan">Vegan</Dropdown.Item>
-              <Dropdown.Item eventKey="Pescatarian">Pescatarian</Dropdown.Item>
-      </DropdownButton>
-      <h4>You selected "{value}" as a Diet Tag</h4>
-    </div>
-  );
+    componentDidMount() {
+        // TODO: add GET here setting this.state.tags
+      }
+
+    fieldChangeHandler(value, e) {
+        console.log("field change");
+        if (!this.state.tags.includes(value)){
+            // TODO: add POST here
+            if (this.state.tags == ""){
+                this.setState({
+                    tags: value
+                  });
+                
+            }else{
+                var updated = this.state.tags + ", " + value
+                this.setState({
+                    tags: updated
+                  });
+            }
+        }
+      }
+
+    render() {
+        return (
+            <div className="pref">
+                <div className="dropdown">
+                    <h2>Diet Tag<i className="arrow down"></i></h2>
+                    <div className="dropdown-content">
+                        <button onClick={e => this.fieldChangeHandler("Vegetarian", e)}>Vegetarian</button>
+                        <button onClick={e => this.fieldChangeHandler("Vegan", e)}>Vegan</button>
+                        <button onClick={e => this.fieldChangeHandler("Pescatarian", e)}>Pescatarian</button>
+                        {/* add more preferences */}
+                    </div>
+                </div>
+
+                <p className="tags">You selected "{this.state.tags}" as a Diet Tag</p>
+            </div>
+        );
+    }
 }
-
-export default Diet;
-

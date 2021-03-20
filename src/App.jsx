@@ -98,25 +98,25 @@ class App extends React.Component {
                                 <PasswordReset/>
                             </div>
                         </Route>
-                        <Route path="/settings/preferences">
-                            <SideMenu/>
-                                <div className="maincontent" id="mainContent">
-                                <Banner title ={"Preferences"}/>
-                                <div className={styles.innerContent}>
-                                <Preferences/>
-                                </div>
-                            </div>
-                          </Route> 
                         <Route path="/settings/preferences/diet">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Diet"}/>
                                 <div className="diet">
                                 <p>Diet</p>
-                                <Diet/>
+                                    <Diet/>
                                 </div>
                             </div>
-                          </Route>   
+                          </Route> 
+                        <Route path="/settings/preferences">
+                            <SideMenu/>
+                                <div className="maincontent" id="mainContent">
+                                <Banner title ={"Preferences"}/>
+                                <div className={styles.innerContent}>
+                                    <Preferences/>
+                                </div>
+                            </div>
+                          </Route> 
                         <Route path="/settings">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
