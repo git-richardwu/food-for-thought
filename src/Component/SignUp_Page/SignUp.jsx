@@ -139,7 +139,7 @@ export default class SignUp extends React.Component {
     }
 
     render() {
-
+       
         const { redirect } = this.state;
         if(redirect){
            return <Redirect to='/main'/>

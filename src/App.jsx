@@ -24,7 +24,7 @@ import Banner from "./Component/atoms/atomComponents/banner";
 import StyleGuide from "./Component/StyleGuide/StyleGuide"
 import PasswordReset from "./Component/PasswordReset.jsx"
 
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import LandingPage from "./Component/LandingPage";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
@@ -73,15 +73,14 @@ class App extends React.Component {
       <Router basename={process.env.PUBLIC_URL}>
         <div className={styles.container}>
             <div className={styles.mainContent}>
-                {/* Side menu buttons view */}
-                <SideMenu/>
-
-                <div className="maincontent" id="mainContent">
                     <Switch>
                         <Route path="/settings/account">
-                            <Banner title ={"Account"}/>
-                            <div className={styles.innerContent}>
-                                <Profile/>
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Account"}/>
+                                <div className={styles.innerContent}>
+                                    <Profile/>
+                                </div>
                             </div>
                         </Route>
                         <Route
@@ -92,23 +91,32 @@ class App extends React.Component {
                             path="/settings/general/aboutus/william"
                             component={AboutWilliam}
                             />
-                        <Route
-                            path="/reset"
-                            component={PasswordReset}
-                        />
+                        <Route path="/reset">
+                            <div className="maincontent" id="mainContent">
+                                <PasswordReset/>
+                            </div>
+                        </Route>
                         <Route path="/settings">
-                            <Banner title ={"Settings"}/>
-                            <div className={styles.innerContent}>
-                                <Settings/>
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Settings"}/>
+                                <div className={styles.innerContent}>
+                                    <Settings/>
+                                </div>
                             </div>
                         </Route>
                         <Route path={["/signup"]}>
-                          <SignUp/>
+                            <div className="maincontent" id="mainContent">
+                                <SignUp/>
+                            </div>
                         </Route>
                         <Route path="/styleguide">
-                            <Banner title ={"Style Guide"}/>
-                            <div className={styles.innerContent}>
-                                <StyleGuide/>
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Style Guide"}/>
+                                <div className={styles.innerContent}>
+                                    <StyleGuide/>
+                                </div>
                             </div>
                         </Route>
                         <Route path="/friends">
@@ -119,26 +127,35 @@ class App extends React.Component {
                             </div>
                         </Route>
                         <Route path="/profile">
-                            <Banner title ={"Profile"}/>
-                            <div className={styles.innerContent}>
-                                <UserProfile/>
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Profile"}/>
+                                <div className={styles.innerContent}>
+                                    <UserProfile/>
+                                </div>
                             </div>
                         </Route>
                         <Route path={["/main"]}>
-                            <Banner title ={"Food For Thought"}/>
-                            <div className={styles.innerContent}>
-                                <div className="container">
-                                    <PostForm refresh={this.state.refreshPosts} />
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Food For Thought"}/>
+                                <div className={styles.innerContent}>
+                                    <div className="container">
+                                        <PostForm refresh={this.state.refreshPosts} />
+                                    </div>
                                 </div>
                             </div>
                         </Route>
 
                         <Route path={["/login"]}>
-                            <LoginForm refreshPosts={this.doRefreshPosts} />
+                            <div className="maincontent" id="mainContent">
+                                <LoginForm refreshPosts={this.doRefreshPosts} />
+                            </div>
                         </Route>
-
                         <Route path={["/"]}>
-                            <LandingPage/>
+                            <div className="maincontent" id="mainContent">                               
+                                <LandingPage/>
+                            </div>
                         </Route>
 
                     </Switch>
@@ -151,7 +168,6 @@ class App extends React.Component {
                 This is a modal dialog!
             </Modal>
             </div>
-        </div>
       </Router>
     );
   }

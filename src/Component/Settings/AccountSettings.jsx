@@ -135,12 +135,38 @@ export default class AccountSettings extends React.Component {
     };
     
     fetch(process.env.REACT_APP_API_PATH + "/auth/logout", requestOptions)
-      .then(response => response.json())
+      .then(response => response.text())
       .then(result => console.log(result))
-      .catch(error => alert('error'));
+      .catch(error => alert('error'))
+      .then(() => {
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
+      })
+      .then(() => {
+        this.setState({
+            deletePressed: true
+            });
+      });
 
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("user");
+  }
+
+  reset(){
+    var requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        },
+      };
+      
+      fetch(process.env.REACT_APP_API_PATH + "/auth/logout", requestOptions)
+        .then(response => response.text())
+        .then(result => console.log(result))
+        .catch(error => alert('error'))
+        .then(() => {
+          sessionStorage.removeItem("token");
+          sessionStorage.removeItem("user");
+        });
   }
 
     async deleteAccount() {
@@ -361,7 +387,7 @@ export default class AccountSettings extends React.Component {
                     </div>
                     <div className="col-75">
                         <Link to="/reset">
-                            <button className="resetButton">
+                            <button className="resetButton" onClick={this.reset}>
                                 Reset
                                 <i className="arrow right"></i>
                             </button>  
@@ -372,9 +398,7 @@ export default class AccountSettings extends React.Component {
                 <input type="submit" value="Submit" />
                 {this.state.responseMessage}
             </form>
-            <Link to="/">
-                <button className="redButton" onClick={this.logout}>Log Out</button>    
-            </Link>
+            <button className="redButton" onClick={this.logout.bind(this)}>Log Out</button>    
             <br/>
             <br/>
             
