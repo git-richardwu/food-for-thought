@@ -11,7 +11,7 @@ import "./StyleGuide.css"
 
 const StyleGuide = () => {
     return (
-        <div className="container">
+        <div className="styleGuideContainer">
             <h2> Logo </h2>
             <img src = {logoimage} alt = "logo" className = "logosize"/>
 
@@ -124,7 +124,7 @@ const StyleGuide = () => {
                 Buttons that go to a another page have an arrow pointing right.<br/>
                 The scroll bar provides measured feedback to user and provides the length of the content that has been scrolled within a webpage.<br/>
             </p>
-            <video width="750" height="500" controls>
+            <video width="750" height="500" controls className="lastVideo">
                 <source src={feedback} type="video/mp4"/>
             </video>
         </div>

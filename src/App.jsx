@@ -147,15 +147,11 @@ class App extends React.Component {
                                 </div>
                             </div>
                         </Route>
-                        <Route path={["/main"]}>
+                        <Route path={["/home"]}>
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
-                                <Banner title ={"Food For Thought"}/>
-                                <div className={styles.innerContent}>
-                                    <div className="container">
-                                        <PostForm refresh={this.state.refreshPosts} />
-                                    </div>
-                                </div>
+                                <Banner title ={"Home"}/>
+                                <PostForm refresh={this.state.refreshPosts} />
                             </div>
                         </Route>
 

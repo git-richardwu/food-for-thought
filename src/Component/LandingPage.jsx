@@ -24,7 +24,7 @@ render() {
     );
   }
   else {
-      return <Redirect to="/main"/>
+      return <Redirect to="/home"/>
   }
     }
 }

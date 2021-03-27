@@ -34,6 +34,7 @@ h1 {
 }
 
 .font1h{
+    text-align: center;
     font-family: RubikMonoOne;
     font-size: 20px;
 }
@@ -119,10 +120,13 @@ p {
 }
 
 
-.container {
+.styleGuideContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-right: 200px;
     background-color: #FEFFF6;
+}
+
+.lastVideo {
+    margin-bottom: 200px;
 }

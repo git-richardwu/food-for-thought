@@ -24,6 +24,11 @@
     cursor: pointer;
 }
 
+.logo{
+    height: 100px;
+    width: 175px;
+}
+
 @media screen and (max-width: 850px) {
     .sideMenu{
         flex-direction: row;
@@ -35,5 +40,10 @@
     .icon{
         height: 50px;
         width: 50px;
+    }
+
+    .logo{
+        height: 0px;
+        width: 0px;
     }
  }
