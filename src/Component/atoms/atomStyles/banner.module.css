@@ -16,3 +16,26 @@
     line-height: 123.8px;
     color: #FFFFFF;
 }
+
+
+ @media screen and (max-width: 850px) {
+    .titleStyle{
+        font-size: 30px;
+    }
+
+    .banner {
+        height: 75px;
+        margin-left: 0px;
+    }
+ }
+
+ @media screen and (max-width: 350px) {
+    .titleStyle{
+        font-size: 30px;
+    }
+
+    .banner {
+        height: 75px;
+        margin-left: 0px;
+    }
+ }

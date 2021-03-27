@@ -80,9 +80,7 @@ class App extends React.Component {
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Account"}/>
-                                <div className={styles.innerContent}>
-                                    <Profile/>
-                                </div>
+                                <Profile/>
                             </div>
                         </Route>
                         <Route
@@ -103,27 +101,22 @@ class App extends React.Component {
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Diet"}/>
                                 <div className="diet">
-                                <p>Diet</p>
                                     <Diet/>
                                 </div>
                             </div>
                           </Route> 
                         <Route path="/settings/preferences">
                             <SideMenu/>
-                                <div className="maincontent" id="mainContent">
+                            <div className="maincontent" id="mainContent">
                                 <Banner title ={"Preferences"}/>
-                                <div className={styles.innerContent}>
-                                    <Preferences/>
-                                </div>
+                                <Preferences/>
                             </div>
                           </Route> 
                         <Route path="/settings">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Settings"}/>
-                                <div className={styles.innerContent}>
-                                    <Settings/>
-                                </div>
+                                <Settings/>
                             </div>
                         </Route>
                         <Route path={["/signup"]}>
@@ -135,9 +128,7 @@ class App extends React.Component {
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Style Guide"}/>
-                                <div className={styles.innerContent}>
-                                    <StyleGuide/>
-                                </div>
+                                <StyleGuide/>
                             </div>
                         </Route>
                         <Route path="/friends">
