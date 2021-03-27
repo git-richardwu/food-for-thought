@@ -121,10 +121,12 @@ p {
 
 
 .styleGuideContainer {
-    display: flex;
+    background-color: #FEFFF6;
+    display:flex;
     flex-direction: column;
     align-items: center;
-    background-color: #FEFFF6;
+    overflow-y: auto;
+    height: 100vh;
 }
 
 .lastVideo {

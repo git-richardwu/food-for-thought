@@ -23,8 +23,10 @@ import UserProfile from "./Component/UserProfile/UserProfile";
 import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
 import styles from "./Component/UserProfile/UserProfile.module.css";
 import Banner from "./Component/atoms/atomComponents/banner";
-import StyleGuide from "./Component/StyleGuide/StyleGuide"
-import PasswordReset from "./Component/PasswordReset.jsx"
+import StyleGuide from "./Component/StyleGuide/StyleGuide";
+import PasswordReset from "./Component/PasswordReset.jsx";
+import PostingList from "./Component/PostingList.jsx";
+import Posts from "./Component/Posts/Posts.js"
 
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import LandingPage from "./Component/LandingPage";
@@ -126,7 +128,7 @@ class App extends React.Component {
                         </Route>
                         <Route path="/styleguide">
                             <SideMenu/>
-                            <div className="maincontent" id="mainContent">
+                            <div className="mainHome">
                                 <Banner title ={"Style Guide"}/>
                                 <StyleGuide/>
                             </div>
@@ -149,9 +151,9 @@ class App extends React.Component {
                         </Route>
                         <Route path={["/home"]}>
                             <SideMenu/>
-                            <div className="maincontent" id="mainContent">
+                            <div className="mainHome">
                                 <Banner title ={"Home"}/>
-                                <PostForm refresh={this.state.refreshPosts} />
+                                <Posts/>
                             </div>
                         </Route>
 
