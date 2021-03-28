@@ -9,6 +9,7 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import PostProfilePicture from "./PostProfilePicture";
 import Test from "../../Images/test.jpeg";
 import PostURL from "./PostURL.js"
+import FoodPhoto from "./FoodPhoto";
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -136,11 +137,14 @@ export default class Post extends React.Component {
       return this.props.post.content.split("~")[0];
   }
 
+  getFoodPhotoID(){
+        return this.props.post.content.split("~")[3];
+  }
+
   render() {
 
     return (
       <div>
-
         <div
             key={this.props.post.id}
             className={[this.props.type, "postbody"].join(" ")}>
@@ -168,7 +172,7 @@ export default class Post extends React.Component {
             <div className="content">
                 <Ingredients id={this.getIngredientsID()}/>
                 <Steps id={this.getStepsID()}/>
-                <img className="postImage" src={Test} alt="Food"/>
+                <FoodPhoto id={this.getFoodPhotoID()}/>
             </div>
             <PostURL link={this.props.post.thumbnailURL}/>
             {this.conditionalDisplay()}

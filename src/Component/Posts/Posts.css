@@ -99,11 +99,15 @@
     cursor: pointer;
 }
 
-.postImage{
+.postImageContainer{
     margin-left: 30px;
     margin-top: 30px;
     width: 33%;
     height: 100%;
+}
+
+.postImage{
+    width: 100%;
 }
 
 .postLinkContainer{
@@ -135,7 +139,7 @@
         font-size: 16px;
     }
 
-    .postImage{
+    .postImageContainer{
         width: 33%;
         margin-left: 0px;
         margin-bottom: 10px;
@@ -212,7 +216,7 @@
         font-size: 0px;
     }
 
-    .postImage{
+    .postImageContainer{
         width: 100%;
         margin-left: 0px;
         margin-bottom: 10px;
