@@ -156,6 +156,7 @@
     box-shadow: inset 0 0px 0px;
 }
 
+
 /* https://www.w3schools.com/howto/howto_css_responsive_form.asp */
 
 /* Floating column for labels: 25% width */
@@ -179,6 +180,7 @@
     display: table;
     clear: both;
   }
+
   
   /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
@@ -192,3 +194,59 @@
     }
 }
 
+.weightAndValue{
+  display: flex;
+  flex-direction: row;
+  /* padding-right: 10px; */
+  /* background-color: green; */
+  width: fit-content;
+  height: fit-content;
+ 
+
+}
+.weightBox{
+  background-color: #6FD397;
+  width: fit-content;
+  font-size: 22px;
+  padding: 10px 32px;
+  font-family: ReemKufi;
+  font-weight: bolder;
+  border-radius: 4px;
+  /* margin-bottom: 30px; */
+  height: fit-content;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.weightText{
+  width: fit-content;
+  font-size: 22px;
+  padding: 10px 32px;
+  font-family: ReemKufi;
+  font-weight: bolder;
+  border-radius: 4px;
+  height: fit-content;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.setWeightGoalButtonContainer{
+  height: 100%;
+  width: 50%;
+  margin-top: 32px;
+}
+
+.setWeightGoalButton{
+  font-size: 20px;
+  font-family: ReemKufi;
+}
+
+.inputBox{
+  font-size: 20px;
+  font-family: ReemKufi;
+  font-weight: bolder;
+
+}
