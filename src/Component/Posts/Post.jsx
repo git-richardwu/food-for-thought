@@ -7,7 +7,6 @@ import Ingredients from "./Ingredients.js";
 import Steps from "./Steps.js";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 import PostProfilePicture from "./PostProfilePicture";
-import Test from "../../Images/test.jpeg";
 import PostURL from "./PostURL.js"
 import FoodPhoto from "./FoodPhoto";
 
