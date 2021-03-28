@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import Post from "./Post.jsx";
 import "./Posts.css";
 
-const Posts = () => {
+const Posts = ({userId}) => {
     const [posts, setPosts] = useState([]);
     const [isError, setError] = useState(false);
     const [isLoading, setLoading] = useState(true);
@@ -17,7 +17,11 @@ const Posts = () => {
     }, [])
 
     const fetchPosts = async () => {
-        fetch(process.env.REACT_APP_API_PATH+"/posts?sort=newest", {
+        var url = process.env.REACT_APP_API_PATH+"/posts?sort=newest";
+        if (userId){
+            url += "&authorID="+userId;
+        }
+        fetch(url, {
           method: "get",
           headers: {
             'Content-Type': 'application/json',
@@ -93,13 +97,23 @@ const Posts = () => {
         return <div> Loading... </div>;
     } else if (posts) {
         if (posts.length > 0){
-            return (
-                <div className="posts">
-                    {posts.map(post => (
-                        <Post key={post.id} post={post} type="postlist" deletePost={deletePost} />
-                    ))}
-                </div>
-            );
+            if (userId){
+                return (
+                    <div className="postsProfilePage">
+                        {posts.map(post => (
+                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} />
+                        ))}
+                    </div>
+                );
+            }else{
+                return (
+                    <div className="posts">
+                        {posts.map(post => (
+                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} />
+                        ))}
+                    </div>
+                );
+            }
         }else{
             return (<div> No Posts Found </div>);
         }

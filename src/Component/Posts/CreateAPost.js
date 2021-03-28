@@ -3,7 +3,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import "./Posts.css";
 import "./CreateAPost.css"
-import { BrowserRouter as Router, Redirect, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch, Link, useHistory} from "react-router-dom";
 
 const CreateAPost = () => {
     const [title, setTitle] = useState("");
@@ -17,6 +17,7 @@ const CreateAPost = () => {
     const [postTags, setPostTags] = useState([]);
     const [tag, setTag] = useState("");
     const fileField = document.querySelector('input[type="file"]');
+    const history = useHistory()
 
     const addStep = () => {
         if (step != ""){
@@ -223,12 +224,10 @@ const CreateAPost = () => {
     return (
         <div className="createAPostContainer">
             <div className="createForm">
-                <Link to="/home">
-                    <button className="backButton backButtonCreate">
-                        <i className="arrow left"/>
-                        Back
-                    </button>
-                </Link>
+                <button className="backButton backButtonCreate" onClick={e => history.goBack()}>
+                    <i className="arrow left"/>
+                    Back
+                </button>
 
                 <div className="createAPostTitle">
                     <label className="titleLabel">Title:</label>

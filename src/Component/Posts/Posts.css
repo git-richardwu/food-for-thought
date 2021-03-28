@@ -1,4 +1,4 @@
-.addPostButton{
+.addPostButtonHome{
     position: absolute;
     right: 30px;
     bottom: 30px;
@@ -6,8 +6,12 @@
     width: 80px;
 }
 
-.button{
-    cursor: pointer;
+.addPostButtonProfile{
+    position: absolute;
+    right: 0px;
+    bottom: 30px;
+    height: 80px;
+    width: 80px;
 }
 
 .posts{
@@ -17,6 +21,17 @@
     justify-content: flex-start;
     overflow-y: auto;
     height: 100vh;
+    margin-left: 225px;
+}
+
+.postsProfilePage{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: 10px;
+    overflow-y: auto;
+    height: 400px;
 }
 
 .postlist {
@@ -29,7 +44,6 @@
   }
 
   .postbody{
-    margin-left: 225px;
     display:flex;
     flex-direction: column;
     justify-content: flex-start;
