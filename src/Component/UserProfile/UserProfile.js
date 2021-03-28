@@ -9,9 +9,12 @@ function UserProfile() {
   //need to pull userbio from database and store it in userBio variable
   const [userBio, editUserBio] = React.useState("");
   const [bioID, setBioID] = React.useState();
+  const [weightGoal, setWeightGoal] = React.useState("")
+  const [weightGoalID, setWeightGoalID] = React.useState(-1)
 
  React.useEffect(()=>{
     fetchUserBio();
+    fetchWeightGoal();
  })
  
 
@@ -42,21 +45,6 @@ function UserProfile() {
               }
 
         }
-          // if(result){
-          //   //edge case is bio not there
-          //   if(result[0][0].type != null){
-          //     let bio =  result[0][0].type;
-          //     console.log("Bio from user profile: " +bio);
-          //     editUserBio(bio);
-          //     console.log("Bio id: " + result[0][0].id)
-          //     setBioID(result[0][0].id);
-          //     // console.log("This is result: " + result[0][1].ownerID)
-          //   }else{
-          //     let bio = "Please add a bio."
-          //     editUserBio(bio);
-          //   }
-            
-          // }
         ,
         error=>{
           alert("Error occurred when trying to retrieve bio")
@@ -64,7 +52,38 @@ function UserProfile() {
       );
 
   }
-          
+  
+  function fetchWeightGoal() {
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=weightGoal&ownerID="+sessionStorage.getItem("user"),{
+      method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          if (result[0].length != 0) {
+            result[0].forEach(function (artifacts) {
+              if (artifacts.category == "weightGoal") {
+                let goal = artifacts.type;
+                console.log("Goal from user preferences: " + goal);
+                setWeightGoal(goal);
+                console.log("Weight goal id: " + artifacts.id);
+                setWeightGoalID(artifacts.id);
+              } 
+            });
+          } else {
+            setWeightGoalID(-1);
+          }
+        },
+        (error) => {
+          alert("Error occurred when trying to retrieve weight goal");
+        }
+      );
+  }      
     
 
   return (
@@ -85,7 +104,7 @@ function UserProfile() {
                 dietTag3={"dietTag3"}
                 dietTag4={"dietTag4"}
                 calories={"calories go here"}
-                pounds={"pounds go here"}
+                pounds={weightGoal}
                 setUserBio = { () => editUserBio()}
                 bioID = {bioID}
               />
