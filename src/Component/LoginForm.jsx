@@ -128,7 +128,7 @@ export default class LoginForm extends React.Component {
         </div>
       );
     } else {
-      return <Redirect to='/main'/>
+      return <Redirect to='/home'/>
       // console.log("Returning welcome message");
       // if (this.state.username) {
       //   return <p>Welcome, {this.state.username}</p>;

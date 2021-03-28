@@ -23,10 +23,14 @@ import UserProfile from "./Component/UserProfile/UserProfile";
 import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
 import styles from "./Component/UserProfile/UserProfile.module.css";
 import Banner from "./Component/atoms/atomComponents/banner";
-import StyleGuide from "./Component/StyleGuide/StyleGuide"
-import PasswordReset from "./Component/PasswordReset.jsx"
+import StyleGuide from "./Component/StyleGuide/StyleGuide";
+import PasswordReset from "./Component/PasswordReset.jsx";
+import PostingList from "./Component/PostingList.jsx";
+import Posts from "./Component/Posts/Posts.js";
+import AddPostButton from "./assets/addPost.svg";
+import CreateAPost from "./Component/Posts/CreateAPost.js";
 
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch, Link } from "react-router-dom";
 import LandingPage from "./Component/LandingPage";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
@@ -80,9 +84,7 @@ class App extends React.Component {
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Account"}/>
-                                <div className={styles.innerContent}>
-                                    <Profile/>
-                                </div>
+                                <Profile/>
                             </div>
                         </Route>
                         <Route
@@ -103,27 +105,22 @@ class App extends React.Component {
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Diet"}/>
                                 <div className="diet">
-                                <p>Diet</p>
                                     <Diet/>
                                 </div>
                             </div>
                           </Route> 
                         <Route path="/settings/preferences">
                             <SideMenu/>
-                                <div className="maincontent" id="mainContent">
+                            <div className="maincontent" id="mainContent">
                                 <Banner title ={"Preferences"}/>
-                                <div className={styles.innerContent}>
-                                    <Preferences/>
-                                </div>
+                                <Preferences/>
                             </div>
                           </Route> 
                         <Route path="/settings">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Settings"}/>
-                                <div className={styles.innerContent}>
-                                    <Settings/>
-                                </div>
+                                <Settings/>
                             </div>
                         </Route>
                         <Route path={["/signup"]}>
@@ -133,11 +130,9 @@ class App extends React.Component {
                         </Route>
                         <Route path="/styleguide">
                             <SideMenu/>
-                            <div className="maincontent" id="mainContent">
+                            <div className="mainHome">
                                 <Banner title ={"Style Guide"}/>
-                                <div className={styles.innerContent}>
-                                    <StyleGuide/>
-                                </div>
+                                <StyleGuide/>
                             </div>
                         </Route>
                         <Route path="/friends">
@@ -153,21 +148,29 @@ class App extends React.Component {
                                 <Banner title ={"Profile"}/>
                                 <div className={styles.innerContent}>
                                     <UserProfile/>
+                                    <Link to="/create">
+                                        <img className="addPostButtonProfile" src ={AddPostButton}></img>
+                                    </Link>
                                 </div>
                             </div>
                         </Route>
-                        <Route path={["/main"]}>
+                        <Route path={["/create"]}>
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
-                                <Banner title ={"Food For Thought"}/>
-                                <div className={styles.innerContent}>
-                                    <div className="container">
-                                        <PostForm refresh={this.state.refreshPosts} />
-                                    </div>
-                                </div>
+                                <Banner title ={"Create"}/>
+                                <CreateAPost/>
                             </div>
                         </Route>
-
+                        <Route path={["/home"]}>
+                            <SideMenu/>
+                            <div className="mainHome">
+                                <Banner title ={"Home"}/>
+                                <Posts/>
+                                <Link to="/create">
+                                    <img className="addPostButtonHome" src ={AddPostButton}></img>
+                                </Link>
+                            </div>
+                        </Route>
                         <Route path={["/login"]}>
                             <div className="maincontent" id="mainContent">
                                 <LoginForm refreshPosts={this.doRefreshPosts} />

@@ -31,11 +31,11 @@
     display: flex;
     margin-top: 20px;
     margin-left: 2%;
-    width: 100%;
     flex-direction: column;
     height: 100%;
     margin-right: 2%;
     margin-left: 200px;
+    position: relative;
     
 }
 .infoContainer{

@@ -6,7 +6,7 @@ import SideMenu from "../atoms/atomComponents/sideMenu"
 const Settings = () => {
     return (
         <div className="settingsContainer">
-            <Link to="/settings/account">
+            <Link to="/settings/account" className="link">
                 <button className="settingsMenuButton">
                     Account
                     <div className="triangle-right"/>
