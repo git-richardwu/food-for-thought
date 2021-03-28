@@ -164,9 +164,7 @@ class App extends React.Component {
                                 <Banner title ={"Home"}/>
                                 <Posts/>
                                 <Link to="/create">
-                                    <button className="button">
-                                        <img className="addPostButton" src ={AddPostButton}></img>
-                                    </button>
+                                    <img className="addPostButton" src ={AddPostButton}></img>
                                 </Link>
                             </div>
                         </Route>

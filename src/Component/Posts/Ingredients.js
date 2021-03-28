@@ -41,7 +41,7 @@ const Ingredients = ({id}) => {
                 <p className="subHeader">Ingredients:</p>
                 <ul>
                     {ingredeints.length != 0 && ingredeints.map(ing => (
-                        <li>{ing}</li>
+                        <li key={ing}>{ing}</li>
                     ))}
                 </ul>
             </div>

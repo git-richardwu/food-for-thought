@@ -42,7 +42,7 @@ const Steps = ({id}) => {
                 <p className="subHeader">Steps:</p>
                 <ol>
                     {steps.length != 0 && steps.map(step => (
-                        <li>{step}</li>
+                        <li key={step}>{step}</li>
                     ))}
                 </ol>
             </div>
