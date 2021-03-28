@@ -5,17 +5,19 @@ import helpIcon from "../../assets/delete.png";
 import commentIcon from "../../assets/comment.svg";
 import Ingredients from "./Ingredients.js";
 import Steps from "./Steps.js";
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from "react-router-dom";
 import PostProfilePicture from "./PostProfilePicture";
 import PostURL from "./PostURL.js"
 import FoodPhoto from "./FoodPhoto";
+import PostTags from "./PostTags.js"
 
 export default class Post extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       showModal: false,
-      comments: this.props.post.commentCount
+      comments: this.props.post.commentCount,
+      redirect: false,
     };
     this.post = React.createRef();
 
@@ -45,29 +47,6 @@ export default class Post extends React.Component {
       return "comments show";
     }
     return "comments hide";
-  }
-
-  deletePost(postID) {
-    var dialogResult = window.confirm("Are you sure you want to delete this post? This is irreverisible!");
-    if (dialogResult){
-        //make the api call to post
-        fetch(process.env.REACT_APP_API_PATH+"/posts/"+postID, {
-            method: "DELETE",
-            headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+sessionStorage.getItem("token")
-            }
-            })
-            .then(
-            result => {
-                this.props.loadPosts();
-            },
-            error => {
-                alert("error!"+error);
-            }
-            );
-    }
- 
   }
 
 
@@ -117,7 +96,7 @@ export default class Post extends React.Component {
         className="deleteIcon"
         alt="Delete Post"
         title="Delete Post"
-        onClick={e => this.deletePost(this.props.post.id)}
+        onClick={e => this.props.deletePost(this.props.post.id, this.props.post.content)}
       />
     );
     }
@@ -141,7 +120,9 @@ export default class Post extends React.Component {
   }
 
   render() {
-
+    if (this.state.redirect){
+        <Redirect to="/home"/>
+    }
     return (
       <div>
         <div
@@ -174,6 +155,7 @@ export default class Post extends React.Component {
                 <FoodPhoto id={this.getFoodPhotoID()}/>
             </div>
             <PostURL link={this.props.post.thumbnailURL}/>
+            <PostTags postID={this.props.post.id}/>
             {this.conditionalDisplay()}
         </div>
       </div>

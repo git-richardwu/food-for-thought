@@ -26,9 +26,11 @@ import Banner from "./Component/atoms/atomComponents/banner";
 import StyleGuide from "./Component/StyleGuide/StyleGuide";
 import PasswordReset from "./Component/PasswordReset.jsx";
 import PostingList from "./Component/PostingList.jsx";
-import Posts from "./Component/Posts/Posts.js"
+import Posts from "./Component/Posts/Posts.js";
+import AddPostButton from "./assets/addPost.svg";
+import CreateAPost from "./Component/Posts/CreateAPost.js";
 
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch, Link } from "react-router-dom";
 import LandingPage from "./Component/LandingPage";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
@@ -149,14 +151,25 @@ class App extends React.Component {
                                 </div>
                             </div>
                         </Route>
+                        <Route path={["/create"]}>
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Create"}/>
+                                <CreateAPost/>
+                            </div>
+                        </Route>
                         <Route path={["/home"]}>
                             <SideMenu/>
                             <div className="mainHome">
                                 <Banner title ={"Home"}/>
                                 <Posts/>
+                                <Link to="/create">
+                                    <button className="button">
+                                        <img className="addPostButton" src ={AddPostButton}></img>
+                                    </button>
+                                </Link>
                             </div>
                         </Route>
-
                         <Route path={["/login"]}>
                             <div className="maincontent" id="mainContent">
                                 <LoginForm refreshPosts={this.doRefreshPosts} />
