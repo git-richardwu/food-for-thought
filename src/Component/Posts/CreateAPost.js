@@ -14,6 +14,8 @@ const CreateAPost = () => {
     const [image, setImage] = useState("");
     const [link, setLink] = useState("");
     const [redirect, setRedirect] = useState(false);
+    const [postTags, setPostTags] = useState([]);
+    const [tag, setTag] = useState("");
     const fileField = document.querySelector('input[type="file"]');
 
     const addStep = () => {
@@ -32,6 +34,23 @@ const CreateAPost = () => {
             setIngredients(add);
             setIngredient("");
         }
+    }
+
+    const addTag = () => {
+        if (tag != "" && !postTags.includes(tag)){
+            if (postTags.length < 11){
+                var add = postTags;
+                add.push(tag);
+                setPostTags(add);
+                setTag("");
+            }else{
+                alert("Only 10 tags are allowed per post.")
+            }
+        }
+    }
+
+    const deleteTag = (tagID) => {
+        setPostTags(postTags.filter(x => x != tagID));
     }
 
     const validatePost = () => {
@@ -144,9 +163,28 @@ const CreateAPost = () => {
                                                                     thumbnailURL: link,
                                                                     type: "post"
                                                                 })
-                                                              })
+                                                              }).then(res => res.json())
                                                               .then(result => {
                                                                 if (result){
+                                                                    console.log(result);
+                                                                    fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+                                                                        method: "POST",
+                                                                        headers: {
+                                                                          'Content-Type': 'application/json',
+                                                                          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                                                                        },
+                                                                        body: JSON.stringify({
+                                                                            postID: result.id,
+                                                                            userID: sessionStorage.getItem("user"),
+                                                                            name: postTags.join("~"),
+                                                                            type: "dietTags"
+                                                                        })
+                                                                      })
+                                                                      .then(result => {
+                                                                        if (result){
+                                                                            setRedirect(true)
+                                                                        }
+                                                                      })
                                                                     setRedirect(true)
                                                                 }
                                                               })
@@ -227,6 +265,20 @@ const CreateAPost = () => {
                 <div>
                     <label className="linkLabel">Link:</label>
                     <input className="linkInput" type="url" value={link} onChange={e => setLink(e.target.value)}/>
+                </div>
+
+                <div>
+                    <label className="linkLabel">Add Diet Tags:</label>
+                    <input className="addTagInput" type="url" value={tag} onChange={e => setTag(e.target.value)} maxLength="16"/>
+                    <button className="addToListButtonTags" onClick={e => addTag()}>Add Tag</button>
+                    <div className="postTagsContainer">
+                        {postTags.map(tag => (
+                            <div key={tag} className="postDietTag">
+                                {tag}
+                                <button className="deleteTag" onClick={e => deleteTag(tag)}>x</button>
+                            </div>
+                        ))}
+                    </div>
                 </div>
 
                 <button className="createButton" onClick={e => createPost()}>Create</button>

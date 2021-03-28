@@ -140,6 +140,34 @@
     box-shadow: inset 0 0px 0px;
 }
 
+.addTagInput{
+    font-size: 14px;
+    font-family: ReemKufi;
+    width: 100px;
+    background-color: #FEFFF6; 
+    border: none;
+    margin-bottom: 30px;
+}
+
+.addToListButtonTags{
+    background-color: #6FD397;
+    margin-left: 20px;
+    border: none;
+    color: black;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-family: ReemKufi;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.deleteTag{
+    background-color: transparent;
+    border: none;
+    float: right;
+    cursor: pointer;
+}
+
 @media screen and (max-width: 850px) {
     .backButtonCreate {
         left:10px;
