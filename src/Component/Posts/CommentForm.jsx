@@ -58,7 +58,7 @@ export default class CommentForm extends React.Component {
           <label>
             Add A Comment to Post {this.props.parent}
             <br />
-            <textarea rows="10" cols="70" onChange={this.myChangeHandler} />
+            <textarea rows="5" cols="120" onChange={this.myChangeHandler} />
           </label>
           <br />
 
