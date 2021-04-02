@@ -17,7 +17,7 @@ const Posts = ({userId}) => {
     }, [])
 
     const fetchPosts = async () => {
-        var url = process.env.REACT_APP_API_PATH+"/posts?sort=newest";
+        var url = process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID=";
         if (userId){
             url += "&authorID="+userId;
         }
