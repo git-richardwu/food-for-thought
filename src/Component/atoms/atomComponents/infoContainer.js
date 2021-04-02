@@ -91,7 +91,7 @@ function InfoContainer({
       <div className={styles.nameContainer}>
         <div className={styles.leftsideOfInfoContainer}>
           <p className={styles.name}>
-            |{name}| @{username}
+            @{username}
           </p>
           <div className={styles.bioAndButtonsContainer}>
             {editBio === false && <p className={styles.bioText}>{bio}</p>}

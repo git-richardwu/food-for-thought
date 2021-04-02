@@ -119,6 +119,10 @@ export default class Post extends React.Component {
         return this.props.post.content.split("~")[3];
   }
 
+    updateProfileID(){
+        sessionStorage.setItem("profileUser", this.props.post.author.id);
+    }
+
   render() {
     if (this.state.redirect){
         <Redirect to="/home"/>
@@ -131,14 +135,13 @@ export default class Post extends React.Component {
             <div className="deletePost">
                 {this.showDelete()}
                 <div className="profilePictureContainer"> 
-                    <Link to="/profile">
-                        {/* need to connect with profile page to get poster's profile*/}
+                    <Link to="/profile" onClick={e => this.updateProfileID()}>
                         <PostProfilePicture id={this.props.post.author.id} />
                     </Link>
                 </div>
                 <div className="postUsername">
-                    <Link to="/profile">
-                        {/* need to connect with profile page to get poster's profile*/}
+                    <Link to="/profile" onClick={e => this.updateProfileID()}>
+                        {sessionStorage.setItem("profileUser", this.props.post.author.id)}
                         {this.props.post.author.username}
                     </Link>
                 </div>

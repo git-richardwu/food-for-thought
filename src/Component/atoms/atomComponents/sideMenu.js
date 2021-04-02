@@ -8,6 +8,12 @@ import styles from "../atomStyles/sideMenu.module.css";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 function SideMenu() {
+
+    const updateProfileID = () =>
+    {
+        sessionStorage.setItem("profileUser", sessionStorage.getItem("user"));
+    }
+
     return ( 
         <div className={styles.sideMenu}>
             <Link to="/">
@@ -24,7 +30,7 @@ function SideMenu() {
                 </button>
             </Link>
             <Link to="/profile">
-                <button className={styles.button}>
+                <button className={styles.button} onClick={e => updateProfileID()}>
                     <img className = {styles.icon } src = {personIcon}></img>
                 </button>
             </Link>
