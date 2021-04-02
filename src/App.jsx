@@ -150,12 +150,12 @@ class App extends React.Component {
                                 <FriendList userid={sessionStorage.getItem("user")} />
                             </div>
                         </Route>
-                        <Route path="/profile">
+                        <Route path="/profile/:userID">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Profile"}/>
                                 <div className={styles.innerContent}>
-                                    <UserProfile/>
+                                    <UserProfile />
                                     <Link to="/create">
                                         <img className="addPostButtonProfile" src ={AddPostButton}></img>
                                     </Link>

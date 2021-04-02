@@ -5,13 +5,14 @@ import ProfilePictureButton from "../atoms/atomComponents/profilePictureButton";
 import InfoContainer from "../atoms/atomComponents/infoContainer";
 import FollowerComponent from "../atoms/atomComponents/followerComponent";
 import ActivityComponent from "../atoms/atomComponents/activityComponent";
+import { BrowserRouter as Router, Redirect, Route, Switch, Link, useParams} from "react-router-dom";
 
 function UserProfile() {
   //need to pull userbio from database and store it in userBio variable
+  const {userID} = useParams();
   const [userBio, editUserBio] = React.useState("");
   const [bioID, setBioID] = React.useState();
   const [artifactID, setArtifactID] =  React.useState(0);
-  const [userID, setUserID] = React.useState(window.sessionStorage.getItem("profileUser"))
   const [url, setURL] = React.useState("");
   const [username, setUsername] = React.useState("");
 
