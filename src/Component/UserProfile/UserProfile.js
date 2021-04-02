@@ -199,7 +199,7 @@ const fetchUser = async () => {
                 {/* <h5>{this.state.url}</h5> 
                 <h5>{this.state.artifactID}</h5> */}
 
-                <button onClick={updateImageURL}>Change Profile Picture</button>
+                {userID === sessionStorage.getItem("user") && <button onClick={updateImageURL}>Change Profile Picture</button>}
                 {/* <ProfilePictureButton name={"Picture Place Holder"} /> */}
               </div>
               
@@ -217,6 +217,7 @@ const fetchUser = async () => {
                 pounds={"pounds go here"}
                 setUserBio = { () => editUserBio()}
                 bioID = {bioID}
+                userID = {userID}
                 />
               </div>
             </div>
