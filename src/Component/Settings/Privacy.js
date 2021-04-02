@@ -44,7 +44,7 @@ const Privacy = () => {
       }
 
     const fetchNumBlockedUsers = async () => {
-        var url = process.env.REACT_APP_API_PATH+"/connections?type=blocked&userID="+sessionStorage.getItem("user");
+        var url = process.env.REACT_APP_API_PATH+"/connections?type=block&status=active&userID="+sessionStorage.getItem("user");
         fetch(url, {
           method: "get",
           headers: {

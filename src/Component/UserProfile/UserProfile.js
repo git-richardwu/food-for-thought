@@ -20,7 +20,7 @@ function UserProfile() {
     })
 
   function fetchProfilePic(){
-    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?ownerID="+userID, {
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=profilePicDisplay&ownerID="+userID, {
       method: "GET",
         headers: new Headers({
           'Content-Type': 'application/json',
