@@ -5,18 +5,21 @@ import ProfilePictureButton from "../atoms/atomComponents/profilePictureButton";
 import InfoContainer from "../atoms/atomComponents/infoContainer";
 import FollowerComponent from "../atoms/atomComponents/followerComponent";
 import ActivityComponent from "../atoms/atomComponents/activityComponent";
+import { BrowserRouter as Router, Redirect, Route, Switch, Link, useParams} from "react-router-dom";
 
 function UserProfile() {
   //need to pull userbio from database and store it in userBio variable
+  const {userID} = useParams();
   const [userBio, editUserBio] = React.useState("");
   const [bioID, setBioID] = React.useState();
   const [artifactID, setArtifactID] =  React.useState(0);
-  const [userID, setUserID] = React.useState(window.sessionStorage.getItem("user"))
-  const [url, setURL] = React.useState("")
+  const [url, setURL] = React.useState("");
+  const [username, setUsername] = React.useState("");
 
     React.useEffect(()=>{
         fetchUserBio();
         fetchProfilePic();
+        fetchUser();
     })
 
   function fetchProfilePic(){
@@ -50,8 +53,8 @@ function UserProfile() {
  
 
   function fetchUserBio(){
-    console.log("User ID " +sessionStorage.getItem("user"))
-    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=bio&ownerID="+sessionStorage.getItem("user"),{
+    console.log("User ID " +userID)
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=bio&ownerID="+userID,{
       method:"get",
       headers:{
         'Content-Type': 'application/json',
@@ -164,6 +167,29 @@ function UserProfile() {
     }
   }
 }
+
+const fetchUser = async () => {
+    var url = process.env.REACT_APP_API_PATH+"/users/"+userID;
+    fetch(url, {
+      method: "get",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      },
+
+    })
+      .then(res => res.json())
+      .then(
+        result => {
+          if (result) {
+              setUsername(result.username);
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  }
     return (
           <div >
             {/* Pic and info container */}
@@ -180,8 +206,8 @@ function UserProfile() {
               {/* User info container */}
               <div className={styles.infoContainer}>
               <InfoContainer
-                name={"Name Place Holder"}
-                username={"Username Placeholders"}
+                name={""}
+                username={username}
                 bio={userBio}
                 dietTag1={"dietTag1"}
                 dietTag2={"dietTag2"}
@@ -204,7 +230,7 @@ function UserProfile() {
                   "{Number of people current user follows goes here}"
                 }
               />
-              <ActivityComponent activity={"{post goes here}"}/>
+              <ActivityComponent userID={userID}/>
             </div>
           </div>
     );
