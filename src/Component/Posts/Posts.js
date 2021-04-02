@@ -10,12 +10,11 @@ const Posts = ({userId}) => {
 
     useEffect(() => {
         const getPosts = async () => {
-            const posts = await fetchPosts()
-            setPosts(posts)
+            await fetchPosts();
         }
         getPosts();
-    }, [])
-
+    }, [userId])
+    
     const fetchPosts = async () => {
         var url = process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID=";
         if (userId){
@@ -33,7 +32,6 @@ const Posts = ({userId}) => {
           .then(
             result => {
               if (result) {
-                  console.log(result[0]);
                   setPosts(result[0]);
                   setLoading(false);
               }
