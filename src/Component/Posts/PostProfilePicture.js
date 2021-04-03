@@ -6,31 +6,40 @@ const PostProfilePicture = ({id}) => {
 
     useEffect(() => {
         const getPicture = async () => {
-            const picture = await fetchProfilePicture()
-            setSrc(picture)
+            await fetchProfilePicture();
         }
         getPicture();
     }, [])
 
     const fetchProfilePicture = async () =>{
-        // TODO: profile picture implement needed
-        return "";
+        fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=profilePicDisplay&ownerID="+id, {
+            method: "GET",
+              headers: new Headers({
+                'Content-Type': 'application/json',
+              }),
+          })
+          .then(response => response.json())
+          .then(result => {
+                if(result[1] == 0){
+                    setSrc("https://i.redd.it/32ztztrp4m541.jpg")
+                }
+                else {
+                    setSrc(result[0][0].url)
+                }
+          })
     }
 
     if (src){
-        <div>
-            <button className="profileButton">
-                <img src="" alt="profile picture"></img>
-            </button>
-        </div>
-    }else{      
         return (
             <div>
-                <button className="profileButton">
-                    <img src={src} alt="profile picture"></img>
-                </button>
+                <img className="profileButton" src={src} alt="profile picture"></img>
             </div>
-    )
+        )
+    }
+    else{
+        return (
+            <div/>
+        )
     }
 }
 

@@ -21,8 +21,6 @@ export default class PostingList extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("PrevProps "+prevProps.refresh);
-    console.log("Props "+this.props.refresh);
     if (prevProps.refresh !== this.props.refresh){
       this.loadPosts();
     }

@@ -40,7 +40,7 @@ export default class PasswordReset extends React.Component {
 
     const email = this.state.email
 
-    if (email == "" || (!email.includes("@") || !email.includes(".com"))){
+    if (email == "" || (!email.includes("@"))){
         alert("Please enter a valid email!")
         return;
     }
