@@ -61,7 +61,6 @@ export default class LoginForm extends React.Component {
       .then(res => res.json())
       .then(
         result => {
-          console.log("Testing");
           if (result.userID) {
 
             // set the auth token and user ID in the session state

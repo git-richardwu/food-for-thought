@@ -66,11 +66,8 @@ function UserProfile() {
         if(result[0].length != 0){
           if(result[0][0].type != null){
                 let bio =  result[0][0].type;
-                console.log("Bio from user profile: " +bio);
                 editUserBio(bio);
-                console.log("Bio id: " + result[0][0].id)
                 setBioID(result[0][0].id);
-                // console.log("This is result: " + result[0][1].ownerID)
           }
               }else{
                 let bio = "Please add a bio."
@@ -135,9 +132,6 @@ function UserProfile() {
           })
       }).then(response => response.json())
       .then(json => {
-            console.log(json)
-            console.log(json.id)
-            console.log(json.url)
             setArtifactID(json.id)
             setURL(json.url)
             return;
@@ -159,8 +153,6 @@ function UserProfile() {
         })
     }).then(response => response.json())
     .then(json => {
-          console.log(json)
-          console.log(json.url)
           setURL(json.url)
           return;
       })
@@ -199,7 +191,7 @@ const fetchUser = async () => {
                 {/* <h5>{this.state.url}</h5> 
                 <h5>{this.state.artifactID}</h5> */}
 
-                <button onClick={updateImageURL}>Change Profile Picture</button>
+                {userID === sessionStorage.getItem("user") && <button onClick={updateImageURL}>Change Profile Picture</button>}
                 {/* <ProfilePictureButton name={"Picture Place Holder"} /> */}
               </div>
               
@@ -217,6 +209,7 @@ const fetchUser = async () => {
                 pounds={"pounds go here"}
                 setUserBio = { () => editUserBio()}
                 bioID = {bioID}
+                userID = {userID}
                 />
               </div>
             </div>

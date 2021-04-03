@@ -45,7 +45,7 @@ export default class SignUp extends React.Component {
 
         var errorStatusEmail =  false;
 
-        if(email == "" || !email.includes("@") || (!email.includes(".com"))){
+        if(email == "" || !email.includes("@")){
            alert("Please enter a valid email!")
            return;
         }
