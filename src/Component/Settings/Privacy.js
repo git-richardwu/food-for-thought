@@ -18,7 +18,7 @@ const Privacy = () => {
     const fetchPrivacySetting = async () => {
         var url = process.env.REACT_APP_API_PATH+"/user-preferences?name=privacy&userID="+sessionStorage.getItem("user");
         fetch(url, {
-          method: "get",
+          method: "GET",
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+sessionStorage.getItem("token")
@@ -46,7 +46,7 @@ const Privacy = () => {
     const fetchNumBlockedUsers = async () => {
         var url = process.env.REACT_APP_API_PATH+"/connections?type=block&status=active&userID="+sessionStorage.getItem("user");
         fetch(url, {
-          method: "get",
+          method: "GET",
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer '+sessionStorage.getItem("token")
