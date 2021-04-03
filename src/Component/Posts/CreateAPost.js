@@ -21,8 +21,7 @@ const CreateAPost = () => {
 
     const addStep = () => {
         if (step != ""){
-            var add = steps;
-            add.push(step);
+            var add = step.split("\n").filter((s) => s != "");
             setSteps(add);
             setStep("");
         }
@@ -30,8 +29,7 @@ const CreateAPost = () => {
 
     const addIngredient = () => {
         if (ingredient != ""){
-            var add = ingredients;
-            add.push(ingredient);
+            var add = ingredient.split("\n").filter((i) => i != "");
             setIngredients(add);
             setIngredient("");
         }
@@ -237,7 +235,7 @@ const CreateAPost = () => {
                 <div className="createContent">
                     <div className="createIngredients">
                         <label className="textAreaHeader">Ingredients:</label>
-                        <button className="addToListButton" onClick={e => addIngredient()}>Add Ingredient</button>
+                        <button className="addToListButton" onClick={e => addIngredient()}>Add Ingredients</button>
                         <textarea className="createTextArea" type="text" value={ingredient} onChange={e => setIngredient(e.target.value)}/>
                         <ul>
                             {ingredients.map(ing => (
@@ -247,7 +245,7 @@ const CreateAPost = () => {
                     </div>
                     <div className="createSteps">
                         <label className="textAreaHeader">Steps:</label>
-                        <button className="addToListButton" onClick={e => addStep()}>Add Step</button>
+                        <button className="addToListButton" onClick={e => addStep()}>Add Steps</button>
                         <textarea className="createTextArea" type="text" value={step} onChange={e => setStep(e.target.value)}/>
                         <ol>
                             {steps.map(step => (
@@ -268,7 +266,7 @@ const CreateAPost = () => {
 
                 <div>
                     <label className="linkLabel">Add Diet Tags:</label>
-                    <input className="addTagInput" type="url" value={tag} onChange={e => setTag(e.target.value)} maxLength="16"/>
+                    <input className="addTagInput" type="url" value={tag} onChange={e => setTag(e.target.value)} maxLength="14"/>
                     <button className="addToListButtonTags" onClick={e => addTag()}>Add Tag</button>
                     <div className="postTagsContainer">
                         {postTags.map(tag => (
