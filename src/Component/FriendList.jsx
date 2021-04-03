@@ -47,21 +47,22 @@ export default class FriendList extends React.Component {
   updateConnection(id, status){
     //make the api call to the user controller
     fetch(process.env.REACT_APP_API_PATH+"/connections/"+id, {
-      method: "PATCH",
+      method: "DELETE",
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       },
-      body: JSON.stringify({
-        status: status
-      })
+      // body: JSON.stringify({
+      //   status: status
+      // })
     })
-      .then(res => res.json())
+      // .then(res => res.json())
       .then(
         result => {
-          this.setState({
-            responseMessage: result.Status
-          });
+          // this.setState({
+          //   responseMessage: result.Status
+          // });
+          alert("You have unfollowed this user.")
           this.loadFriends();
         },
         error => {
@@ -82,16 +83,16 @@ export default class FriendList extends React.Component {
         onClick={e => this.updateConnection(id, "blocked")}
       />
     )
-    }else{
-      return(
-      <img
-        src={unblockIcon}
-        className="sidenav-icon deleteIcon"
-        alt="Unblock User"
-        title="Unblock User"
-        onClick={e => this.updateConnection(id, "active")}
-      />
-    )
+    // }else{
+    //   return(
+    //   <img
+    //     src={unblockIcon}
+    //     className="sidenav-icon deleteIcon"
+    //     alt="Unblock User"
+    //     title="Unblock User"
+    //     onClick={e => this.updateConnection(id, "active")}
+    //   />
+    // )
     }
   }
 
