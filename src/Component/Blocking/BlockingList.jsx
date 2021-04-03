@@ -17,7 +17,7 @@ export default class BlockingList extends React.Component {
 
   loadBlock() {
 
-    fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user"), {
+    fetch(process.env.REACT_APP_API_PATH+"/connections?type=block&status=active&userID="+sessionStorage.getItem("user"), {
       method: "GET",
       headers: {
         'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export default class BlockingList extends React.Component {
           //   responseMessage: result.Status
           // });
           result => {
-          alert("User Unblocked! Please Refresh Page!");
+          alert("User Unblocked! The page will refresh");
           this.loadBlock();
         }
         // },

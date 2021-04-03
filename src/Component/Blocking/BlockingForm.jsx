@@ -1,6 +1,7 @@
 import React from "react";
 import "../../App.css";
 import Autocomplete from "../Autocomplete.jsx"
+import BlockingList from "./BlockingList.jsx"
 
 export default class BlockingForm extends React.Component {
   constructor(props) {
@@ -8,8 +9,9 @@ export default class BlockingForm extends React.Component {
     this.state = {
       blockedname: "",
       // userid is a number
-      blockedid: 0,
+      blockedid: "",
     //   responseMessage: "",
+    // users are all the users available on the server
       users: []
     };
     this.fieldChangeHandler.bind(this);
@@ -23,10 +25,48 @@ export default class BlockingForm extends React.Component {
   }
 
   selectAutocomplete(blockedid) {
-      this.setState({
-        blockedid: blockedid
-      })
-      console.log("Block User: "+blockedid)
+    // const [BlockedUsers, setNumBlockedUsers] = useState(0);
+    // let connections = ""
+    fetch(process.env.REACT_APP_API_PATH+"/connections?type=block&status=active&userID="+sessionStorage.getItem("user")+"&connectedUserID="+blockedid, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+      }
+     })
+      .then(res => res.json())
+      .then(
+        result => {
+          if (result) {
+              // alert(result[0][0])
+              // connections = (result[0]).users
+              // alert(result[1])
+              console.log(result);
+              if (blockedid != sessionStorage.getItem("user") && result[1] == 0) {
+                this.setState({
+                  blockedid: blockedid
+                })
+                console.log("Block User: "+blockedid)
+              };
+          }
+        },
+        // error => {
+        //   console.log(error);
+        //   if (blockedid != sessionStorage.getItem("user")) {
+        //     this.setState({
+        //       blockedid: blockedid
+        //     })
+        //     console.log("Block User: "+blockedid)
+        //   };
+        // }
+      );
+    // alert(connections.toString())
+    // if (blockedid != sessionStorage.getItem("user")) {
+    //   this.setState({
+    //     blockedid: blockedid
+    //   })
+    //   console.log("Block User: "+blockedid)
+    // }
   }
 
   componentDidMount() {
@@ -67,7 +107,7 @@ export default class BlockingForm extends React.Component {
     console.log(this.state.blockedid);
     console.log(sessionStorage.getItem("token"))
 
-
+    
     //make the api call to the user controller
     fetch(process.env.REACT_APP_API_PATH+"/connections", {
       method: "POST",
@@ -89,11 +129,14 @@ export default class BlockingForm extends React.Component {
           this.setState({
             // responseMessage: result.Status
           });
+          // alert(" User has been blocked, please refresh page.")
+          window.location.reload()
         },
         error => {
           alert("error!");
         }
       );
+    
   };
 
   render() {

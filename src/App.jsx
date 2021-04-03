@@ -90,7 +90,7 @@ class App extends React.Component {
                             <FriendList userid={sessionStorage.getItem("user")} />
                             </div>
                         </Route> */}
-                        <Route path="/blocked">
+                        <Route path="/settings/privacy/blockedUsers">
                             <div>
                             <p>Blocked Users</p>
                             <BlockingForm userid={sessionStorage.getItem("user")} />
