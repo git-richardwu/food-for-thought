@@ -11,14 +11,19 @@ function UserProfile() {
   const [bioID, setBioID] = React.useState();
   const [weightGoal, setWeightGoal] = React.useState("")
   const [weightGoalID, setWeightGoalID] = React.useState(-1)
+  const [calorieID, setCalorieID] = React.useState(-1)
+  const [calorieGoal, setCalorieGoal] = React.useState("")
+  fetchWeightGoal();
+  fetchCalorieGoal();
 
  React.useEffect(()=>{
-    fetchUserBio();
-    fetchWeightGoal();
+
+     fetchUserBio();
+     
  })
  
 
-  function fetchUserBio(){
+   function fetchUserBio(){
     console.log("User ID " +sessionStorage.getItem("user"))
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=bio&ownerID="+sessionStorage.getItem("user"),{
       method:"get",
@@ -53,7 +58,7 @@ function UserProfile() {
 
   }
   
-  function fetchWeightGoal() {
+   function fetchWeightGoal() {
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=weightGoal&ownerID="+sessionStorage.getItem("user"),{
       method: "get",
         headers: {
@@ -80,11 +85,46 @@ function UserProfile() {
           }
         },
         (error) => {
+          console.log(error);
           alert("Error occurred when trying to retrieve weight goal");
         }
       );
   }      
-    
+  
+   function fetchCalorieGoal (){
+
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=calorieGoal&ownerID="+sessionStorage.getItem("user"),{
+      method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          if (result[0].length != 0) {
+            result[0].forEach(function (artifacts) {
+              if (artifacts.category == "calorieGoal") {
+                let goal = artifacts.type;
+                console.log("Goal from user preferences: " + goal);
+                setCalorieGoal(goal);
+                console.log("Calorie goal id: " + artifacts.id);
+                setCalorieID(artifacts.id);
+                return;
+              } 
+            });
+          } else {
+            setCalorieID(-1);
+          }
+        },
+        (error) => {
+          alert("Error occurred when trying to retrieve calorie goal");
+        }
+      );
+
+  }
 
   return (
         <div >
@@ -103,7 +143,7 @@ function UserProfile() {
                 dietTag2={"dietTag2"}
                 dietTag3={"dietTag3"}
                 dietTag4={"dietTag4"}
-                calories={"calories go here"}
+                calories={calorieGoal}
                 pounds={weightGoal}
                 setUserBio = { () => editUserBio()}
                 bioID = {bioID}
