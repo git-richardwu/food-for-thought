@@ -13,8 +13,14 @@ function UserProfile() {
   const [weightGoalID, setWeightGoalID] = React.useState(-1)
   const [calorieID, setCalorieID] = React.useState(-1)
   const [calorieGoal, setCalorieGoal] = React.useState("")
+  const [dietTag1, setDietTag1] = React.useState("")
+  const [dietTag2, setDietTag2] = React.useState("")
+  const [dietTag3, setDietTag3] = React.useState("")
+  const [dietTag4, setDietTag4] = React.useState("")
+
   fetchWeightGoal();
   fetchCalorieGoal();
+  fetchDietTags();
 
  React.useEffect(()=>{
 
@@ -92,7 +98,6 @@ function UserProfile() {
   }      
   
    function fetchCalorieGoal (){
-
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=calorieGoal&ownerID="+sessionStorage.getItem("user"),{
       method: "get",
         headers: {
@@ -112,11 +117,8 @@ function UserProfile() {
                 setCalorieGoal(goal);
                 console.log("Calorie goal id: " + artifacts.id);
                 setCalorieID(artifacts.id);
-                return;
               } 
             });
-          } else {
-            setCalorieID(-1);
           }
         },
         (error) => {
@@ -126,6 +128,52 @@ function UserProfile() {
 
   }
 
+  function fetchDietTags(){
+
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=dietTag&ownerID="+sessionStorage.getItem("user"),{
+      method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          if (result[0].length != 0) {
+            result[0].forEach(function (artifacts) {
+              if (artifacts.category == "dietTag"){
+                if(artifacts.url == "1"){
+                  let dietTag = artifacts.type;
+                  console.log("Goal from user preferences: " + dietTag);
+                  setDietTag1(dietTag);
+                }
+                if(artifacts.url == "2"){
+                  let dietTag = artifacts.type;
+                  console.log("Goal from user preferences: " + dietTag);
+                  setDietTag2(dietTag);
+                }
+                if(artifacts.url == "3"){
+                  let dietTag = artifacts.type;
+                  console.log("Goal from user preferences: " + dietTag);
+                  setDietTag3(dietTag);
+                }
+                if(artifacts.url == "4"){
+                  let dietTag = artifacts.type;
+                  console.log("Goal from user preferences: " + dietTag);
+                  setDietTag4(dietTag);
+                }
+              } 
+            });
+          }
+        },
+        (error) => {
+          alert("Error occurred when trying to set diet tags");
+        }
+      );
+
+  }
   return (
         <div >
           {/* Pic and info container */}
@@ -139,10 +187,10 @@ function UserProfile() {
                 name={"Name Place Holder"}
                 username={"Username Placeholders"}
                 bio={userBio}
-                dietTag1={"dietTag1"}
-                dietTag2={"dietTag2"}
-                dietTag3={"dietTag3"}
-                dietTag4={"dietTag4"}
+                dietTag1={dietTag1}
+                dietTag2={dietTag2}
+                dietTag3={dietTag3}
+                dietTag4={dietTag4}
                 calories={calorieGoal}
                 pounds={weightGoal}
                 setUserBio = { () => editUserBio()}
