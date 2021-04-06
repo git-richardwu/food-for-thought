@@ -276,14 +276,29 @@
 import React,{useState} from 'react';
 import "./Diet.css"
 
+
+
 export default class Diet extends React.Component {
+    onButtonClickHandler = () => {
+        this.setState({ showMessage: !this.state.showMessage });
+      };
+
     constructor(props) {
       super(props);
       this.state = {
-          tags: ""
+          tags: "",
+          showMessage: false
       };
       this.fieldChangeHandler.bind(this);
     }
+    // toggleText(e) {
+    //     var text = document.getElementById("demo");
+    //     if (text.style.display === "none") {
+    //       text.style.display = "block";
+    //     } else {
+    //       text.style.display = "none";
+    //     }
+    //   }
 
     componentDidMount() {
         // TODO: add GET here setting this.state.tags
@@ -297,8 +312,18 @@ export default class Diet extends React.Component {
                 this.setState({
                     tags: value
                   });
+            }
+            // else if(this.state.tags == "Other"){
+            //         var text = React.findDOMNode(this.ref.tag).value;
+            //         if (text.style.display === "none") {
+            //           text.style.display = "block";
+            //         } else {
+            //           text.style.display = "none";
+            //         }
                 
-            }else{
+
+            // }
+            else{
                 var updated = this.state.tags + ", " + value
                 this.setState({
                     tags: updated
@@ -306,6 +331,7 @@ export default class Diet extends React.Component {
             }
         }
       }
+      
 
     render() {
         return (
@@ -316,11 +342,21 @@ export default class Diet extends React.Component {
                         <button onClick={e => this.fieldChangeHandler("Vegetarian", e)}>Vegetarian</button>
                         <button onClick={e => this.fieldChangeHandler("Vegan", e)}>Vegan</button>
                         <button onClick={e => this.fieldChangeHandler("Pescatarian", e)}>Pescatarian</button>
-                        {/* add more preferences */}
+                        <button onClick={e => this.fieldChangeHandler("Keto", e)}>Keto</button>
+                        <button onClick={e => this.fieldChangeHandler("Pizza", e)}>Pizza</button>
+                        {/* <button onClick={e => this.fieldChangeHandler("Other", e)}>Other</button> */}
+                        {/* <button onclick={this.onButtonClickHandler}>Other</button> */}
+                        {/* <button onclick={this.toggleText()}>Other</button> */}
+                        {/* {this.state.showMessage && <p>You would like to add: "<input type="text"></input>" as a Diet Tag</p>} */}
+
+                     {/* add more preferences */}
                     </div>
                 </div>
 
                 <p className="tags">You selected "{this.state.tags}" as a Diet Tag</p>
+                <p>You would like to add: "<input type="text"></input>" as a Diet Tag <button>Submit</button></p>
+                {/* <p id='demo' style={{display: "none"}} ref = "tag">Hello Javascript</p>      */}
+
             </div>
         );
     }
