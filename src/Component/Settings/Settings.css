@@ -177,7 +177,108 @@
     display: table;
     clear: both;
   }
+
+.privacyContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #FEFFF6;
+    margin-top: 10%;
+}
+
+.numBlock{
+    float: right;
+    margin-right: 20px;
+}
+
+.privacy{
+    width: 550px;
+}
+
+.privacyLabel{
+    text-align: left;
+    font-size: 22px;
+    font-family: ReemKufi;
+    background-color: #6FD397;
+    border: none;
+    color: black;
+    font-weight: bolder;
+    padding: 10px 32px
+}
+
+.privacySubLabel{
+    text-align: left;
+    font-size: 14px;
+    font-family: ReemKufi;
+    color: black;
+}
+
+/* Toggle switch from https://www.w3schools.com/howto/howto_css_switch.asp */
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    float: right;
+    width: 60px;
+    height: 34px;
+  }
   
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .2s;
+    transition: .2s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .2s;
+    transition: .2s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
 @media screen and (max-width: 850px) {
     .col-25, .col-75, input[type=submit] {
       width: 100%;
@@ -217,6 +318,28 @@
     .settingsMenuButton {
         font-size: 18px;
         width: 250px;
+    }
+
+    .privacyContainer {
+        margin-top: 30%;
+    }
+
+    .numBlock{
+        margin-right: 10px;
+    }
+    
+    .privacy{
+        width: 250px;
+    }
+    
+    .privacyLabel{
+        padding: 10px 10px;
+        font-size: 18px;
+    }
+    
+    .privacySubLabel{
+        margin-top: 12px;
+        font-size: 12px;
     }
 }
 
