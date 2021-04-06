@@ -3,6 +3,7 @@ import "../App.css";
 import CommentForm from "./CommentForm.jsx";
 import helpIcon from "../assets/delete.png";
 import commentIcon from "../assets/comment.svg";
+import PostingList from "./PostingList.jsx";
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -60,6 +61,49 @@ export default class Post extends React.Component {
       );
   }
 
+  resharePost (postid, parentID, text) {
+
+   
+
+      //keep the form from actually submitting via HTML - we want to handle it in react
+      // event.preventDefault();
+      console.log("THIS IS THE POST ID:"+  postid)
+      console.log("THIS IS THE Parent ID:"+  parentID)
+      // return;
+      //make the api call to post
+      fetch(process.env.REACT_APP_API_PATH+"/posts", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        },
+        body: JSON.stringify({
+          parentID: parentID,
+          content: text,
+          type: "post",
+          thumbnailURL: "",
+          authorID: sessionStorage.getItem("user"),
+
+        })
+      })
+        .then(res => res.json())
+        .then(
+          result => {
+            console.log("made it this far2");
+            // once a post is complete, reload the feed
+            this.props.loadPosts()
+          },
+          error => {
+            console.log("made it this far3");
+
+            // alert("error!");
+            alert(error)
+          }
+        );
+    
+
+  }
+
 
   // we only want to display comment information if this is a post that accepts comments
   conditionalDisplay() {
@@ -83,6 +127,16 @@ export default class Post extends React.Component {
               onClick={e => this.showModal()}
               alt="View Comments"
             />
+             {/* <form onSubmit={ () => this.resharePost(this.props.post.id, this.props.parentid)}>
+             <input type="submit" value="Reshare" />
+             </form> */}
+            <button onClick={() =>{
+              console.log("This is post id: " +this.props.post.id )
+              console.log("This is post: " +this.props.post )
+              console.log("This is post type: " +this.props.type )
+
+              this.resharePost(this.props.post.id, this.props.parentid, this.props.post.content)}}>Reshare</button>
+
           </div>
           <div className={this.showHideComments()}>
             <CommentForm
