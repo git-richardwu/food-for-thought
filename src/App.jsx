@@ -12,6 +12,7 @@ import LoginForm from "./Component/LoginForm.jsx";
 import Profile from "./Component/Settings/AccountSettings.jsx";
 import Preferences from "./Component/Settings/Preferences.js"
 import Diet from "./Component/Diet.jsx"
+import Allergies from "./Component/Allergies.jsx"
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
@@ -108,6 +109,16 @@ class App extends React.Component {
                                 </div>
                             </div>
                           </Route> 
+                        <Route path="/settings/preferences/allergies">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Allergies"}/>
+                                <div className="Allergies">
+                                <p>Allergies</p>
+                                    <Allergies/>
+                                </div>
+                            </div>
+                          </Route>                           
                         <Route path="/settings/preferences">
                             <SideMenu/>
                                 <div className="maincontent" id="mainContent">
