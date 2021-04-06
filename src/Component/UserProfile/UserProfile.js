@@ -9,12 +9,15 @@ function UserProfile() {
   //need to pull userbio from database and store it in userBio variable
   const [userBio, editUserBio] = React.useState("");
   const [bioID, setBioID] = React.useState();
+  const [followingCount, setFollowCount] = React.useState(0);
+  const [followerCount, setFollowerCount] = React.useState(0);
 
  React.useEffect(()=>{
     fetchUserBio();
+    fetchFollowingCount();
+    fetchFollowerCount();
  })
- 
-
+  
   function fetchUserBio(){
     console.log("User ID " +sessionStorage.getItem("user"))
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=bio&ownerID="+sessionStorage.getItem("user"),{
@@ -64,6 +67,32 @@ function UserProfile() {
       );
 
   }
+
+  function fetchFollowingCount(){
+    fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user"),{
+      method: "GET",
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),        
+    }).then(response => response.json())
+    .then(json => {
+        // console.log(json)
+        setFollowCount(json[1])
+      })
+  }
+
+  function fetchFollowerCount(){
+    fetch(process.env.REACT_APP_API_PATH+"/connections?connectedUserID="+sessionStorage.getItem("user"),{
+      method: "GET",
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),        
+    }).then(response => response.json())
+    .then(json => {
+        console.log(json)
+        setFollowerCount(json[1])
+      })
+  }
           
     
 
@@ -96,10 +125,8 @@ function UserProfile() {
           <div className={styles.followAndActivityContainer}>
             <FollowerComponent
             
-              numOfFollowers={"{Number of followers go here}"}
-              numOfFollowing={
-                "{Number of people current user follows goes here}"
-              }
+              numOfFollowers={followerCount}
+              numOfFollowing={followingCount}
             />
             <ActivityComponent activity={"{post goes here}"}/>
           </div>
