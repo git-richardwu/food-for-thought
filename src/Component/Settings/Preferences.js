@@ -7,9 +7,13 @@ const Preferences = () => {
   const [weightGoal, setWeightGoal] = React.useState();
   const [weightGoalID, setWeightGoalID] = React.useState(-1);
   const [weightGoalButton, pressedWeightGoalButton] = React.useState(false)
+  const [calorieGoal, setCalorieGoal] = React.useState();
+  const [calorieGoalID, setCalorieGoalID] = React.useState(-1);
+  const [calorieGoalButton, pressedCalorieGoalButton] = React.useState(false)
 
   React.useEffect(() => {
     fetchWeightGoal();
+    fetchCalorieGoal();
   });
 
   function fetchWeightGoal() {
@@ -24,7 +28,7 @@ const Preferences = () => {
       .then((res) => res.json())
       .then(
         (result) => {
-          if (result[0].length != 0) {
+          if (result[0].length !== 0) {
             result[0].forEach(function (artifacts) {
               if (artifacts.category == "weightGoal") {
                 let goal = artifacts.type;
@@ -40,6 +44,38 @@ const Preferences = () => {
         },
         (error) => {
           alert("Error occurred when trying to retrieve weight goal");
+        }
+      );
+  }
+
+  function fetchCalorieGoal() {
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=weightGoal&ownerID="+sessionStorage.getItem("user"),{
+      method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          if (result[0].length !== 0) {
+            result[0].forEach(function (artifacts) {
+              if (artifacts.category == "calorieGoal") {
+                let calorie = artifacts.type;
+                console.log("Goal from user preferences: " + calorie);
+                setCalorieGoal(calorie);
+                console.log("Calorie goal id: " + artifacts.id);
+                setCalorieGoalID(artifacts.id);
+              } 
+            });
+          } else {
+            setCalorieGoalID(-1);
+          }
+        },
+        (error) => {
+          alert("Error occurred when trying to retrieve calorie goal");
         }
       );
   }
@@ -104,6 +140,66 @@ const Preferences = () => {
 
 
     }
+    async function submitCalorieGoal(calorie){
+      //if calorieGoalID == -1 do a post, otherwise do a patch
+      await setCalorieGoal(calorie)
+      console.log("Goal in submit func(): " + calorie)
+      console.log("This is calorie goal: hdhnd " + calorieGoal)
+      console.log("This is the userID " + sessionStorage.getItem("user"))
+      if (calorieGoalID === -1){
+  
+        fetch(process.env.REACT_APP_API_PATH +"/user-artifacts", {
+          method:"POST",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': "Bearer " + sessionStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            "ownerID": sessionStorage.getItem("user"),
+            "category": "calorieGoal",
+            "type": calorie,
+            "url": "string",
+          }),
+        })
+          .then((res) => res.json())
+          .then(
+            (result) => {
+              console.log("This is the result:1 " + result);
+            },
+    
+            (error) => {
+              alert("errror");
+            }
+          );
+      }else{
+        fetch(
+        process.env.REACT_APP_API_PATH +"/user-artifacts/"+calorieGoalID,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': "Bearer " + sessionStorage.getItem("token"),
+          },
+          body: JSON.stringify({
+            "type": calorie,
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then(
+          (result) => {
+            console.log("This is the result:2 " + result.Status);
+          },
+  
+          (error) => {
+            alert("errror");
+          }
+        );
+    }
+  
+  
+  
+      }
   
   return (
     <div>
@@ -137,7 +233,6 @@ const Preferences = () => {
                <input className="inputBox" type = "number" id="weightGoal"/> 
           }
         </div>
-          
 
         <div className="setWeightGoalButtonContainer">
         {weightGoalButton === false &&
@@ -155,7 +250,36 @@ const Preferences = () => {
         }
 
 
+        <div className="calorieAndValue">
+          <div className="calorieBox">Calorie Goal:</div>
+          
+          {calorieGoalButton === false &&
+          <div className="calorieText">{calorieGoal}</div>
+          }
+          {calorieGoalButton === true &&
+               <input className="inputBox" type = "number" id="calorieGoal"/> 
+          }
         </div>
+          
+
+        </div> 
+        <div className="setCalorieGoalButtonContainer">
+        {calorieGoalButton === false &&
+          <button className="setCalorieGoalButton" onClick={()=>{
+              pressedCalorieGoalButton(true)
+          }}>Submit Calorie goal</button>
+        }
+        {calorieGoalButton === true &&
+          <button className="setCalorieGoalButton" onClick={ async ()=>{
+            let calorie = document.getElementById("calorieGoal").value + " calories per day"
+            await submitCalorieGoal(calorie)
+            console.log(document.getElementById("calorieGoal").value)
+            pressedCalorieGoalButton(false)
+          }}>Submit Calorie Goal</button>
+        }
+
+
+        </div> 
       </div>
     </div>
   );

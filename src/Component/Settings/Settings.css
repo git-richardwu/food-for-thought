@@ -244,6 +244,58 @@
   font-family: ReemKufi;
 }
 
+.calorieAndValue{
+  display: flex;
+  flex-direction: row;
+  /* padding-right: 10px; */
+  /* background-color: green; */
+  width: fit-content;
+  height: fit-content;
+ 
+
+}
+.calorieBox{
+  background-color: #6FD397;
+  width: fit-content;
+  font-size: 22px;
+  padding: 10px 32px;
+  font-family: ReemKufi;
+  font-weight: bolder;
+  border-radius: 4px;
+  margin-top: 30px;
+  height: fit-content;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.calorieText{
+  width: fit-content;
+  font-size: 22px;
+  padding: 10px 32px;
+  font-family: ReemKufi;
+  font-weight: bolder;
+  border-radius: 4px;
+  margin-top: 30px;
+  height: fit-content;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  
+}
+
+.setCalorieGoalButtonContainer{
+  height: 100%;
+  width: 50%;
+  margin-top: 32px;
+}
+
+.setCalorieGoalButton{
+  font-size: 20px;
+  font-family: ReemKufi;
+}
+
+
 .inputBox{
   font-size: 20px;
   font-family: ReemKufi;
