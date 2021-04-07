@@ -162,6 +162,7 @@ class App extends React.Component {
                                 </div>
                             </div>
                         </Route>
+
                         <Route path={["/create"]}>
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
