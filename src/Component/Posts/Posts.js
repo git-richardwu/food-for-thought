@@ -10,14 +10,13 @@ const Posts = ({userId}) => {
 
     useEffect(() => {
         const getPosts = async () => {
-            const posts = await fetchPosts()
-            setPosts(posts)
+            await fetchPosts();
         }
         getPosts();
-    }, [])
-
+    }, [userId])
+    
     const fetchPosts = async () => {
-        var url = process.env.REACT_APP_API_PATH+"/posts?sort=newest";
+        var url = process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID=";
         if (userId){
             url += "&authorID="+userId;
         }
@@ -31,10 +30,13 @@ const Posts = ({userId}) => {
         })
           .then(res => res.json())
           .then(
-            result => {
+            async result => {
               if (result) {
-                  console.log(result[0]);
-                  setPosts(result[0]);
+                  if (userId){
+                    setPosts(result[0]);
+                  }else{
+                    await setPostsForHomepage(result[0]);
+                  }
                   setLoading(false);
               }
             },
@@ -44,6 +46,130 @@ const Posts = ({userId}) => {
               return [];
             }
           );
+      }
+
+    const setPostsForHomepage = async (allPosts) => {
+        var postsToAdd = [];
+        for (var i = 0; i < allPosts.length; i++){
+            if (allPosts[i].author.id.toString() === sessionStorage.getItem("user")){
+                // add own posts
+                postsToAdd.push(allPosts[i]);
+            }else{
+                if (await isFollowing(allPosts[i].author.id) === true){
+                    if (await isPrivate(allPosts[i].author.id) === true){
+                        if (await isFollower(allPosts[i].author.id) === true){
+                            // add if you follow author, author follows you, and author is private
+                            postsToAdd.push(allPosts[i]);
+                        }
+                    }else{
+                        // add post if following and author is not private
+                        postsToAdd.push(allPosts[i]);
+                    }
+                }
+            }
+        }
+
+        setPosts(postsToAdd);
+    }
+
+    async function isFollowing(connectedUserID) {
+        var retVal = false;
+        var url = process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user")
+            +"&connectedUserID="+connectedUserID;
+        await fetch(url, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          },
+    
+        })
+          .then(res => res.json())
+          .then(
+            result => {
+              if (result) {
+                  if (result[1] > 0){
+                      if (result[0][0].type === "block"){
+                          retVal = false;
+                      }else{
+                        retVal = true;
+                      }
+                  }else{
+                      retVal = false;
+                  }
+              }
+            },
+            error => {
+                console.log(error);
+                retVal = false;
+            }
+          );
+        
+          return retVal;
+    }
+
+    async function isFollower(userId) {
+        var retVal = false;
+        var url = process.env.REACT_APP_API_PATH+"/connections?connectedUserID="+sessionStorage.getItem("user")
+            +"&userID="+userId;
+        await fetch(url, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          },
+    
+        })
+          .then(res => res.json())
+          .then(
+            result => {
+                if (result) {
+                    if (result[1] > 0){
+                        if (result[0][0].type === 'block'){
+                            retVal = false;
+                        }else{
+                            retVal = true;
+                        }
+                    }else{
+                        retVal = false;
+                    }
+                }
+            },
+            error => {
+                console.log(error);
+            }
+          );
+        return retVal;
+    }
+
+    async function isPrivate(userId) {
+        var retVal = false;
+        var url = process.env.REACT_APP_API_PATH+"/user-preferences?name=privacy&userID="+userId;
+        await fetch(url, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          },
+    
+        })
+           .then(res => res.json())
+           .then(
+            result => {
+                if (result) {
+                    if (result[1] === 0){
+                        retVal = false;
+                    }else{
+                        retVal = (result[0][0].value === "true");
+                    }
+                }
+            },
+            error => {
+              console.log(error);
+              retVal = false;
+            }
+          );
+        return retVal;
       }
 
     const deletePost = async (postID, postContent) => {
@@ -92,9 +218,9 @@ const Posts = ({userId}) => {
       }
 
     if (isError) {
-        return <div> ERROR loading Posts </div>;
+        return <div className="posts"> ERROR loading Posts </div>;
     } else if (isLoading) {
-        return <div> Loading... </div>;
+        return <div className="posts"> Loading... </div>;
     } else if (posts) {
         if (posts.length > 0){
             if (userId){
@@ -115,7 +241,7 @@ const Posts = ({userId}) => {
                 );
             }
         }else{
-            return (<div> No Posts Found </div>);
+            return (<div className="posts"> No Posts Found </div>);
         }
     } else {
         return <div> Please Log In... </div>;

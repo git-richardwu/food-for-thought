@@ -1,6 +1,7 @@
 import React from "react";
 import "../App.css";
 import Autocomplete from "./Autocomplete.jsx";
+import { BrowserRouter as Router, Redirect, Route, Switch, Link } from "react-router-dom";
 
 export default class FriendForm extends React.Component {
   constructor(props) {
@@ -59,40 +60,40 @@ export default class FriendForm extends React.Component {
       );
   }
 
-  submitHandler = event => {
-    //keep the form from actually submitting
-    event.preventDefault();
+  // submitHandler = event => {
+  //   //keep the form from actually submitting
+  //   event.preventDefault();
 
-    console.log("friend is ");
-    console.log(this.state.friendid);
+  //   console.log("friend is ");
+  //   console.log(this.state.friendid);
 
 
-    //make the api call to the user controller
-    fetch(process.env.REACT_APP_API_PATH+"/connections", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer '+sessionStorage.getItem("token")
-      },
-      body: JSON.stringify({
-        connectedUserID: this.state.friendid,
-        userID: sessionStorage.getItem("user"),
-        type:"friend",
-        status:"active"
-      })
-    })
-      .then(res => res.json())
-      .then(
-        result => {
-          this.setState({
-            responseMessage: result.Status
-          });
-        },
-        error => {
-          alert("error!");
-        }
-      );
-  };
+  //   //make the api call to the user controller
+  //   fetch(process.env.REACT_APP_API_PATH+"/connections", {
+  //     method: "POST",
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Authorization': 'Bearer '+sessionStorage.getItem("token")
+  //     },
+  //     body: JSON.stringify({
+  //       connectedUserID: this.state.friendid,
+  //       userID: sessionStorage.getItem("user"),
+  //       type:"friend",
+  //       status:"active"
+  //     })
+  //   })
+  //     .then(res => res.json())
+  //     .then(
+  //       result => {
+  //         this.setState({
+  //           responseMessage: result.Status
+  //         });
+  //       },
+  //       error => {
+  //         alert("error!");
+  //       }
+  //     );
+  // };
 
   render() {
     return (
@@ -104,7 +105,16 @@ export default class FriendForm extends React.Component {
             <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
           </div>
         </label>
-        <input type="submit" value="submit" />
+        {/* <input type="submit" value="submit" /> */}
+        {/* <Link to={{
+          pathname: "/user",
+          search: "?userID="+this.state.friendid
+        }}>
+          <button>Submit</button>
+        </Link> */}
+        <Link to={`/user/${this.state.friendid}`}>
+          <button>Submit</button>
+         </Link>
         {this.state.responseMessage}
       </form>
     );

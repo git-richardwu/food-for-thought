@@ -2,7 +2,7 @@ import React from "react"
 import styles from "../atomStyles/activityComponent.module.css"
 import PostComponent from "./postComponent"
 
-function ActivityComponent({activity}){
+function ActivityComponent({userID}){
     return(
         <div className={styles.activityContainer}>
             <link rel="preconnect" href="https://fonts.gstatic.com"/>
@@ -10,7 +10,7 @@ function ActivityComponent({activity}){
             <div className={styles.activityLog}>
                 <p className={styles.title}>Activity Log</p>
             </div>
-            <PostComponent post={activity}/>
+            <PostComponent userID={userID}/>
            
         </div>
     )

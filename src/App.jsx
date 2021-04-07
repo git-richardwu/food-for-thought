@@ -32,6 +32,7 @@ import CreateAPost from "./Component/Posts/CreateAPost.js";
 
 import { BrowserRouter as Router, Redirect, Route, Switch, Link } from "react-router-dom";
 import LandingPage from "./Component/LandingPage";
+import Privacy from "./Component/Settings/Privacy";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -115,7 +116,14 @@ class App extends React.Component {
                                 <Banner title ={"Preferences"}/>
                                 <Preferences/>
                             </div>
-                          </Route> 
+                          </Route>
+                        <Route path="/settings/privacy">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Privacy"}/>
+                                <Privacy/>
+                            </div>
+                        </Route> 
                         <Route path="/settings">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
@@ -142,18 +150,19 @@ class App extends React.Component {
                                 <FriendList userid={sessionStorage.getItem("user")} />
                             </div>
                         </Route>
-                        <Route path="/profile">
+                        <Route path="/profile/:userID">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Profile"}/>
                                 <div className={styles.innerContent}>
-                                    <UserProfile/>
+                                    <UserProfile />
                                     <Link to="/create">
                                         <img className="addPostButtonProfile" src ={AddPostButton}></img>
                                     </Link>
                                 </div>
                             </div>
                         </Route>
+
                         <Route path={["/create"]}>
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">

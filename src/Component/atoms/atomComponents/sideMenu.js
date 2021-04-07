@@ -23,7 +23,7 @@ function SideMenu() {
                     <img className = {styles.icon } src = {notificationsIcon}></img>
                 </button>
             </Link>
-            <Link to="/profile">
+            <Link to={`/profile/${sessionStorage.getItem("user")}`}>
                 <button className={styles.button}>
                     <img className = {styles.icon } src = {personIcon}></img>
                 </button>
