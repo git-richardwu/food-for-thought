@@ -103,6 +103,25 @@ export default class Post extends React.Component {
     return "";
   }
 
+  // showDelete1(){
+  //   if (this.props.post.author.id == sessionStorage.getItem("user")) {
+  //     return(
+  //     <img
+  //       src={helpIcon}
+  //       className="deleteIcon"
+  //       alt="Delete Post"
+  //       title="Delete Post"
+  //       onClick={e => this.props.deletePost(this.props.post.id, this.props.post.comments)}
+  //     />
+  //   );
+  //   }
+  //   return "";
+  // }
+
+  getCommentBody(){
+    return this.props.post.content;
+  }
+
   getIngredientsID(){
     return this.props.post.content.split("~")[2];
   }
@@ -123,7 +142,8 @@ export default class Post extends React.Component {
     if (this.state.redirect){
         <Redirect to="/home"/>
     }
-    return (
+    if (this.props.type === "postlist"){
+      return (
       <div>
         <div
             key={this.props.post.id}
@@ -159,5 +179,46 @@ export default class Post extends React.Component {
         </div>
       </div>
     );
+    }
+    else {
+      return(
+      <div>
+        <div
+            key={this.props.post.id}
+            className={[this.props.type, "commentBody"].join(" ")}>
+            <div className="deletePost">
+                {this.showDelete()}
+
+                <div className="profilePictureContainer"> 
+                    <Link to="/profile">
+                        {/* need to connect with profile page to get poster's profile*/}
+                        <PostProfilePicture id={this.props.post.author.id} />
+                    </Link>
+                </div>
+
+                <div className="postUsername">
+                    <Link to="/profile">
+                        {/* need to connect with profile page to get poster's profile*/}
+                        {this.props.post.author.username}
+                    </Link>
+                </div>
+
+                <div className="postDate">
+                    {new Date(this.props.post.createdAt).toLocaleString()}
+                </div>
+
+                <div className="commentBody">
+                    {this.getCommentBody()}
+                </div>
+            </div>
+            {/* <PostURL link={this.props.post.thumbnailURL}/>
+            <PostTags postID={this.props.post.id}/> */}
+            {/* {this.props.post.content} */}
+            {this.conditionalDisplay()}
+        </div>
+      </div>
+      );
+    }
+    
   }
 }
