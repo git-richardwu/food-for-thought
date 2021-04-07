@@ -164,6 +164,7 @@ export default class BlockingForm extends React.Component {
         <input className = "backButton" type="submit" value="Submit" />
         {/* {this.state.responseMessage} */}
       </form>
+      <p>Blocked Users:</p>
       </div>
     );
   }
