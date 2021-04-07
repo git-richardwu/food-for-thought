@@ -29,7 +29,6 @@ import PostingList from "./Component/PostingList.jsx";
 import Posts from "./Component/Posts/Posts.js";
 import AddPostButton from "./assets/addPost.svg";
 import CreateAPost from "./Component/Posts/CreateAPost.js";
-import NonUserProfile from "./Component/NonUserProfile.js";
 
 import { BrowserRouter as Router, Redirect, Route, Switch, Link } from "react-router-dom";
 import LandingPage from "./Component/LandingPage";
@@ -163,28 +162,6 @@ class App extends React.Component {
                                 </div>
                             </div>
                         </Route>
-
-                        {/* <Route path="/user/:userID">
-                            <SideMenu/>
-                            <div className="mainHome">
-                                <Banner title ={"Profile"}/>
-                                <NonUserProfile/>
-                            </div>
-                        </Route> */}
-
-                        <Route path='/user/:userID' 
-                        /* component={NonUserProfile}*/
-                        render={(props) => (
-                            <div className="maincontent" id="mainContent">
-                                <SideMenu/>
-                                <Banner title ={"Profile"}/>
-                                <div className={styles.innerContent}>
-                                    <NonUserProfile {...props}/>
-                                </div>
-                            </div>
-
-                          )}
-                        />
 
                         <Route path={["/create"]}>
                             <SideMenu/>
