@@ -78,14 +78,8 @@ export default class BlockingList extends React.Component {
   conditionalAction(status, id){
     if (status == "active"){
       return(
-      <img
-        src={unblockIcon}
-        className="sidenav-icon deleteIcon"
-        alt="Unblock User"
-        title="Unblock User"
-        onClick={e => this.unblockConnection(id)}
-      />
-    )
+      <button className = "backButton" onClick={e => this.unblockConnection(id)}> Unblock </button>
+      )
     }
   }
 
@@ -103,7 +97,7 @@ export default class BlockingList extends React.Component {
             {connections.map(connection => (
               <div key={connection.id} className="userlist-block">
                 <p className = "wordfont">
-                {connection.connectedUser.username}  - {connection.status}
+                {connection.connectedUser.username}  
                 </p>
                 <div className="deletePost">
                 {this.conditionalAction(connection.status, connection.id)}
