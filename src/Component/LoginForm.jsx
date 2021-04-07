@@ -111,7 +111,7 @@ export default class LoginForm extends React.Component {
           <h2>Login</h2>
         <form onSubmit={this.submitHandler}>
           <label>
-            Username
+            Email
             <input className="textbox" type="text" onChange={this.myChangeHandler} />
           </label>
           <br />

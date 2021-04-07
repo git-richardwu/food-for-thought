@@ -1,6 +1,8 @@
 import React from "react";
 import "../../App.css";
 import unblockIcon from "../../assets/thumbsup.jpg"
+import "./blocking.css"
+import "../Settings/Settings.css"
 
 export default class BlockingList extends React.Component {
   constructor(props) {
@@ -99,8 +101,10 @@ export default class BlockingList extends React.Component {
         <div className="post">
           <ul>
             {connections.map(connection => (
-              <div key={connection.id} className="userlist">
-                {connection.connectedUser.username} - {connection.status}
+              <div key={connection.id} className="userlist-block">
+                <p className = "wordfont">
+                {connection.connectedUser.username}  - {connection.status}
+                </p>
                 <div className="deletePost">
                 {this.conditionalAction(connection.status, connection.id)}
                 </div>

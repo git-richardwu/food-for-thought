@@ -1,0 +1,14 @@
+.userlist-block {
+    text-align: left;
+    background: lightgreen;
+    border-radius: 20px;
+    padding:30px;
+    margin-left: 740px;
+    margin-bottom: 20px;
+    width:40%;
+    display: inline-flex;
+  }
+
+.wordfont {
+    font-family: ReemKufi;
+}

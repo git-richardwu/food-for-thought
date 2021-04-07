@@ -2,6 +2,10 @@ import React from "react";
 import "../../App.css";
 import Autocomplete from "../Autocomplete.jsx"
 import BlockingList from "./BlockingList.jsx"
+import "./blocking.css"
+import "../Settings/Settings.css"
+
+import { BrowserRouter as Router, Route, Switch, Link, Redirect } from "react-router-dom";
 
 export default class BlockingForm extends React.Component {
   constructor(props) {
@@ -141,18 +145,27 @@ export default class BlockingForm extends React.Component {
 
   render() {
     return (
-      <form onSubmit={this.submitHandler} className="profileform1">
+      <div className = "privacyContainer">
+      <form onSubmit={this.submitHandler}>
+        <Link to="/settings/">
+            <button className = "backButton">
+              <i className = "arrow left"/>
+                Back
+            </button>      
+        </Link>
+        <br/>
         <label>
+          {/* <br/> */}
           Block a User! (enter username, not userid or email)
-          
           <br />
           <div className="autocomplete">
             <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
           </div>
         </label>
-        <input type="submit" value="submit" />
+        <input className = "backButton" type="submit" value="Submit" />
         {/* {this.state.responseMessage} */}
       </form>
+      </div>
     );
   }
 }

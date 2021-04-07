@@ -91,10 +91,12 @@ class App extends React.Component {
                             </div>
                         </Route> */}
                         <Route path="/settings/privacy/blockedUsers">
-                            <div>
-                            <p>Blocked Users</p>
-                            <BlockingForm userid={sessionStorage.getItem("user")} />
-                            <BlockingList userid={sessionStorage.getItem("user")} />
+                            <SideMenu/>
+                            {/* <Banner title = {"Block User"}/> */}
+                            <div className="maincontent" id="mainContent">
+                                <Banner title = {"Block User"}/>
+                                <BlockingForm userid={sessionStorage.getItem("user")} />
+                                <BlockingList userid={sessionStorage.getItem("user")} />
                             </div>
                         </Route>
                         <Route path="/settings/account">
