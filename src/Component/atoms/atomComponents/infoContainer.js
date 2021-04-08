@@ -16,6 +16,7 @@ function InfoContainer({
   setUserBio,
   bioID,
   userID
+  
 }) {
   //Dont confuse bio with editBio...one is a string one is a boolean
   const [editBio, isEditingBio] = React.useState(false);
@@ -153,15 +154,16 @@ function InfoContainer({
           {/* Start of calorie and Weight Container */}
           <div className={styles.calorieAndWeightContainer}>
             <div>
-              {/* Calorie goal */}
+              {/* Weight goal */}
               <h1 className={styles.calorieAndWeightStyle}>
-                Calorie Goal : {calories}
+                Weight Goal: {pounds}{" "}
               </h1>
             </div>
 
             <div>
+                {/* Calorie goal */}
               <h1 className={styles.calorieAndWeightStyle}>
-                Weight Goal: {pounds}{" "}
+                Calorie Goal: {calories}
               </h1>
             </div>
           </div>

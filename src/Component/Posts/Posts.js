@@ -47,6 +47,47 @@ const Posts = ({userId}) => {
             }
           );
       }
+    
+     function resharePost (postid, parentID, text) {
+
+        //keep the form from actually submitting via HTML - we want to handle it in react
+        // event.preventDefault();
+        console.log("THIS IS THE POST ID:"+  postid)
+        console.log("THIS IS THE Parent ID:"+  parentID)
+        // return;
+        //make the api call to post
+        fetch(process.env.REACT_APP_API_PATH+"/posts", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          },
+          body: JSON.stringify({
+            parentID: parentID,
+            content: text,
+            type: "post",
+            thumbnailURL: "",
+            authorID: sessionStorage.getItem("user"),
+    
+          })
+        })
+          .then(res => res.json())
+          .then(
+            result => {
+              console.log("made it this far2");
+              // once a post is complete, reload the feed
+             fetchPosts()
+            },
+            error => {
+              console.log("made it this far3");
+    
+              // alert("error!");
+              alert(error)
+            }
+          );
+      
+    
+    }
 
     const setPostsForHomepage = async (allPosts) => {
         var postsToAdd = [];
@@ -227,7 +268,7 @@ const Posts = ({userId}) => {
                 return (
                     <div className="postsProfilePage">
                         {posts.map(post => (
-                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} />
+                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} resharePost={resharePost} />
                         ))}
                     </div>
                 );
@@ -235,7 +276,7 @@ const Posts = ({userId}) => {
                 return (
                     <div className="posts">
                         {posts.map(post => (
-                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} />
+                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} resharePost={resharePost} />
                         ))}
                     </div>
                 );

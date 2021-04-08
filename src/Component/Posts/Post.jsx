@@ -10,6 +10,8 @@ import PostProfilePicture from "./PostProfilePicture";
 import PostURL from "./PostURL.js"
 import FoodPhoto from "./FoodPhoto";
 import PostTags from "./PostTags.js"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faRetweet } from '@fortawesome/free-solid-svg-icons'
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -22,6 +24,7 @@ export default class Post extends React.Component {
     this.post = React.createRef();
 
   }
+  
 
   showModal = e => {
     this.setState({
@@ -72,6 +75,8 @@ export default class Post extends React.Component {
               onClick={e => this.showModal()}
               alt="View Comments"
             />
+            <FontAwesomeIcon style={{ width:"45px", height:"45px", paddingRight:"10px",  paddingBottom:"10px"}} icon={faRetweet} onClick={()=> this.props.resharePost(this.props.post.id, this.props.parentid, this.props.post.content)}/>
+            
           </div>
           <div className={this.showHideComments()}>
             <CommentForm

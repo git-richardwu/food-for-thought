@@ -5,7 +5,10 @@
     height: 80px;
     width: 80px;
 }
-
+.repostIcon{
+    width:70px;
+    height:70px;
+}
 .addPostButtonProfile{
     position: absolute;
     right: 0px;
