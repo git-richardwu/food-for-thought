@@ -78,8 +78,8 @@ export default class FriendList extends React.Component {
       <img
         src={blockIcon}
         className="sidenav-icon deleteIcon"
-        alt="Block User"
-        title="Block User"
+        alt="Unfollow User"
+        title="Unfollow User"
         onClick={e => this.updateConnection(id, "blocked")}
       />
     )

@@ -96,9 +96,7 @@ export default class BlockingList extends React.Component {
           <ul>
             {connections.map(connection => (
               <div key={connection.id} className="userlist-block">
-                <p className = "wordfont">
-                {connection.connectedUser.username}  
-                </p>
+                <p className = "wordfont">{connection.connectedUser.username}</p>
                 <div className="deletePost">
                 {this.conditionalAction(connection.status, connection.id)}
                 </div>
