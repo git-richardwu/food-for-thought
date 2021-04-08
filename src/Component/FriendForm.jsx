@@ -99,7 +99,7 @@ export default class FriendForm extends React.Component {
     return (
       <form onSubmit={this.submitHandler} className="profileform1">
         <label>
-          Find a Friend!
+          Find users to follow!
           <br />
           <div className="autocomplete">
             <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
