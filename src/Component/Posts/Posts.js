@@ -99,12 +99,18 @@ const Posts = ({userId}) => {
                 if (await isFollowing(allPosts[i].author.id) === true){
                     if (await isPrivate(allPosts[i].author.id) === true){
                         if (await isFollower(allPosts[i].author.id) === true){
-                            // add if you follow author, author follows you, and author is private
+                            if (await isnotBlocking(allPosts[i].author.id) === true) {
+                                // isnotblocking === true means not blocking and vice versa
+                                // add if you follow author, author follows you, and author is private
                             postsToAdd.push(allPosts[i]);
+                            }
                         }
                     }else{
-                        // add post if following and author is not private
-                        postsToAdd.push(allPosts[i]);
+                        if (await isnotBlocking(allPosts[i].author.id) === true) {
+                            // isnotblocking === true means not blocking and vice versa
+                            // add post if following and author is not private
+                            postsToAdd.push(allPosts[i]);
+                        }
                     }
                 }
             }
@@ -137,6 +143,41 @@ const Posts = ({userId}) => {
                       }
                   }else{
                       retVal = false;
+                  }
+              }
+            },
+            error => {
+                console.log(error);
+                retVal = false;
+            }
+          );
+        
+          return retVal;
+    }
+    async function isnotBlocking(connectedUserID) {
+        var retVal = false;
+        var url = process.env.REACT_APP_API_PATH+"/connections?type=block&userID="+sessionStorage.getItem("user")
+            +"&connectedUserID="+connectedUserID;
+        await fetch(url, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          },
+    
+        })
+          .then(res => res.json())
+          .then(
+            result => {
+              if (result) {
+                  if (result[1] > 0){
+                    //   if (result[0][0].type === "block"){
+                    //       retVal = false;
+                    //   }else{
+                        retVal = false;
+                    //   }
+                  }else{
+                      retVal = true;
                   }
               }
             },

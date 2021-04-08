@@ -12,8 +12,11 @@ function UserProfile() {
   const {userID} = useParams();
   const [userBio, editUserBio] = React.useState("");
   const [bioID, setBioID] = React.useState();
+  const [followingCount, setFollowCount] = React.useState(0);
+  const [followerCount, setFollowerCount] = React.useState(0);
   const [artifactID, setArtifactID] =  React.useState(0);
   const [url, setURL] = React.useState("");
+  const [followState, setFollowState] = React.useState(false)
   const [username, setUsername] = React.useState("");
   const [weightGoal, setWeightGoal] = React.useState("")
   const [weightGoalID, setWeightGoalID] = React.useState(-1)
@@ -27,11 +30,14 @@ function UserProfile() {
   fetchCalorieGoal();
   fetchDietTags();
 
-    React.useEffect(()=>{
-        fetchUserBio();
-        fetchProfilePic();
-        fetchUser();
-    })
+ React.useEffect(()=>{
+    fetchUserBio();
+    fetchFollowingCount();
+    fetchFollowerCount();
+    fetchProfilePic();
+    fetchFollowing();
+    fetchUser();
+ }, [followState, userID])
 
   function fetchProfilePic(){
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=profilePicDisplay&ownerID="+userID, {
@@ -60,6 +66,21 @@ function UserProfile() {
         }
         // console.log(json[0][0].url)
     }) 
+    }
+
+    function fetchFollowing(){
+      fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user")+"&connectedUserID="+userID,{
+        method: "GET",
+          headers: new Headers({
+            'Content-Type': 'application/json',
+          }),        
+      }).then(response => response.json())
+      .then(json => {
+          console.log(json)
+          if(json[1] != 0){
+            setFollowState(true)
+          }
+        })
     }
  
 
@@ -93,6 +114,83 @@ function UserProfile() {
         }
       );
 
+  }
+
+  function fetchFollowingCount(){
+    fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+userID,{
+      method: "GET",
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),        
+    }).then(response => response.json())
+    .then(json => {
+        // console.log(json)
+        setFollowCount(json[1])
+      })
+  }
+
+  function fetchFollowerCount(){
+    fetch(process.env.REACT_APP_API_PATH+"/connections?connectedUserID="+userID,{
+      method: "GET",
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),        
+    }).then(response => response.json())
+    .then(json => {
+        console.log(json)
+        setFollowerCount(json[1])
+      })
+  }
+
+  function followFunction(){
+    fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user")+"&connectedUserID="+userID,{
+      method: "GET",
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+    })
+    .then(response => response.json())
+    .then(json => {
+        console.log(json)
+        if(json[1] == 0 ){ {/* no connection */}
+            fetch(process.env.REACT_APP_API_PATH+"/connections",{
+              method: "POST", 
+              headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+ sessionStorage.getItem("token")
+            }),
+            body: JSON.stringify({
+              userID: sessionStorage.getItem("user"),
+              connectedUserID: userID,
+              type: "Follow",
+              status: "Active"
+            })
+          }).then(response => response.json())
+          .then(thing => {
+            console.log(thing)
+            console.log("Followed!")
+            setFollowState(true)
+            
+          })
+        } 
+        else {
+          {/* delete connection */}
+          const connectionID = json[0][0].id
+          console.log(json[0][0].id)
+          fetch(process.env.REACT_APP_API_PATH+"/connections/"+connectionID, {
+              method: "DELETE", 
+              headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+ sessionStorage.getItem("token")
+            }),
+          }).then(response => {
+            console.log("Unfollowed!")
+            setFollowState(false)
+            
+          })
+        }
+        
+    }) 
   }
 
   const updateImageURL = () => {
@@ -301,6 +399,7 @@ const fetchUser = async () => {
                 <h5>{this.state.artifactID}</h5> */}
 
                 {userID === sessionStorage.getItem("user") && <button onClick={updateImageURL}>Change Profile Picture</button>}
+                {userID !== sessionStorage.getItem("user") && <button onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
                 {/* <ProfilePictureButton name={"Picture Place Holder"} /> */}
               </div>
               
@@ -325,17 +424,15 @@ const fetchUser = async () => {
             </div>
             {/* End of pic and info container*/}
 
-            <div className={styles.followAndActivityContainer}>
-              <FollowerComponent
-              
-                numOfFollowers={"{Number of followers go here}"}
-                numOfFollowing={
-                  "{Number of people current user follows goes here}"
-                }
-              />
-              <ActivityComponent userID={userID}/>
-            </div>
+          <div className={styles.followAndActivityContainer}>
+            <FollowerComponent
+            
+              numOfFollowers={followerCount}
+              numOfFollowing={followingCount}
+            />
+            <ActivityComponent activity={userID}/>
           </div>
+        </div>
     );
 }
 export default UserProfile;

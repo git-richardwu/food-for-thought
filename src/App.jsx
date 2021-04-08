@@ -6,6 +6,8 @@
 
 import React from "react";
 import "./App.css";
+import BlockingForm from "./Component/Blocking/BlockingForm.jsx"
+import BlockingList from "./Component/Blocking/BlockingList.jsx"
 import PostForm from "./Component/PostForm.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
@@ -81,6 +83,22 @@ class App extends React.Component {
         <div className={styles.container}>
             <div className={styles.mainContent}>
                     <Switch>
+                        {/* <Route path="/friends">
+                            <div>
+                            <p>Friends</p>
+                            <FriendForm userid={sessionStorage.getItem("user")} />
+                            <FriendList userid={sessionStorage.getItem("user")} />
+                            </div>
+                        </Route> */}
+                        <Route path="/settings/privacy/blockedUsers">
+                            <SideMenu/>
+                            {/* <Banner title = {"Block User"}/> */}
+                            <div className="maincontent" id="mainContent">
+                                <Banner title = {"Block User"}/>
+                                <BlockingForm userid={sessionStorage.getItem("user")} />
+                                <BlockingList userid={sessionStorage.getItem("user")} />
+                            </div>
+                        </Route>
                         <Route path="/settings/account">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
@@ -162,6 +180,7 @@ class App extends React.Component {
                                 </div>
                             </div>
                         </Route>
+
                         <Route path={["/create"]}>
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
