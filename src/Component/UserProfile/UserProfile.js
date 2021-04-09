@@ -85,8 +85,7 @@ function UserProfile() {
  
 
    function fetchUserBio(){
-    console.log("User ID " +sessionStorage.getItem("user"))
-    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=bio&ownerID="+sessionStorage.getItem("user"),{
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=bio&ownerID="+userID,{
       method:"get",
       headers:{
         'Content-Type': 'application/json',
@@ -256,7 +255,7 @@ function UserProfile() {
 
   
 function fetchWeightGoal() {
-  fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=weightGoal&ownerID="+sessionStorage.getItem("user"),{
+  fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=weightGoal&ownerID="+userID,{
     method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -312,7 +311,7 @@ const fetchUser = async () => {
   }
 
   function fetchCalorieGoal (){
-    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=calorieGoal&ownerID="+sessionStorage.getItem("user"),{
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=calorieGoal&ownerID="+userID,{
       method: "get",
         headers: {
           "Content-Type": "application/json",
@@ -344,7 +343,7 @@ const fetchUser = async () => {
 
   function fetchDietTags(){
 
-    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=dietTag&ownerID="+sessionStorage.getItem("user"),{
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=dietTag&ownerID="+userID,{
       method: "get",
         headers: {
           "Content-Type": "application/json",
@@ -430,7 +429,7 @@ const fetchUser = async () => {
               numOfFollowers={followerCount}
               numOfFollowing={followingCount}
             />
-            <ActivityComponent activity={userID}/>
+            <ActivityComponent userID={userID}/>
           </div>
         </div>
     );

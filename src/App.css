@@ -171,8 +171,6 @@
   }
 
 .comment-block{
-  width:1000px;
-  /* height:900px; */
   display:flex;
   flex-direction: column;
   align-items: flex-start;
