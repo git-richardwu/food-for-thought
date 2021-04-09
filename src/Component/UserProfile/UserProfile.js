@@ -428,6 +428,7 @@ const fetchUser = async () => {
             
               numOfFollowers={followerCount}
               numOfFollowing={followingCount}
+              userID={userID}
             />
             <ActivityComponent userID={userID}/>
           </div>

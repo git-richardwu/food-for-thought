@@ -22,6 +22,7 @@ import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
 import Settings from "./Component/Settings/Settings.js"
 import UserProfile from "./Component/UserProfile/UserProfile";
+import FollowingList from "./Component/UserProfile/FollowingList";
 import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
 import styles from "./Component/UserProfile/UserProfile.module.css";
 import Banner from "./Component/atoms/atomComponents/banner";
@@ -177,6 +178,16 @@ class App extends React.Component {
                                     <Link to="/create">
                                         <img className="addPostButtonProfile" src ={AddPostButton}></img>
                                     </Link>
+                                </div>
+                            </div>
+                        </Route>
+
+                        <Route path="/following/:userID">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Following List"}/>
+                                <div className={styles.innerContent}>
+                                    <FollowingList />
                                 </div>
                             </div>
                         </Route>
