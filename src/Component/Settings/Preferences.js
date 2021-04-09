@@ -49,7 +49,7 @@ const Preferences = () => {
   }
 
   function fetchCalorieGoal() {
-    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=weightGoal&ownerID="+sessionStorage.getItem("user"),{
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=calorieGoal&ownerID="+sessionStorage.getItem("user"),{
       method: "get",
         headers: {
           "Content-Type": "application/json",

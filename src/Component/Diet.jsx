@@ -162,116 +162,10 @@
 //        );
 //     };
 //     render() {
-//      return (
-//        <form onSubmit={this.submitHandler} className="profileform">
-//          <div className = "pref">
-//          <Dropdown>
-//           <Dropdown.Toggle variant="success" id="dropdown-basic">
-//             Dropdown Button
-//           </Dropdown.Toggle>
-
-//           <Dropdown.Menu>
-//             <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-//             <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-//             <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
-//           </Dropdown.Menu>
-//         </Dropdown>
-//            </div>
-//            <label>
-//                Calorie Count : {this.state.Calories}
-//            </label>
-//            {this.state.responseMessage}
-//        </form>
-//      );
-//    }
 //  }
  
 
 
-// import React, { Component } from 'react'
-// import Select from 'react-select'
-// import axios from 'axios'
-
-// export default class Diet extends Component {
-//   constructor(props){
-//     super(props)
-//     this.state = {
-//       selectOptions : [],
-//       value:[]
-//     }
-//     }
-  
-
-//  async getOptions(){
-//     const res = await axios.get('https://jsonplaceholder.typicode.com/users')
-//     const data = res.data
-
-//     const options = data.map(d => ({
-//       "value" : d.id,
-//       "label" : d.name
-
-//     }))
-
-//     this.setState({selectOptions: options})
-
-//   }
-
-//   handleChange(e){
-//     this.setState({value:e})
-//    }
-
-//   componentDidMount(){
-//       this.getOptions()
-//   }
-
-//   render() {
-//     console.log(this.state.value)
-//     return (
-//       <div className = "pref">
-//         <Select options={this.state.selectOptions} onChange={this.handleChange.bind(this)} isMulti />
-//         {
-//            this.state.value === null ? "" : this.state.value.map(v => <h4>{v.label}</h4>)
-//         }
-//       </div>
-//     )
-//   }
-// }
-
-// import * as React from 'react';
-// import * as ReactDOM from 'react-dom';
-
-// import { DropDownList } from '@progress/kendo-react-dropdowns';
-
-// class Diet extends React.Component {
-//     sizes = [ "X-Small", "Small", "Medium", "Large", "X-Large", "2X-Large" ];
-//     state = { value: "Large" };
-
-//     handleChange = (event) => {
-//         this.setState({
-//             value: event.target.value
-//         });
-//     }
-
-//     render() {
-//         return (
-//             <div>
-//                 <div>T-shirt size:</div>
-//                 <DropDownList
-//                     data={this.sizes}
-//                     value={this.state.value}
-//                     onChange={this.handleChange}
-//                 />
-//             </div>
-//         );
-//     }
-// }
-
-// ReactDOM.render(
-//     <Diet />,
-//     document.querySelector('my-app')
-// );
-
-// export default Diet;
 
 import React,{useState} from 'react';
 import "./Diet.css"
@@ -287,63 +181,97 @@ export default class Diet extends React.Component {
       super(props);
       this.state = {
           tags: "",
-          showMessage: false
       };
       this.fieldChangeHandler.bind(this);
     }
-    // toggleText(e) {
-    //     var text = document.getElementById("demo");
-    //     if (text.style.display === "none") {
-    //       text.style.display = "block";
-    //     } else {
-    //       text.style.display = "none";
-    //     }
-    //   }
+
+    fieldChangeHandler(value, e) {
+      console.log("field change");
+      if (!this.state.tags.includes(value)){
+          // TODO: add POST here
+          if (this.state.tags == ""){
+              this.setState({
+                  tags: value
+                });
+          }
+          else{
+              var updated = this.state.tags + ", " + value
+              this.setState({
+                  tags: updated
+                });
+          }
+     fetch(process.env.REACT_APP_API_PATH+"/users-preferences?userID="+sessionStorage.getItem("user"), {
+       method: "POST",
+       headers: {
+         'Content-Type': 'application/json',
+         'Authorization': 'Bearer '+sessionStorage.getItem("token")
+       },
+       body: JSON.stringify({
+          username: this.state.username,
+          firstName: this.state.firstname,
+          lastName: this.state.lastname,
+
+        })
+     })
+       .then(res => res.json())
+       .then(
+         result => {
+         },
+         error => {
+           alert("error!");
+         }
+       );
+      }
+    }
 
     componentDidMount() {
         // TODO: add GET here setting this.state.tags
+        fetch(process.env.REACT_APP_API_PATH+"/user-preferences?userID="+sessionStorage.getItem("user"), {
+                   method: "get",
+                   headers: {
+                     'Content-Type': 'application/json',
+                     'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                   }
+                 })
+                   .then(res => res.json())
+                   .then(
+                     result => {
+                       if (result) {
+                         console.log(result);
+                          let tags = "";
+                          result[0].forEach(function(pref) {
+                            if (pref.name === "tags"){
+                                tags  = pref; 
+                            }
+                          },
+                          this.setState({
+                            tags: tags
+                          });
+                       }
+                     },
+                     error => {
+                       alert("error!");
+                     }
+                   );
       }
 
-    fieldChangeHandler(value, e) {
-        console.log("field change");
-        if (!this.state.tags.includes(value)){
-            // TODO: add POST here
-            if (this.state.tags == ""){
-                this.setState({
-                    tags: value
-                  });
-            }
-            // else if(this.state.tags == "Other"){
-            //         var text = React.findDOMNode(this.ref.tag).value;
-            //         if (text.style.display === "none") {
-            //           text.style.display = "block";
-            //         } else {
-            //           text.style.display = "none";
-            //         }
-                
 
-            // }
-            else{
-                var updated = this.state.tags + ", " + value
-                this.setState({
-                    tags: updated
-                  });
-            }
-        }
-      }
       
-
     render() {
         return (
             <div className="pref">
                 <div className="dropdown">
                     <h2>Diet Tag<i className="arrowDiet down"></i></h2>
                     <div className="dropdown-content">
-                        <button onClick={e => this.fieldChangeHandler("Vegetarian", e)}>Vegetarian</button>
-                        <button onClick={e => this.fieldChangeHandler("Vegan", e)}>Vegan</button>
-                        <button onClick={e => this.fieldChangeHandler("Pescatarian", e)}>Pescatarian</button>
                         <button onClick={e => this.fieldChangeHandler("Keto", e)}>Keto</button>
+                        <button onClick={e => this.fieldChangeHandler("Low-carb", e)}>Low-carb</button>
+                        <button onClick={e => this.fieldChangeHandler("Mediterranean", e)}>Mediterranean</button>
+                        <button onClick={e => this.fieldChangeHandler("Paleo", e)}>Paleo</button>
+                        <button onClick={e => this.fieldChangeHandler("Pescatarian", e)}>Pescatarian</button>
                         <button onClick={e => this.fieldChangeHandler("Pizza", e)}>Pizza</button>
+                        <button onClick={e => this.fieldChangeHandler("Vegan", e)}>Vegan</button>
+                        <button onClick={e => this.fieldChangeHandler("Vegetarian", e)}>Vegetarian</button>
+                        
                         {/* <button onClick={e => this.fieldChangeHandler("Other", e)}>Other</button> */}
                         {/* <button onclick={this.onButtonClickHandler}>Other</button> */}
                         {/* <button onclick={this.toggleText()}>Other</button> */}
