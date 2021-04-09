@@ -48,7 +48,7 @@ const Posts = ({userId}) => {
           );
       }
     
-     function resharePost (postid, parentID, text) {
+     function resharePost (postid, parentID, text, authorID) {
 
         //keep the form from actually submitting via HTML - we want to handle it in react
         // event.preventDefault();
@@ -65,7 +65,7 @@ const Posts = ({userId}) => {
           body: JSON.stringify({
             parentID: parentID,
             content: text,
-            type: "post",
+            type: "repost",
             thumbnailURL: "",
             authorID: sessionStorage.getItem("user"),
     
@@ -254,31 +254,34 @@ const Posts = ({userId}) => {
         return retVal;
       }
 
-    const deletePost = async (postID, postContent) => {
+    const deletePost = async (postID, postContent, type) => {
         var dialogResult = window.confirm("Are you sure you want to delete this post? This is irreverisible!");
         if (dialogResult){
-            var ids = postContent.split("~")
-            fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[1], {
-                method: "DELETE",
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                }
-                });
-            fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[2], {
-                method: "DELETE",
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                }
-                });
-            fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[3], {
-                method: "DELETE",
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                }
-                });
+            var ids = postContent.split("~");
+            if (type !== "repost"){
+                fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[1], {
+                    method: "DELETE",
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    }
+                    });
+                fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[2], {
+                    method: "DELETE",
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    }
+                    });
+                fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[3], {
+                    method: "DELETE",
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    }
+                    });
+            }
+            
             //make the api call to post
             fetch(process.env.REACT_APP_API_PATH+"/posts/"+postID, {
                 method: "DELETE",

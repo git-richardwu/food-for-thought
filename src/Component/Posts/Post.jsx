@@ -75,7 +75,11 @@ export default class Post extends React.Component {
               onClick={e => this.showModal()}
               alt="View Comments"
             />
-            <FontAwesomeIcon style={{ width:"45px", height:"45px", paddingRight:"10px",  paddingBottom:"10px"}} icon={faRetweet} onClick={()=> this.props.resharePost(this.props.post.id, this.props.parentid, this.props.post.content)}/>
+            <FontAwesomeIcon 
+                style={{ width:"45px", height:"45px", paddingRight:"10px",  paddingBottom:"10px"}} 
+                icon={faRetweet} 
+                onClick={()=> this.props.resharePost(this.props.post.id, this.props.parentid, this.props.post.content, this.props.post.author.id)}
+            />
             
           </div>
           <div className={this.showHideComments()}>
@@ -101,7 +105,7 @@ export default class Post extends React.Component {
         className="deleteIcon"
         alt="Delete Post"
         title="Delete Post"
-        onClick={e => this.props.deletePost(this.props.post.id, this.props.post.content)}
+        onClick={e => this.props.deletePost(this.props.post.id, this.props.post.content, this.props.post.type)}
       />
     );
     }
