@@ -1,5 +1,5 @@
 import React from "react";
-import Post from "./Post.jsx";
+import Post from "./Posts/Post.jsx";
 
 export default class PostingList extends React.Component {
   constructor(props) {
@@ -21,8 +21,6 @@ export default class PostingList extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    console.log("PrevProps "+prevProps.refresh);
-    console.log("Props "+this.props.refresh);
     if (prevProps.refresh !== this.props.refresh){
       this.loadPosts();
     }
@@ -32,6 +30,7 @@ export default class PostingList extends React.Component {
     let url = process.env.REACT_APP_API_PATH+"/posts?parentID=";
     if (this.props && this.props.parentid){
       url += this.props.parentid;
+      console.log("THIS IS PARENT ID: " + this.props.parentid)
     }
     fetch(url, {
       method: "get",
@@ -77,7 +76,7 @@ export default class PostingList extends React.Component {
         <div className="posts">
 
           {posts.map(post => (
-            <Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts}/>
+            <Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts} parentid={this.props.parentid}/>
           ))}
 
         </div>
