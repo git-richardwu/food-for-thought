@@ -12,15 +12,32 @@ function UserProfile() {
   const {userID} = useParams();
   const [userBio, editUserBio] = React.useState("");
   const [bioID, setBioID] = React.useState();
+  const [followingCount, setFollowCount] = React.useState(0);
+  const [followerCount, setFollowerCount] = React.useState(0);
   const [artifactID, setArtifactID] =  React.useState(0);
   const [url, setURL] = React.useState("");
+  const [followState, setFollowState] = React.useState(false)
   const [username, setUsername] = React.useState("");
+  const [weightGoal, setWeightGoal] = React.useState("")
+  const [weightGoalID, setWeightGoalID] = React.useState(-1)
+  const [calorieID, setCalorieID] = React.useState(-1)
+  const [calorieGoal, setCalorieGoal] = React.useState("")
+  const [dietTag1, setDietTag1] = React.useState("")
+  const [dietTag2, setDietTag2] = React.useState("")
+  const [dietTag3, setDietTag3] = React.useState("")
+  const [dietTag4, setDietTag4] = React.useState("")
+  fetchWeightGoal();
+  fetchCalorieGoal();
+  fetchDietTags();
 
-    React.useEffect(()=>{
-        fetchUserBio();
-        fetchProfilePic();
-        fetchUser();
-    })
+ React.useEffect(()=>{
+    fetchUserBio();
+    fetchFollowingCount();
+    fetchFollowerCount();
+    fetchProfilePic();
+    fetchFollowing();
+    fetchUser();
+ }, [followState, userID])
 
   function fetchProfilePic(){
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=profilePicDisplay&ownerID="+userID, {
@@ -50,10 +67,24 @@ function UserProfile() {
         // console.log(json[0][0].url)
     }) 
     }
+
+    function fetchFollowing(){
+      fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user")+"&connectedUserID="+userID,{
+        method: "GET",
+          headers: new Headers({
+            'Content-Type': 'application/json',
+          }),        
+      }).then(response => response.json())
+      .then(json => {
+          console.log(json)
+          if(json[1] != 0){
+            setFollowState(true)
+          }
+        })
+    }
  
 
-  function fetchUserBio(){
-    console.log("User ID " +userID)
+   function fetchUserBio(){
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=bio&ownerID="+userID,{
       method:"get",
       headers:{
@@ -76,27 +107,89 @@ function UserProfile() {
               }
 
         }
-          // if(result){
-          //   //edge case is bio not there
-          //   if(result[0][0].type != null){
-          //     let bio =  result[0][0].type;
-          //     console.log("Bio from user profile: " +bio);
-          //     editUserBio(bio);
-          //     console.log("Bio id: " + result[0][0].id)
-          //     setBioID(result[0][0].id);
-          //     // console.log("This is result: " + result[0][1].ownerID)
-          //   }else{
-          //     let bio = "Please add a bio."
-          //     editUserBio(bio);
-          //   }
-            
-          // }
         ,
         error=>{
           alert("Error occurred when trying to retrieve bio")
         }
       );
 
+  }
+
+  function fetchFollowingCount(){
+    fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+userID,{
+      method: "GET",
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),        
+    }).then(response => response.json())
+    .then(json => {
+        // console.log(json)
+        setFollowCount(json[1])
+      })
+  }
+
+  function fetchFollowerCount(){
+    fetch(process.env.REACT_APP_API_PATH+"/connections?connectedUserID="+userID,{
+      method: "GET",
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),        
+    }).then(response => response.json())
+    .then(json => {
+        console.log(json)
+        setFollowerCount(json[1])
+      })
+  }
+
+  function followFunction(){
+    fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user")+"&connectedUserID="+userID,{
+      method: "GET",
+        headers: new Headers({
+          'Content-Type': 'application/json',
+        }),
+    })
+    .then(response => response.json())
+    .then(json => {
+        console.log(json)
+        if(json[1] == 0 ){ {/* no connection */}
+            fetch(process.env.REACT_APP_API_PATH+"/connections",{
+              method: "POST", 
+              headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+ sessionStorage.getItem("token")
+            }),
+            body: JSON.stringify({
+              userID: sessionStorage.getItem("user"),
+              connectedUserID: userID,
+              type: "Follow",
+              status: "Active"
+            })
+          }).then(response => response.json())
+          .then(thing => {
+            console.log(thing)
+            console.log("Followed!")
+            setFollowState(true)
+            
+          })
+        } 
+        else {
+          {/* delete connection */}
+          const connectionID = json[0][0].id
+          console.log(json[0][0].id)
+          fetch(process.env.REACT_APP_API_PATH+"/connections/"+connectionID, {
+              method: "DELETE", 
+              headers: new Headers({
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+ sessionStorage.getItem("token")
+            }),
+          }).then(response => {
+            console.log("Unfollowed!")
+            setFollowState(false)
+            
+          })
+        }
+        
+    }) 
   }
 
   const updateImageURL = () => {
@@ -160,6 +253,40 @@ function UserProfile() {
   }
 }
 
+  
+function fetchWeightGoal() {
+  fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=weightGoal&ownerID="+userID,{
+    method: "get",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + sessionStorage.getItem("token"),
+      },
+    }
+  )
+    .then((res) => res.json())
+    .then(
+      (result) => {
+        if (result[0].length != 0) {
+          result[0].forEach(function (artifacts) {
+            if (artifacts.category == "weightGoal") {
+              let goal = artifacts.type;
+              console.log("Goal from user preferences: " + goal);
+              setWeightGoal(goal);
+              console.log("Weight goal id: " + artifacts.id);
+              setWeightGoalID(artifacts.id);
+            } 
+          });
+        } else {
+          setWeightGoalID(-1);
+        }
+      },
+      (error) => {
+        console.log(error);
+        alert("Error occurred when trying to retrieve weight goal");
+      }
+    );
+} 
+
 const fetchUser = async () => {
     var url = process.env.REACT_APP_API_PATH+"/users/"+userID;
     fetch(url, {
@@ -182,6 +309,85 @@ const fetchUser = async () => {
         }
       );
   }
+
+  function fetchCalorieGoal (){
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=calorieGoal&ownerID="+userID,{
+      method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          if (result[0].length != 0) {
+            result[0].forEach(function (artifacts) {
+              if (artifacts.category == "calorieGoal") {
+                let goal = artifacts.type;
+                console.log("Goal from user preferences: " + goal);
+                setCalorieGoal(goal);
+                console.log("Calorie goal id: " + artifacts.id);
+                setCalorieID(artifacts.id);
+              } 
+            });
+          }
+        },
+        (error) => {
+          alert("Error occurred when trying to retrieve calorie goal");
+        }
+      );
+
+  }
+
+  function fetchDietTags(){
+
+    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=dietTag&ownerID="+userID,{
+      method: "get",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          if (result[0].length != 0) {
+            result[0].forEach(function (artifacts) {
+              if (artifacts.category == "dietTag"){
+                if(artifacts.url == "1"){
+                  let dietTag = artifacts.type;
+                  console.log("Goal from user preferences: " + dietTag);
+                  setDietTag1(dietTag);
+                }
+                if(artifacts.url == "2"){
+                  let dietTag = artifacts.type;
+                  console.log("Goal from user preferences: " + dietTag);
+                  setDietTag2(dietTag);
+                }
+                if(artifacts.url == "3"){
+                  let dietTag = artifacts.type;
+                  console.log("Goal from user preferences: " + dietTag);
+                  setDietTag3(dietTag);
+                }
+                if(artifacts.url == "4"){
+                  let dietTag = artifacts.type;
+                  console.log("Goal from user preferences: " + dietTag);
+                  setDietTag4(dietTag);
+                }
+              } 
+            });
+          }
+        },
+        (error) => {
+          alert("Error occurred when trying to set diet tags");
+        }
+      );
+
+  }
+
     return (
           <div >
             {/* Pic and info container */}
@@ -192,21 +398,23 @@ const fetchUser = async () => {
                 <h5>{this.state.artifactID}</h5> */}
 
                 {userID === sessionStorage.getItem("user") && <button onClick={updateImageURL}>Change Profile Picture</button>}
+                {userID !== sessionStorage.getItem("user") && <button onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
                 {/* <ProfilePictureButton name={"Picture Place Holder"} /> */}
               </div>
               
               {/* User info container */}
               <div className={styles.infoContainer}>
+                
               <InfoContainer
                 name={""}
                 username={username}
                 bio={userBio}
-                dietTag1={"dietTag1"}
-                dietTag2={"dietTag2"}
-                dietTag3={"dietTag3"}
-                dietTag4={"dietTag4"}
-                calories={"calories go here"}
-                pounds={"pounds go here"}
+                dietTag1={dietTag1}
+                dietTag2={dietTag2}
+                dietTag3={dietTag3}
+                dietTag4={dietTag4}
+                calories={calorieGoal}
+                pounds={weightGoal}
                 setUserBio = { () => editUserBio()}
                 bioID = {bioID}
                 userID = {userID}
@@ -215,17 +423,16 @@ const fetchUser = async () => {
             </div>
             {/* End of pic and info container*/}
 
-            <div className={styles.followAndActivityContainer}>
-              <FollowerComponent
-              
-                numOfFollowers={"{Number of followers go here}"}
-                numOfFollowing={
-                  "{Number of people current user follows goes here}"
-                }
-              />
-              <ActivityComponent userID={userID}/>
-            </div>
+          <div className={styles.followAndActivityContainer}>
+            <FollowerComponent
+            
+              numOfFollowers={followerCount}
+              numOfFollowing={followingCount}
+              userID={userID}
+            />
+            <ActivityComponent userID={userID}/>
           </div>
+        </div>
     );
 }
 export default UserProfile;

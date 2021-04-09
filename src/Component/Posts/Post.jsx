@@ -10,6 +10,8 @@ import PostProfilePicture from "./PostProfilePicture";
 import PostURL from "./PostURL.js"
 import FoodPhoto from "./FoodPhoto";
 import PostTags from "./PostTags.js"
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {faRetweet } from '@fortawesome/free-solid-svg-icons'
 
 export default class Post extends React.Component {
   constructor(props) {
@@ -22,6 +24,7 @@ export default class Post extends React.Component {
     this.post = React.createRef();
 
   }
+  
 
   showModal = e => {
     this.setState({
@@ -72,6 +75,12 @@ export default class Post extends React.Component {
               onClick={e => this.showModal()}
               alt="View Comments"
             />
+            <FontAwesomeIcon 
+                style={{ width:"45px", height:"45px", paddingRight:"10px",  paddingBottom:"10px"}} 
+                icon={faRetweet} 
+                onClick={()=> this.props.resharePost(this.props.post.id, this.props.parentid, this.props.post.content, this.props.post.author.id)}
+            />
+            
           </div>
           <div className={this.showHideComments()}>
             <CommentForm
@@ -96,11 +105,30 @@ export default class Post extends React.Component {
         className="deleteIcon"
         alt="Delete Post"
         title="Delete Post"
-        onClick={e => this.props.deletePost(this.props.post.id, this.props.post.content)}
+        onClick={e => this.props.deletePost(this.props.post.id, this.props.post.content, this.props.post.type)}
       />
     );
     }
     return "";
+  }
+
+  // showDelete1(){
+  //   if (this.props.post.author.id == sessionStorage.getItem("user")) {
+  //     return(
+  //     <img
+  //       src={helpIcon}
+  //       className="deleteIcon"
+  //       alt="Delete Post"
+  //       title="Delete Post"
+  //       onClick={e => this.props.deletePost(this.props.post.id, this.props.post.comments)}
+  //     />
+  //   );
+  //   }
+  //   return "";
+  // }
+
+  getCommentBody(){
+    return this.props.post.content;
   }
 
   getIngredientsID(){
@@ -123,7 +151,8 @@ export default class Post extends React.Component {
     if (this.state.redirect){
         <Redirect to="/home"/>
     }
-    return (
+    if (this.props.type === "postlist"){
+      return (
       <div>
         <div
             key={this.props.post.id}
@@ -159,5 +188,46 @@ export default class Post extends React.Component {
         </div>
       </div>
     );
+    }
+    else {
+      return(
+      <div>
+        <div
+            key={this.props.post.id}
+            className={[this.props.type, "commentBody"].join(" ")}>
+            <div className="deletePost">
+                {this.showDelete()}
+
+                <div className="profilePictureContainer"> 
+                    <Link to="/profile">
+                        {/* need to connect with profile page to get poster's profile*/}
+                        <PostProfilePicture id={this.props.post.author.id} />
+                    </Link>
+                </div>
+
+                <div className="postUsername">
+                    <Link to="/profile">
+                        {/* need to connect with profile page to get poster's profile*/}
+                        {this.props.post.author.username}
+                    </Link>
+                </div>
+
+                <div className="postDate">
+                    {new Date(this.props.post.createdAt).toLocaleString()}
+                </div>
+
+                <div className="commentBody">
+                    {this.getCommentBody()}
+                </div>
+            </div>
+            {/* <PostURL link={this.props.post.thumbnailURL}/>
+            <PostTags postID={this.props.post.id}/> */}
+            {/* {this.props.post.content} */}
+            {this.conditionalDisplay()}
+        </div>
+      </div>
+      );
+    }
+    
   }
 }

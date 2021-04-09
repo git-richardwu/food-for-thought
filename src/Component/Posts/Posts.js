@@ -47,6 +47,47 @@ const Posts = ({userId}) => {
             }
           );
       }
+    
+     function resharePost (postid, parentID, text, authorID) {
+
+        //keep the form from actually submitting via HTML - we want to handle it in react
+        // event.preventDefault();
+        console.log("THIS IS THE POST ID:"+  postid)
+        console.log("THIS IS THE Parent ID:"+  parentID)
+        // return;
+        //make the api call to post
+        fetch(process.env.REACT_APP_API_PATH+"/posts", {
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          },
+          body: JSON.stringify({
+            parentID: parentID,
+            content: text,
+            type: "repost",
+            thumbnailURL: "",
+            authorID: sessionStorage.getItem("user"),
+    
+          })
+        })
+          .then(res => res.json())
+          .then(
+            result => {
+              console.log("made it this far2");
+              // once a post is complete, reload the feed
+             fetchPosts()
+            },
+            error => {
+              console.log("made it this far3");
+    
+              // alert("error!");
+              alert(error)
+            }
+          );
+      
+    
+    }
 
     const setPostsForHomepage = async (allPosts) => {
         var postsToAdd = [];
@@ -58,12 +99,18 @@ const Posts = ({userId}) => {
                 if (await isFollowing(allPosts[i].author.id) === true){
                     if (await isPrivate(allPosts[i].author.id) === true){
                         if (await isFollower(allPosts[i].author.id) === true){
-                            // add if you follow author, author follows you, and author is private
+                            if (await isnotBlocking(allPosts[i].author.id) === true) {
+                                // isnotblocking === true means not blocking and vice versa
+                                // add if you follow author, author follows you, and author is private
                             postsToAdd.push(allPosts[i]);
+                            }
                         }
                     }else{
-                        // add post if following and author is not private
-                        postsToAdd.push(allPosts[i]);
+                        if (await isnotBlocking(allPosts[i].author.id) === true) {
+                            // isnotblocking === true means not blocking and vice versa
+                            // add post if following and author is not private
+                            postsToAdd.push(allPosts[i]);
+                        }
                     }
                 }
             }
@@ -96,6 +143,41 @@ const Posts = ({userId}) => {
                       }
                   }else{
                       retVal = false;
+                  }
+              }
+            },
+            error => {
+                console.log(error);
+                retVal = false;
+            }
+          );
+        
+          return retVal;
+    }
+    async function isnotBlocking(connectedUserID) {
+        var retVal = false;
+        var url = process.env.REACT_APP_API_PATH+"/connections?type=block&userID="+sessionStorage.getItem("user")
+            +"&connectedUserID="+connectedUserID;
+        await fetch(url, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          },
+    
+        })
+          .then(res => res.json())
+          .then(
+            result => {
+              if (result) {
+                  if (result[1] > 0){
+                    //   if (result[0][0].type === "block"){
+                    //       retVal = false;
+                    //   }else{
+                        retVal = false;
+                    //   }
+                  }else{
+                      retVal = true;
                   }
               }
             },
@@ -172,31 +254,34 @@ const Posts = ({userId}) => {
         return retVal;
       }
 
-    const deletePost = async (postID, postContent) => {
+    const deletePost = async (postID, postContent, type) => {
         var dialogResult = window.confirm("Are you sure you want to delete this post? This is irreverisible!");
         if (dialogResult){
-            var ids = postContent.split("~")
-            fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[1], {
-                method: "DELETE",
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                }
-                });
-            fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[2], {
-                method: "DELETE",
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                }
-                });
-            fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[3], {
-                method: "DELETE",
-                headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                }
-                });
+            var ids = postContent.split("~");
+            if (type !== "repost"){
+                fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[1], {
+                    method: "DELETE",
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    }
+                    });
+                fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[2], {
+                    method: "DELETE",
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    }
+                    });
+                fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[3], {
+                    method: "DELETE",
+                    headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    }
+                    });
+            }
+            
             //make the api call to post
             fetch(process.env.REACT_APP_API_PATH+"/posts/"+postID, {
                 method: "DELETE",
@@ -227,7 +312,7 @@ const Posts = ({userId}) => {
                 return (
                     <div className="postsProfilePage">
                         {posts.map(post => (
-                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} />
+                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} resharePost={resharePost} />
                         ))}
                     </div>
                 );
@@ -235,7 +320,7 @@ const Posts = ({userId}) => {
                 return (
                     <div className="posts">
                         {posts.map(post => (
-                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} />
+                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} resharePost={resharePost} />
                         ))}
                     </div>
                 );

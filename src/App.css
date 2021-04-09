@@ -127,7 +127,7 @@
 
 .comments{
     background:white;
-    width:90%;
+    width: 1200px;
     display:block;
     border-radius: 20px;
     padding:10px;
@@ -137,14 +137,16 @@
 
 .commentlist {
   text-align: left;
-  background: lightblue;
+  background: rgb(163, 226, 174);
   color:black;
-  border-radius: 20px;
+  border-radius: 5px;
   padding:10px;
   margin:10px;
+  /* margin-left:20px; */
   font-size: 12px;
-  width:90%;
+  width: 900px;
   display:block;
+  word-wrap: break-word;
 }
 
 .hide{
@@ -169,11 +171,10 @@
   }
 
 .comment-block{
-  width:100%;
   display:flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: left;
 }
 
 .sidenav{
@@ -211,7 +212,7 @@
 
 .comment-indicator{
   text-align:right;
-  width:100%;
+  /* width:; */
   display:block;
   float:right;
   margin-top: 10px;
@@ -224,8 +225,9 @@
 }
 
 .comment-indicator-text{
-  background-color: lightblue;
-  color: black;
+  background-color: #6FD397;
+  /* background-color: green; */
+  color: white;
   border-radius: 10px;
   font-size: 16px;
   font-weight: bold;
@@ -327,4 +329,7 @@
 .dropdown-content a:hover {background-color: #ddd}
 
 /* Show the dropdown menu (use JS to add this class to the .dropdown-content container when the user clicks on the dropdown button) */
-.show {display:block;}
+.show {
+  display:block;
+  /* height: 100px; */
+}

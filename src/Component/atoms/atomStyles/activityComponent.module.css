@@ -3,12 +3,16 @@
     flex-direction: column;
     width: 100%;
     align-items: center;
+    
+    margin-left: 30px
 }
 
 .activityLog{
     height: fit-content;
-    width: 90%;
-    background: #6FD397;}
+    width: 100%;
+    background: #6FD397;
+    
+}
 
 .title{
     font-style: normal;
