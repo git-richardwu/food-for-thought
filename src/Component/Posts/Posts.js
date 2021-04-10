@@ -1,12 +1,14 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import Post from "./Post.jsx";
+import SearchBar from "./SearchBar"
 import "./Posts.css";
 
 const Posts = ({userId}) => {
     const [posts, setPosts] = useState([]);
     const [isError, setError] = useState(false);
     const [isLoading, setLoading] = useState(true);
+    const [showSearchBar, setShowSearchBar] = useState(true); // used if we decide to toggle search bar
 
     useEffect(() => {
         const getPosts = async () => {
@@ -302,10 +304,137 @@ const Posts = ({userId}) => {
      
       }
 
+    const searchPosts = async (searchText, useTitle, useTags, useCalorie) => {
+        if (searchText === ""){
+            await fetchPosts();
+        }else{
+            var allPosts = await fetchAllPosts();
+            var filteredPosts = [];
+            for (var i = 0; i < allPosts.length; i++){
+                if (useTitle && allPosts[i].content.toLowerCase().includes(searchText)){
+                    console.log(allPosts[i]);
+                    filteredPosts.push(allPosts[i]);
+                    continue;
+                }
+    
+                if (useTags){
+                    var tags = await getPostDietTag(allPosts[i].id);
+                    if (tags.includes(searchText)){
+                        filteredPosts.push(allPosts[i]);                    
+                        continue;
+                    }
+                }
+    
+                if (useCalorie && allPosts[i].content.includes(searchText)){
+                    var calorie = await getPostCalorieTag(allPosts[i].id);
+                    var searchCalorie = parseInt(searchText);
+                    if (searchCalorie != NaN && ((searchCalorie - calorie) <= 100)){
+                        filteredPosts.push(allPosts[i]);
+                        continue;
+                    }
+                }
+            }
+    
+            setPosts(filteredPosts);
+        }
+
+    }
+
+    async function fetchAllPosts() {
+        var posts = [];
+        var url = process.env.REACT_APP_API_PATH+"/posts?sort=newest&parentID=";
+        await fetch(url, {
+          method: "get",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          },
+    
+        })
+          .then(res => res.json())
+          .then(
+            result => {
+              if (result) {
+                  posts = result[0];
+              }
+            }
+          );
+
+        return posts;
+    }
+
+    async function getPostCalorieTag(id) {
+        var calorie = 0;
+        await fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+id+"&type=calorie", {
+            method: "get",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            },
+      
+          })
+            .then(res => res.json())
+            .then(
+              async result => {
+                if (result) {
+                    if (result[0][0]){
+                        calorie = parseInt(result[0][0].name);
+                    }
+                }
+              },
+              error => {
+                console.log(error);
+              }
+            );
+
+        return calorie;
+    }
+
+    async function getPostDietTag(id) {
+        var dietTags = "";
+        await fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+id+"&type=dietTags", {
+            method: "get",
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            },
+      
+          })
+            .then(res => res.json())
+            .then(
+              async result => {
+                if (result) {
+                    if (result[0][0]){
+                        dietTags = result[0][0].name;
+                    }
+                }
+              },
+              error => {
+                console.log(error);
+              }
+            );
+
+        return dietTags.toLowerCase();
+    }
+
     if (isError) {
-        return <div className="posts"> ERROR loading Posts </div>;
+        return (
+            <div className="postsOuter"> 
+                <SearchBar searchPosts={searchPosts}/> <br/>
+                <div className="posts">
+                    <p>Error Loading Posts</p> 
+                </div>
+            </div>
+        );
     } else if (isLoading) {
-        return <div className="posts"> Loading... </div>;
+        return (
+            <div className="postsOuter"> 
+                <SearchBar searchPosts={searchPosts}/> <br/>
+                <div className="posts">
+                    <p>Loading...</p> 
+                </div>
+            </div>
+        );
     } else if (posts) {
         if (posts.length > 0){
             if (userId){
@@ -318,15 +447,34 @@ const Posts = ({userId}) => {
                 );
             }else{
                 return (
-                    <div className="posts">
-                        {posts.map(post => (
-                            <Post key={post.id} post={post} type="postlist" deletePost={deletePost} resharePost={resharePost} />
-                        ))}
+                    <div className="postsOuter">
+                        {showSearchBar && <SearchBar searchPosts={searchPosts}/>}
+                        <div className="posts">
+                            {posts.map(post => (
+                                <Post key={post.id} post={post} type="postlist" deletePost={deletePost} resharePost={resharePost} />
+                            ))}
+                        </div>
                     </div>
                 );
             }
         }else{
-            return (<div className="posts"> No Posts Found </div>);
+            if (userId){
+                return (
+                    <div className="postsOuter"> 
+                        <div className="posts">
+                            <p>No Posts Found</p> 
+                        </div>
+                    </div>
+                );
+            }
+            return (
+                <div className="postsOuter"> 
+                    <SearchBar searchPosts={searchPosts}/> <br/>
+                    <div className="posts">
+                        <p>No Posts Found</p> 
+                    </div>
+                </div>
+            );
         }
     } else {
         return <div> Please Log In... </div>;

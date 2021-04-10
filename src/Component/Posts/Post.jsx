@@ -112,21 +112,6 @@ export default class Post extends React.Component {
     return "";
   }
 
-  // showDelete1(){
-  //   if (this.props.post.author.id == sessionStorage.getItem("user")) {
-  //     return(
-  //     <img
-  //       src={helpIcon}
-  //       className="deleteIcon"
-  //       alt="Delete Post"
-  //       title="Delete Post"
-  //       onClick={e => this.props.deletePost(this.props.post.id, this.props.post.comments)}
-  //     />
-  //   );
-  //   }
-  //   return "";
-  // }
-
   getCommentBody(){
     return this.props.post.content;
   }
