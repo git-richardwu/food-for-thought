@@ -311,7 +311,7 @@ const Posts = ({userId}) => {
             var allPosts = await fetchAllPosts();
             var filteredPosts = [];
             for (var i = 0; i < allPosts.length; i++){
-                if (useTitle && allPosts[i].content.toLowerCase().includes(searchText)){
+                if (useTitle && allPosts[i].content.split("~")[0].toLowerCase().includes(searchText)){
                     console.log(allPosts[i]);
                     filteredPosts.push(allPosts[i]);
                     continue;
@@ -325,7 +325,7 @@ const Posts = ({userId}) => {
                     }
                 }
     
-                if (useCalorie && allPosts[i].content.includes(searchText)){
+                if (useCalorie){
                     var calorie = await getPostCalorieTag(allPosts[i].id);
                     var searchCalorie = parseInt(searchText);
                     if (searchCalorie != NaN && ((searchCalorie - calorie) <= 100)){

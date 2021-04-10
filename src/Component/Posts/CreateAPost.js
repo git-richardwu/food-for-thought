@@ -16,6 +16,7 @@ const CreateAPost = () => {
     const [redirect, setRedirect] = useState(false);
     const [postTags, setPostTags] = useState([]);
     const [tag, setTag] = useState("");
+    const [calorie, setCalorie] = useState(0);
     const fileField = document.querySelector('input[type="file"]');
     const history = useHistory()
 
@@ -163,28 +164,46 @@ const CreateAPost = () => {
                                                                     type: "post"
                                                                 })
                                                               }).then(res => res.json())
-                                                              .then(result => {
+                                                              .then(async result => {
+                                                                  var postId = result.id;
                                                                 if (result){
                                                                     console.log(result);
-                                                                    fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+                                                                    await fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
                                                                         method: "POST",
                                                                         headers: {
                                                                           'Content-Type': 'application/json',
                                                                           'Authorization': 'Bearer '+sessionStorage.getItem("token")
                                                                         },
                                                                         body: JSON.stringify({
-                                                                            postID: result.id,
+                                                                            postID: postId,
                                                                             userID: sessionStorage.getItem("user"),
                                                                             name: postTags.join("~"),
                                                                             type: "dietTags"
                                                                         })
                                                                       })
-                                                                      .then(result => {
+                                                                      .then(res => res.json())
+                                                                      .then(async result => {
                                                                         if (result){
-                                                                            setRedirect(true)
+                                                                            await fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+                                                                                method: "POST",
+                                                                                headers: {
+                                                                                  'Content-Type': 'application/json',
+                                                                                  'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                                                                                },
+                                                                                body: JSON.stringify({
+                                                                                    postID: postId,
+                                                                                    userID: sessionStorage.getItem("user"),
+                                                                                    name: calorie.toString(),
+                                                                                    type: "calorie"
+                                                                                })
+                                                                              })
+                                                                              .then(result => {
+                                                                                  if (result){
+                                                                                      setRedirect(true);
+                                                                                  }
+                                                                              })
                                                                         }
                                                                       })
-                                                                    setRedirect(true)
                                                                 }
                                                               })
                                                         }
@@ -212,6 +231,12 @@ const CreateAPost = () => {
                   }
                 );
 
+        }
+    }
+
+    const setTagOnKey = (key) => {
+        if (key === "Enter"){
+            addTag()
         }
     }
     
@@ -264,19 +289,29 @@ const CreateAPost = () => {
                     <input className="linkInput" type="url" value={link} onChange={e => setLink(e.target.value)}/>
                 </div>
 
-                <div>
-                    <label className="linkLabel">Add Diet Tags:</label>
-                    <input className="addTagInput" type="url" value={tag} onChange={e => setTag(e.target.value)} maxLength="14"/>
-                    <button className="addToListButtonTags" onClick={e => addTag()}>Add Tag</button>
-                    <div className="postTagsContainer">
-                        {postTags.map(tag => (
-                            <div key={tag} className="postDietTag">
-                                {tag}
-                                <button className="deleteTag" onClick={e => deleteTag(tag)}>x</button>
-                            </div>
-                        ))}
+                <div className="postTagsContainer">
+                <   div className="createCalorieContainer">
+                        <label className="linkLabel">Calories:</label>
+                        <input className="addTagInput" type="number" value={calorie} onChange={e => setCalorie(e.target.value)} step="25" min="0" max="10000"/>
                     </div>
+                    <div className="addDietTagsContainer">
+                        <label className="linkLabel">Add Diet Tags:</label>
+                        <input className="addTagInput" type="url" value={tag} onChange={e => setTag(e.target.value)} maxLength="14" onKeyPress={e => setTagOnKey(e.key)}/>
+                        <button className="addToListButtonTags" onClick={e => addTag()}>Add Tag</button>
+                        <div className="displayedPostTags">
+                            {postTags.map(tag => (
+                                <div key={tag} className="postDietTag">
+                                    {tag}
+                                    <button className="deleteTag" onClick={e => deleteTag(tag)}>x</button>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+   
+  
                 </div>
+
+
 
                 <button className="createButton" onClick={e => createPost()}>Create</button>
             </div>

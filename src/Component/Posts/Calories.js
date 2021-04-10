@@ -1,19 +1,18 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 
-const PostTags = ({postID}) => {
-    const [dietTags, setTags] = useState([]);
+const Calories = ({postID}) => {
+    const [calories, setCalories] = useState(0);
 
     useEffect(() => {
-        const getTags = async () => {
-            const tags = await fetchTags()
-            setTags(tags)
+        const getCalories = async () => {
+            await fetchCalories()
         }
-        getTags();
+        getCalories();
     }, [])
 
-    const fetchTags = async () => {
-        fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID+"&type=dietTags", {
+    const fetchCalories = async () => {
+        fetch(process.env.REACT_APP_API_PATH+"/post-tags?postID="+postID+"&type=calorie", {
             method: "get",
             headers: {
               'Content-Type': 'application/json',
@@ -26,25 +25,20 @@ const PostTags = ({postID}) => {
               async result => {
                 if (result) {
                     if (result[0][0]){
-                        setTags(result[0][0].name.split("~"));
+                        setCalories(result[0][0].name);
                     }
                 }
               },
               error => {
                 console.log(error);
-                setTags([]);
               }
             );
     }
 
-    if (dietTags){
+    if (calories){
         return (
-            <div className="displayedPostTags">
-                {dietTags.map(tag => (
-                    <div key={tag} className="postDietTag">
-                        {tag}
-                    </div>
-                ))}
+            <div className="postLinkContainer">
+                <label>Calories: {calories}</label>
             </div>
         )
     }else{
@@ -52,4 +46,4 @@ const PostTags = ({postID}) => {
     }
 }
 
-export default PostTags
+export default Calories

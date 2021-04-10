@@ -9,7 +9,8 @@ import { BrowserRouter as Router, Route, Switch, Link, Redirect } from "react-ro
 import PostProfilePicture from "./PostProfilePicture";
 import PostURL from "./PostURL.js"
 import FoodPhoto from "./FoodPhoto";
-import PostTags from "./PostTags.js"
+import PostTags from "./PostTags.js";
+import Calories from "./Calories.js"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {faRetweet } from '@fortawesome/free-solid-svg-icons'
 
@@ -56,12 +57,6 @@ export default class Post extends React.Component {
   // we only want to display comment information if this is a post that accepts comments
   conditionalDisplay() {
     console.log("Comment count is " + this.props.post.commentCount);
-
-    //if (this.props.post.commentCount <= 0) {
-    //  return "";
-    //  }
-
-    //else {
       return (
         <div className="comment-block">
 
@@ -168,6 +163,7 @@ export default class Post extends React.Component {
                 <FoodPhoto id={this.getFoodPhotoID()}/>
             </div>
             <PostURL link={this.props.post.thumbnailURL}/>
+            <Calories postID={this.props.post.id} />
             <PostTags postID={this.props.post.id}/>
             {this.conditionalDisplay()}
         </div>
