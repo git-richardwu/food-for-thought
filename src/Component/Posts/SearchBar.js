@@ -58,7 +58,7 @@ const SearchBar = ({searchPosts}) => {
     return (
         <div className="searchContainer">
             <div className="searchBarContainer">
-                <input className="searchBar" type="text" placeholder="Search.." onChange={e => setText(e.target.value)} value={searchText}/>
+                <input className="searchBar" type="text" placeholder="Search.." onChange={e => setText(e.target.value)} value={searchText} onKeyPress={e => submitOnEnter(e.key)}/>
                 <img
                     src={SearchImage}
                     tabIndex="0"
