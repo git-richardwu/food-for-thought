@@ -1,7 +1,8 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import Post from "./Post.jsx";
-import SearchBar from "./SearchBar"
+import SearchBar from "./SearchBar";
+
 import "./Posts.css";
 
 const Posts = ({userId}) => {
@@ -37,6 +38,7 @@ const Posts = ({userId}) => {
                   if (userId){
                     setPosts(result[0]);
                   }else{
+                      console.log("reset");
                     await setPostsForHomepage(result[0]);
                   }
                   setLoading(false);
@@ -417,10 +419,26 @@ const Posts = ({userId}) => {
         return dietTags.toLowerCase();
     }
 
+    // used Fisher-Yates Modern Algorithm: https://en.wikipedia.org/wiki/Fisher%E2%80%93Yates_shuffle#The_modern_algorithm
+    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+    const shuffle = () => {
+        var shuffledPosts = posts.slice();
+        for (var i = shuffledPosts.length - 1; i > 0; i--){
+            var j = Math.floor(Math.random() * i);
+            console.log(i);
+            console.log(j);
+            var temp = shuffledPosts[i];
+            shuffledPosts[i] = shuffledPosts[j];
+            shuffledPosts[j] = temp;
+        }
+
+        setPosts(shuffledPosts);
+    }
+
     if (isError) {
         return (
             <div className="postsOuter"> 
-                <SearchBar searchPosts={searchPosts}/> <br/>
+                <SearchBar searchPosts={searchPosts} shuffle={shuffle}/> <br/>
                 <div className="posts">
                     <p>Error Loading Posts</p> 
                 </div>
@@ -429,7 +447,7 @@ const Posts = ({userId}) => {
     } else if (isLoading) {
         return (
             <div className="postsOuter"> 
-                <SearchBar searchPosts={searchPosts}/> <br/>
+                <SearchBar searchPosts={searchPosts} shuffle={shuffle}/> <br/>
                 <div className="posts">
                     <p>Loading...</p> 
                 </div>
@@ -448,7 +466,7 @@ const Posts = ({userId}) => {
             }else{
                 return (
                     <div className="postsOuter">
-                        {showSearchBar && <SearchBar searchPosts={searchPosts}/>}
+                        {showSearchBar && <SearchBar searchPosts={searchPosts} shuffle={shuffle}/>}
                         <div className="posts">
                             {posts.map(post => (
                                 <Post key={post.id} post={post} type="postlist" deletePost={deletePost} resharePost={resharePost} />
@@ -469,7 +487,7 @@ const Posts = ({userId}) => {
             }
             return (
                 <div className="postsOuter"> 
-                    <SearchBar searchPosts={searchPosts}/> <br/>
+                    <SearchBar searchPosts={searchPosts} shuffle={shuffle}/> <br/>
                     <div className="posts">
                         <p>No Posts Found</p> 
                     </div>
