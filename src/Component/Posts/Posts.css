@@ -142,10 +142,24 @@
     margin-left: 10px;
 }
 
-.postTagsContainer{
+.displayedPostTags{
     display: flex;
     flex-direction: row;
     margin-top: 20px;
+}
+
+.postTagsContainer{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.addDietTagsContainer{
+    width: 50%;
+}
+
+.createCalorieContainer{
+    width: 50%;
 }
 
 .postDietTag{
@@ -284,6 +298,18 @@
         width: 7%;
     }
 
+    .postTagsContainer{
+        flex-direction: column;
+    }
+    
+    .addDietTagsContainer{
+        width: 100%;
+    }
+
+    .createCalorieContainer{
+        width: 100%;
+    }
+
 }
 
 @media screen and (max-width: 550px) {
@@ -375,6 +401,8 @@
     .seachFilters {
         font-size: 14px;
     }
+
+
 }
 
 @media screen and (max-width: 350px) {
