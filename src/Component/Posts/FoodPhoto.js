@@ -28,7 +28,7 @@ const FoodPhoto = ({id}) => {
                       if (process.env.REACT_APP_API_PATH.includes("localhost")){
                         setFoodPhoto("http://localhost:3001/"+result.url);
                       }else{
-                        setFoodPhoto("https://webdev.cse.buffalo.edu/"+result.url);
+                        setFoodPhoto("https://webdev.cse.buffalo.edu"+result.url);
                       }
                   }
               })
