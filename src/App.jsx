@@ -6,6 +6,8 @@
 
 import React from "react";
 import "./App.css";
+import BlockingForm from "./Component/Blocking/BlockingForm.jsx"
+import BlockingList from "./Component/Blocking/BlockingList.jsx"
 import PostForm from "./Component/PostForm.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
@@ -22,14 +24,20 @@ import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
 import Settings from "./Component/Settings/Settings.js"
 import UserProfile from "./Component/UserProfile/UserProfile";
+import FollowingList from "./Component/UserProfile/FollowingList";
 import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
 import styles from "./Component/UserProfile/UserProfile.module.css";
 import Banner from "./Component/atoms/atomComponents/banner";
-import StyleGuide from "./Component/StyleGuide/StyleGuide"
-import PasswordReset from "./Component/PasswordReset.jsx"
+import StyleGuide from "./Component/StyleGuide/StyleGuide";
+import PasswordReset from "./Component/PasswordReset.jsx";
+import PostingList from "./Component/PostingList.jsx";
+import Posts from "./Component/Posts/Posts.js";
+import AddPostButton from "./assets/addPost.svg";
+import CreateAPost from "./Component/Posts/CreateAPost.js";
 
-import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch, Link } from "react-router-dom";
 import LandingPage from "./Component/LandingPage";
+import Privacy from "./Component/Settings/Privacy";
 
 // toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
 // contents of the modal dialog are set separately before calling toggle - this is just responsible
@@ -78,13 +86,27 @@ class App extends React.Component {
         <div className={styles.container}>
             <div className={styles.mainContent}>
                     <Switch>
+                        {/* <Route path="/friends">
+                            <div>
+                            <p>Friends</p>
+                            <FriendForm userid={sessionStorage.getItem("user")} />
+                            <FriendList userid={sessionStorage.getItem("user")} />
+                            </div>
+                        </Route> */}
+                        <Route path="/settings/privacy/blockedUsers">
+                            <SideMenu/>
+                            {/* <Banner title = {"Block User"}/> */}
+                            <div className="maincontent" id="mainContent">
+                                <Banner title = {"Block User"}/>
+                                <BlockingForm userid={sessionStorage.getItem("user")} />
+                                <BlockingList userid={sessionStorage.getItem("user")} />
+                            </div>
+                        </Route>
                         <Route path="/settings/account">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Account"}/>
-                                <div className={styles.innerContent}>
-                                    <Profile/>
-                                </div>
+                                <Profile/>
                             </div>
                         </Route>
                         <Route
@@ -105,7 +127,6 @@ class App extends React.Component {
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Diet"}/>
                                 <div className="diet">
-                                <p>Diet</p>
                                     <Diet/>
                                 </div>
                             </div>
@@ -132,20 +153,23 @@ class App extends React.Component {
                           </Route>                              
                         <Route path="/settings/preferences">
                             <SideMenu/>
-                                <div className="maincontent" id="mainContent">
+                            <div className="maincontent" id="mainContent">
                                 <Banner title ={"Preferences"}/>
-                                <div className={styles.innerContent}>
-                                    <Preferences/>
-                                </div>
+                                <Preferences/>
                             </div>
-                          </Route> 
+                          </Route>
+                        <Route path="/settings/privacy">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Privacy"}/>
+                                <Privacy/>
+                            </div>
+                        </Route> 
                         <Route path="/settings">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Settings"}/>
-                                <div className={styles.innerContent}>
-                                    <Settings/>
-                                </div>
+                                <Settings/>
                             </div>
                         </Route>
                         <Route path={["/signup"]}>
@@ -155,11 +179,9 @@ class App extends React.Component {
                         </Route>
                         <Route path="/styleguide">
                             <SideMenu/>
-                            <div className="maincontent" id="mainContent">
+                            <div className="mainHome">
                                 <Banner title ={"Style Guide"}/>
-                                <div className={styles.innerContent}>
-                                    <StyleGuide/>
-                                </div>
+                                <StyleGuide/>
                             </div>
                         </Route>
                         <Route path="/friends">
@@ -169,27 +191,46 @@ class App extends React.Component {
                                 <FriendList userid={sessionStorage.getItem("user")} />
                             </div>
                         </Route>
-                        <Route path="/profile">
+                        <Route path="/profile/:userID">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Profile"}/>
                                 <div className={styles.innerContent}>
-                                    <UserProfile/>
-                                </div>
-                            </div>
-                        </Route>
-                        <Route path={["/main"]}>
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Food For Thought"}/>
-                                <div className={styles.innerContent}>
-                                    <div className="container">
-                                        <PostForm refresh={this.state.refreshPosts} />
-                                    </div>
+                                    <UserProfile />
+                                    <Link to="/create">
+                                        <img className="addPostButtonProfile" src ={AddPostButton}></img>
+                                    </Link>
                                 </div>
                             </div>
                         </Route>
 
+                        <Route path="/following/:userID">
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Following List"}/>
+                                <div className={styles.innerContent}>
+                                    <FollowingList />
+                                </div>
+                            </div>
+                        </Route>
+
+                        <Route path={["/create"]}>
+                            <SideMenu/>
+                            <div className="maincontent" id="mainContent">
+                                <Banner title ={"Create"}/>
+                                <CreateAPost/>
+                            </div>
+                        </Route>
+                        <Route path={["/home"]}>
+                            <SideMenu/>
+                            <div className="mainHome">
+                                <Banner title ={"Home"}/>
+                                <Posts/>
+                                <Link to="/create">
+                                    <img className="addPostButtonHome" src ={AddPostButton}></img>
+                                </Link>
+                            </div>
+                        </Route>
                         <Route path={["/login"]}>
                             <div className="maincontent" id="mainContent">
                                 <LoginForm refreshPosts={this.doRefreshPosts} />

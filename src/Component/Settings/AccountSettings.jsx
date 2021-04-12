@@ -170,7 +170,7 @@ export default class AccountSettings extends React.Component {
   }
 
     async deleteAccount() {
-        var dialogResult = window.confirm("Are you sure you want to delete your account?");
+        var dialogResult = window.confirm("Are you sure you want to delete your account? This is irreverisible!");
         if (dialogResult){
             var requestOptionsDelete = {
                 method: 'DELETE',

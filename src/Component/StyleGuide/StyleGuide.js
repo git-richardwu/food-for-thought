@@ -11,7 +11,7 @@ import "./StyleGuide.css"
 
 const StyleGuide = () => {
     return (
-        <div className="container">
+        <div className="styleGuideContainer">
             <h2> Logo </h2>
             <img src = {logoimage} alt = "logo" className = "logosize"/>
 
@@ -110,7 +110,8 @@ const StyleGuide = () => {
 
             <h3 className="layoutSubHeader">Inline Error Messages</h3>
             <p>
-                Login, Sign Up, and editing account information have inline error messages for when the user does not enter a valid email or password fields do not match.
+                Login, Sign Up, and editing account information have inline error messages <br/>
+                for when the user does not enter a valid email or password fields do not match.
             </p>
             <video width="750" height="500" controls>
                 <source src={inlineError} type="video/mp4"/>
@@ -122,9 +123,10 @@ const StyleGuide = () => {
                 On text fields, we switch from mouse to I-beam pointer.<br/>
                 Back buttons have an arrow pointing left on the button.<br/>
                 Buttons that go to a another page have an arrow pointing right.<br/>
-                The scroll bar provides measured feedback to user and provides the length of the content that has been scrolled within a webpage.<br/>
+                The scroll bar provides measured feedback to user and provides the length of <br/>
+                the content that has been scrolled within a webpage.<br/>
             </p>
-            <video width="750" height="500" controls>
+            <video width="750" height="500" controls className="lastVideo">
                 <source src={feedback} type="video/mp4"/>
             </video>
         </div>

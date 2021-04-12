@@ -1,5 +1,6 @@
 import React from "react";
 import homeIcon from "../../../assets/home-white-18dp.svg";
+import Logo from "../../../Images/logo.jpg"
 import personIcon from "../../../assets/person-white-18dp.svg";
 import settingsIcon from "../../../assets/settings-white-18dp.svg";
 import notificationsIcon from "../../../assets/circle_notifications-white-18dp.svg";
@@ -9,7 +10,10 @@ import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 function SideMenu() {
     return ( 
         <div className={styles.sideMenu}>
-            <Link to="/main">
+            <Link to="/">
+                <img className = {styles.logo} src = {Logo}></img>
+            </Link>
+            <Link to="/home">
                 <button className={styles.button}>
                     <img className = {styles.icon } src = {homeIcon}></img>
                 </button>
@@ -19,7 +23,7 @@ function SideMenu() {
                     <img className = {styles.icon } src = {notificationsIcon}></img>
                 </button>
             </Link>
-            <Link to="/profile">
+            <Link to={`/profile/${sessionStorage.getItem("user")}`}>
                 <button className={styles.button}>
                     <img className = {styles.icon } src = {personIcon}></img>
                 </button>

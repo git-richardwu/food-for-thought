@@ -3,23 +3,21 @@
     border: none;
     color: black;
     padding: 10px 32px;
-    margin-bottom: 30px;
     text-align: left;
-    display: inline-block;
     font-size: 22px;
     cursor: pointer;
-    width: 50%;
     border-radius: 4px;
+    margin-top: 50px;
     font-family: ReemKufi;
     font-weight: bolder;
+    width: 550px;
 }
 
 .settingsContainer {
     display: flex;
     flex-direction: column;
-    margin-left: 25%;
-    margin-top: 10%;
-    width: 100%;
+    align-items: center;
+    justify-content: space-evenly;
     background-color: #FEFFF6;
 }
 
@@ -37,7 +35,7 @@
     color: black;
     padding: 7px 20px;
     margin-bottom: 20px;
-    margin-top: 100px;
+    margin-top: 10%;
     text-align: left;
     font-size: 20px;
     cursor: pointer;
@@ -181,9 +179,108 @@
     clear: both;
   }
 
+.privacyContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    background-color: #FEFFF6;
+    margin-top: 10%;
+}
+
+.numBlock{
+    float: right;
+    margin-right: 20px;
+}
+
+.privacy{
+    width: 550px;
+}
+
+.privacyLabel{
+    text-align: left;
+    font-size: 22px;
+    font-family: ReemKufi;
+    background-color: #6FD397;
+    border: none;
+    color: black;
+    font-weight: bolder;
+    padding: 10px 32px
+}
+
+.privacySubLabel{
+    text-align: left;
+    font-size: 14px;
+    font-family: ReemKufi;
+    color: black;
+}
+
+/* Toggle switch from https://www.w3schools.com/howto/howto_css_switch.asp */
+
+/* The switch - the box around the slider */
+.switch {
+    position: relative;
+    float: right;
+    width: 60px;
+    height: 34px;
+  }
   
-  /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 600px) {
+  /* Hide default HTML checkbox */
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  /* The slider */
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .2s;
+    transition: .2s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: .2s;
+    transition: .2s;
+  }
+  
+  input:checked + .slider {
+    background-color: #2196F3;
+  }
+  
+  input:focus + .slider {
+    box-shadow: 0 0 1px #2196F3;
+  }
+  
+  input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+  }
+  
+  /* Rounded sliders */
+  .slider.round {
+    border-radius: 34px;
+  }
+  
+  .slider.round:before {
+    border-radius: 50%;
+  }
+
+@media screen and (max-width: 850px) {
     .col-25, .col-75, input[type=submit] {
       width: 100%;
       margin-top: 0;
@@ -191,6 +288,213 @@
 
     .profileform label {
         float: left;
+        font-size: 12px;
+    }
+
+    .backButton{
+        font-size: 12px;
+    }
+
+    .redButton{
+        font-size: 12px;
+    }
+
+    .resetButton{
+        font-size: 12px;
+    }
+
+    .profileform input{
+        font-size: 12px;
+    }
+
+    .profileform input[type="submit"]{
+        font-size: 12px;
+    }
+
+    .arrow {
+        border-width: 0 2px 2px 0;
+        margin-bottom: 1px;
+    }
+
+    .settingsMenuButton {
+        font-size: 18px;
+        width: 250px;
+    }
+
+    .privacyContainer {
+        margin-top: 30%;
+    }
+
+    .numBlock{
+        margin-right: 10px;
+    }
+    
+    .privacy{
+        width: 250px;
+    }
+    
+    .privacyLabel{
+        padding: 10px 10px;
+        font-size: 18px;
+    }
+    
+    .privacySubLabel{
+        margin-top: 12px;
+        font-size: 12px;
+    }
+}
+
+@media screen and (max-width: 300px) {
+    .redButton{
+        margin-left: 0px !important;
+    }
+}
+
+@media screen and (max-height: 750px){
+    .backButton{
+        font-size: 10px;
+        padding: 4px 17px;
+    }
+
+    .redButton{
+        font-size: 12px;
+        padding: 4px 17px;
+    }
+
+    .resetButton{
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .profileform input{
+        font-size: 12px;
+        padding: 6px;
+    }
+
+    .profileform input[type="submit"]{
+        font-size: 12px;
+        padding: 4px 17px;
+        margin-bottom: 50px;
+    }
+
+    .arrow {
+        border-width: 0 2px 2px 0;
+        margin-bottom: 1px;
+    }
+}
+
+@media screen and (max-height: 675px){
+    .settingsMenuButton {
+        margin-top: 30px;
+    }
+
+    .backButton{
+        font-size: 10px;
+        padding: 2px 15px;
+    }
+
+    .redButton{
+        font-size: 10px;
+        padding: 2px 15px;
+        margin-left: 230px;
+    }
+
+    .resetButton{
+        font-size: 10px;
+        padding: 6px;
+    }
+
+    .profileform input{
+        font-size: 10px;
+        padding: 6px;
+    }
+
+    .profileform input[type="submit"]{
+        font-size: 10px;
+        padding: 2px 15px;
+    }
+
+    .arrow {
+        border-width: 0 1px 1px 0;
+        margin-bottom: 0px;
+    }
+}
+
+@media screen and (max-height: 650px) {
+
+    .backButton{
+        font-size: 10px;
+        padding: 2px 15px;
+    }
+
+    .redButton{
+        font-size: 10px;
+        padding: 2px 15px;
+        margin-left: 230px;
+    }
+
+    .resetButton{
+        font-size: 10px;
+        padding: 6px;
+    }
+
+    .profileform input{
+        font-size: 10px;
+        padding: 6px;
+    }
+
+    .profileform input[type="submit"]{
+        font-size: 10px;
+        padding: 2px 15px;
+        margin-bottom: 0px;
+    }
+
+    .arrow {
+        border-width: 0 1px 1px 0;
+        margin-bottom: 0px;
+    }
+}
+
+@media screen and (max-height: 575px) {
+    .backButton{
+        font-size: 10px;
+        padding: 2px 12px;
+    }
+
+    .redButton{
+        font-size: 10px;
+        padding: 2px 12px;
+        margin-left: 0px;
+    }
+
+    .resetButton{
+        font-size: 10px;
+        padding: 4px;
+    }
+
+    .profileform input{
+        font-size: 10px;
+        padding: 4px;
+    }
+
+    .profileform label{
+        font-size: 10px;
+        padding: 4px;
+    }
+
+    .profileform input[type="submit"]{
+        font-size: 10px;
+        padding: 2px 12px;
+        margin-bottom: 20px;
+    }
+
+    .arrow {
+        border-width: 0 1px 1px 0;
+        margin-bottom: 0px;
+    }
+
+    .settingsMenuButton {
+        margin-top: 20px;
     }
 }
 

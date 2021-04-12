@@ -15,6 +15,7 @@ function InfoContainer({
   pounds,
   setUserBio,
   bioID,
+  userID
   
 }) {
   //Dont confuse bio with editBio...one is a string one is a boolean
@@ -92,7 +93,7 @@ function InfoContainer({
       <div className={styles.nameContainer}>
         <div className={styles.leftsideOfInfoContainer}>
           <p className={styles.name}>
-            |{name}| @{username}
+            @{username}
           </p>
           <div className={styles.bioAndButtonsContainer}>
             {editBio === false && <p className={styles.bioText}>{bio}</p>}
@@ -101,7 +102,7 @@ function InfoContainer({
               <textarea type="text" id="userBio" rows="10" cols="20"></textarea>
             )}
 
-            {editBio === false && (
+            {userID === sessionStorage.getItem("user") && editBio === false && (
               <div className={styles.editBio_Photo_Container}>
                 <button onClick={() => isEditingBio(!editBio)}>
                   Edit bio button

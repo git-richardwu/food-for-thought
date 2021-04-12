@@ -1,9 +1,10 @@
 import React from "react";
-import "../App.css";
-import blockIcon from "../assets/block_white_216x216.png";
-import unblockIcon from "../assets/thumbsup.jpg";
+import "../../App.css";
+import unblockIcon from "../../assets/thumbsup.jpg"
+import "./blocking.css"
+import "../Settings/Settings.css"
 
-export default class FriendList extends React.Component {
+export default class BlockingList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -13,13 +14,13 @@ export default class FriendList extends React.Component {
   }
 
   componentDidMount() {
-    this.loadFriends();
+    this.loadBlock();
   }
 
-  loadFriends() {
+  loadBlock() {
 
-    fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user"), {
-      method: "get",
+    fetch(process.env.REACT_APP_API_PATH+"/connections?type=block&status=active&userID="+sessionStorage.getItem("user"), {
+      method: "GET",
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
@@ -44,7 +45,7 @@ export default class FriendList extends React.Component {
       );
   }
 
-  updateConnection(id, status){
+  unblockConnection(id){
     //make the api call to the user controller
     fetch(process.env.REACT_APP_API_PATH+"/connections/"+id, {
       method: "DELETE",
@@ -52,47 +53,33 @@ export default class FriendList extends React.Component {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       },
-      // body: JSON.stringify({
-      //   status: status
-      // })
+    //   body: JSON.stringify({
+    //     status: status
+    //   })
     })
       // .then(res => res.json())
       .then(
-        result => {
+        // result => {
           // this.setState({
           //   responseMessage: result.Status
           // });
-          alert("You have unfollowed this user.")
-          this.loadFriends();
-        },
-        error => {
-          alert("error!");
+          result => {
+          alert("User Unblocked! The page will refresh");
+          this.loadBlock();
         }
+        // },
+        // error => {
+        //   alert("ERROR! ERROR!");
+        //   this.loadBlock();
+        // }
       );
   }
 
   conditionalAction(status, id){
     if (status == "active"){
       return(
-
-      <img
-        src={blockIcon}
-        className="sidenav-icon deleteIcon"
-        alt="Unfollow User"
-        title="Unfollow User"
-        onClick={e => this.updateConnection(id, "blocked")}
-      />
-    )
-    // }else{
-    //   return(
-    //   <img
-    //     src={unblockIcon}
-    //     className="sidenav-icon deleteIcon"
-    //     alt="Unblock User"
-    //     title="Unblock User"
-    //     onClick={e => this.updateConnection(id, "active")}
-    //   />
-    // )
+      <button className = "backButton" onClick={e => this.unblockConnection(id)}> Unblock </button>
+      )
     }
   }
 
@@ -108,8 +95,8 @@ export default class FriendList extends React.Component {
         <div className="post">
           <ul>
             {connections.map(connection => (
-              <div key={connection.id} className="userlist">
-                {connection.connectedUser.username} - {connection.status}
+              <div key={connection.id} className="userlist-block">
+                <p className = "wordfont">{connection.connectedUser.username}</p>
                 <div className="deletePost">
                 {this.conditionalAction(connection.status, connection.id)}
                 </div>

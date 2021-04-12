@@ -61,7 +61,6 @@ export default class LoginForm extends React.Component {
       .then(res => res.json())
       .then(
         result => {
-          console.log("Testing");
           if (result.userID) {
 
             // set the auth token and user ID in the session state
@@ -112,7 +111,7 @@ export default class LoginForm extends React.Component {
           <h2>Login</h2>
         <form onSubmit={this.submitHandler}>
           <label>
-            Username
+            Email
             <input className="textbox" type="text" onChange={this.myChangeHandler} />
           </label>
           <br />
@@ -128,7 +127,7 @@ export default class LoginForm extends React.Component {
         </div>
       );
     } else {
-      return <Redirect to='/main'/>
+      return <Redirect to='/home'/>
       // console.log("Returning welcome message");
       // if (this.state.username) {
       //   return <p>Welcome, {this.state.username}</p>;
