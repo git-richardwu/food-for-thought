@@ -65,7 +65,6 @@ const Diet = () => {
 
                 <button className="createButton" onClick={e => createPost()}>Create</button>
             </div>
-        </div>
     )
 }
 
