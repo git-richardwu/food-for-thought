@@ -17,7 +17,7 @@ export default class Budget extends React.Component {
     }
 
     componentDidMount() {
-        // TODO: add GET here setting this.state.tags
+        // TODO: add GET here setting this.state.budget
         fetch(process.env.REACT_APP_API_PATH+"/users/"+sessionStorage.getItem("user"), {
                    method: "get",
                    headers: {
@@ -33,9 +33,7 @@ export default class Budget extends React.Component {
                           this.setState({
                            // IMPORTANT!  You need to guard against any of these values being null.  If they are, it will
                            // try and make the form component uncontrolled, which plays havoc with react
-                           username: result.username || "",
-                           firstname: result.firstName || "",
-                           lastname: result.lastName || ""
+                            budget: result
                           });
                        }
                      },
