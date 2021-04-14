@@ -263,7 +263,6 @@ export default class Diet extends React.Component {
             if (result) {
               console.log(result);
                this.setState({
-
                });
             }
           },
