@@ -1,6 +1,7 @@
 import React from "react";
 import "../../App.css";
 import PostingList from "../PostingList.jsx";
+import {sendNotification} from "../../Notifications/lib"
 
 export default class CommentForm extends React.Component {
   constructor(props) {
@@ -11,6 +12,10 @@ export default class CommentForm extends React.Component {
     };
     this.postListing = React.createRef();
   }
+
+
+
+
 
   submitHandler = event => {
     //keep the form from actually submitting
@@ -43,6 +48,13 @@ export default class CommentForm extends React.Component {
           alert("error!");
         }
       );
+      let userid = sessionStorage.getItem("user");
+      let recpientID = this.props.authorID;
+      let content = "Your post, "+  this.state.post_text  + ", recieved a comment";
+      // let content = "Your post "+  this.state.post_text  + " recieved a comment";
+
+      console.log("Author ID: " + this.props.authorID);
+      sendNotification(userid,recpientID , content);
   };
 
   myChangeHandler = event => {
