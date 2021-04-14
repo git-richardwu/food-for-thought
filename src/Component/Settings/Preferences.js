@@ -43,7 +43,7 @@ const Preferences = () => {
           }
         },
         (error) => {
-          alert("Error occurred when trying to retrieve weight goal");
+          // alert("Error occurred when trying to retrieve weight goal");
         }
       );
   }
@@ -75,7 +75,7 @@ const Preferences = () => {
           }
         },
         (error) => {
-          alert("Error occurred when trying to retrieve calorie goal");
+          // alert("Error occurred when trying to retrieve calorie goal");
         }
       );
   }

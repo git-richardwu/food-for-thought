@@ -193,66 +193,84 @@ export default class Diet extends React.Component {
               this.setState({
                   tags: value
                 });
+                fetch(process.env.REACT_APP_API_PATH+"/users-preferences?userID="+sessionStorage.getItem("user"), {
+                  method: "POST",
+                  headers: {
+                   "Content-Type": "application/json",
+                   'Authorization': "Bearer " + sessionStorage.getItem("token"),
+                  },
+                  body: JSON.stringify({
+                   "ownerID": sessionStorage.getItem("user"),
+                   "category": "dietTag",
+                   "type": this.state.tags,
+                   "url": "string",
+           
+                   })
+                })
+                  .then(res => res.json())
+                  .then(
+                    result => {
+                    },
+                    error => {
+                      alert("error!");
+                    }
+                  );
+                 }
           }
           else{
               var updated = this.state.tags + ", " + value
               this.setState({
                   tags: updated
                 });
+                fetch(process.env.REACT_APP_API_PATH +"/user-artifacts", {
+                  method:"PATCH",
+                  headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': "Bearer " + sessionStorage.getItem("token"),
+                  },
+                  body: JSON.stringify({
+                    "ownerID": sessionStorage.getItem("user"),
+                    "category": "dietTag",
+                    "type": this.state.tags,
+                    "url": "string",
+                  }),
+                })
+                  .then((res) => res.json())
+                  .then(
+                    (result) => {
+                      console.log("This is the result:1 " + result);
+                    },
+            
+                    (error) => {
+                      alert("errror");
+                    }
+                  );  
           }
-     fetch(process.env.REACT_APP_API_PATH+"/users-preferences?userID="+sessionStorage.getItem("user"), {
-       method: "POST",
-       headers: {
-         'Content-Type': 'application/json',
-         'Authorization': 'Bearer '+sessionStorage.getItem("token")
-       },
-       body: JSON.stringify({
-          username: this.state.username,
-          firstName: this.state.firstname,
-          lastName: this.state.lastname,
 
-        })
-     })
-       .then(res => res.json())
-       .then(
-         result => {
-         },
-         error => {
-           alert("error!");
-         }
-       );
-      }
     }
 
     componentDidMount() {
-        // TODO: add GET here setting this.state.tags
-        fetch(process.env.REACT_APP_API_PATH+"/user-preferences?userID="+sessionStorage.getItem("user"), {
-                   method: "get",
-                   headers: {
-                     'Content-Type': 'application/json',
-                     'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                   }
-                 })
-                   .then(res => res.json())
-                   .then(
-                     result => {
-                       if (result) {
-                         console.log(result);
-                          let tags = "";
-                          result[0].forEach(function(pref) {
-                            if (pref.name === "tags"){
-                                tags  = pref; 
-                            }
-                          },
-                          this.setState({
-                            tags: tags
-                          });
-                       }
-                     },
-                     error => {
-                       alert("error!");
-                     }
-                   );
+      fetch(process.env.REACT_APP_API_PATH+"/users/"+sessionStorage.getItem("user"), {
+        method: "get",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer '+sessionStorage.getItem("token")
+        }
+      })
+        .then(res => res.json())
+        .then(
+          result => {
+            if (result) {
+              console.log(result);
+               this.setState({
+
+               });
+            }
+          },
+          error => {
+            alert("error!");
+          }
+        );
       }
 
 
@@ -282,7 +300,7 @@ export default class Diet extends React.Component {
                 </div>
 
                 <p className="tags">You selected "{this.state.tags}" as a Diet Tag</p>
-                <p>You would like to add: "<input type="text"></input>" as a Diet Tag <button>Submit</button></p>
+                <p>You would like to add: "<input type="text"></input>" as a Diet Tag <button onclick="fieldChangeHandler(value, e)">Submit</button></p>
                 {/* <p id='demo' style={{display: "none"}} ref = "tag">Hello Javascript</p>      */}
 
             </div>

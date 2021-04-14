@@ -12,7 +12,7 @@ export default class Allergies extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-          tags: "",
+          allergies: "",
       };
       this.fieldChangeHandler.bind(this);
     }
@@ -35,7 +35,7 @@ export default class Allergies extends React.Component {
                            username: result.username || "",
                            firstname: result.firstName || "",
                            lastname: result.lastName || "",
-                           tags: results.tags || ""
+                        //    tags: results.tags || ""
                           });
                        }
                      },
@@ -48,42 +48,47 @@ export default class Allergies extends React.Component {
 
     fieldChangeHandler(value, e) {
         console.log("field change");
-        if (!this.state.tags.includes(value)){
-            if (this.state.tags == ""){
+        if (!this.state.allergies.includes(value)){
+            if (this.state.allergies == ""){
                 this.setState({
-                    tags: value
+                    allergies: value
                   });
+                  fetch(process.env.REACT_APP_API_PATH +"/user-artifacts", {
+                    method:"POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      'Authorization': "Bearer " + sessionStorage.getItem("token"),
+                    },
+                    body: JSON.stringify({
+                      "ownerID": sessionStorage.getItem("user"),
+                      "category": "allergies",
+                      "type": this.state.allergies,
+                      "url": "string",
+                    }),
+                  })
+                    .then((res) => res.json())
+                    .then(
+                      (result) => {
+                        console.log("This is the result:1 " + result);
+                      },
+              
+                      (error) => {
+                        alert("errror");
+                      }
+                    );  
+            
             }
             else{
-                var updated = this.state.tags + ", " + value
+                var updated = this.state.allergies + ", " + value
                 this.setState({
-                    tags: updated
+                    allergies: updated
                   });
+                  
+
+                
+
             }
         }
-
-        fetch(url, {
-                method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                },
-                body: JSON.stringify({
-                    name: "tags",
-                    value: tags,
-                })
-            })
-                .then(res => res.json())
-                .then(
-                    result => {
-                        this.setState({
-                            tags: result.tags
-                    });
-                    },
-                    error => {
-                        alert("error!");
-                    }
-                };
 };
 
     render() {
@@ -138,6 +143,7 @@ export default class Allergies extends React.Component {
                         </label>
                     </div>
                 </div>
+                <p className="tags">You selected "{this.state.allergies}" as allergies</p>
             </div>
         );
     }

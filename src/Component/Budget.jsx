@@ -11,7 +11,7 @@ export default class Budget extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-          tags: "",
+          budget: "",
       };
       this.fieldChangeHandler.bind(this);
     }
@@ -40,7 +40,6 @@ export default class Budget extends React.Component {
                        }
                      },
                      error => {
-                       alert("error!");
                      }
                    );
       }
@@ -51,26 +50,67 @@ export default class Budget extends React.Component {
         
         if (!this.state.tags.includes(value)){
             // TODO: add POST here
-            if (this.state.tags == ""){
+            if (this.state.budget == ""){
                 this.setState({
-                    tags: value
+                    budget: value
                   });
+                  fetch(process.env.REACT_APP_API_PATH +"/user-artifacts", {
+                    method:"POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                      'Authorization': "Bearer " + sessionStorage.getItem("token"),
+                    },
+                    body: JSON.stringify({
+                      "ownerID": sessionStorage.getItem("user"),
+                      "category": "budget",
+                      "type": this.state.budget,
+                      "url": "string",
+                    }),
+                  })
+                    .then((res) => res.json())
+                    .then(
+                      (result) => {
+                        console.log("This is the result:1 " + result);
+                      },
+              
+                      (error) => {
+                        alert("errror");
+                      }
+                    );  
             }
             else{
-                var updated = this.state.tags + ", " + value
-                this.setState({
-                    tags: updated
-                  });
+              fetch(process.env.REACT_APP_API_PATH +"/user-artifacts", {
+                method:"PATCH",
+                headers: {
+                  "Content-Type": "application/json",
+                  'Authorization': "Bearer " + sessionStorage.getItem("token"),
+                },
+                body: JSON.stringify({
+                  "ownerID": sessionStorage.getItem("user"),
+                  "category": "budget",
+                  "type": this.state.budget,
+                  "url": "string",
+                }),
+              })
+                .then((res) => res.json())
+                .then(
+                  (result) => {
+                    console.log("This is the result:1 " + result);
+                  },
+          
+                  (error) => {
+                    alert("errror");
+                  }
+                );  
             }
         }
-      }
-      
-
-    render() {
+      };
+    
+    render(){
         return (
             <div className="pref">
                 <h2>Budget</h2>
-                <p>You would like to spend $<input type="text"></input> dollars a week<button className="Submit">Submit</button></p> 
+                <p>You would like to spend $<input type="text"></input> dollars a week<button className="Submit" onclick="fieldChangeHandler(value, e)">Submit</button></p> 
                 
                 {/* <p id='demo' style={{display: "none"}} ref = "tag">Hello Javascript</p>      */}
 
