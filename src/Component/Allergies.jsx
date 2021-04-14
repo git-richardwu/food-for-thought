@@ -1,5 +1,4 @@
 import React,{useState} from 'react';
-import { resultsAriaMessage } from 'react-select/src/accessibility';
 import "./Allergies.css"
 
 
