@@ -330,7 +330,7 @@ const Posts = ({userId}) => {
                 if (useCalorie){
                     var calorie = await getPostCalorieTag(allPosts[i].id);
                     var searchCalorie = parseInt(searchText);
-                    if (searchCalorie != NaN && ((searchCalorie - calorie) <= 100)){
+                    if (searchCalorie != NaN && (Math.abs(searchCalorie - calorie) <= 100)){
                         filteredPosts.push(allPosts[i]);
                         continue;
                     }
