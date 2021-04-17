@@ -1,6 +1,6 @@
 import React from "react";
 import "../../App.css";
-import PostingList from "../PostingList.jsx";
+import CommentList from "../CommentList.jsx";
 
 export default class CommentForm extends React.Component {
   constructor(props) {
@@ -55,18 +55,15 @@ export default class CommentForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.submitHandler}>
-          <label>
-            Add A Comment to Post {this.props.parent}
-            <br />
-            <textarea rows="5" cols="120" onChange={this.myChangeHandler} />
-          </label>
-          <br />
-
-          <input type="submit" value="submit" />
+          <p>
+            Add A Comment To This Post
+            <textarea className="commentForm" onChange={this.myChangeHandler} />
+          </p>
+          <input type="submit" value="Comment" />
           <br />
           {this.state.postmessage}
         </form>
-        <PostingList
+        <CommentList
           ref={this.postListing}
           parentid={this.props.parent}
           type="commentlist"

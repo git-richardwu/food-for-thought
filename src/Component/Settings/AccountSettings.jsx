@@ -1,6 +1,17 @@
 import React from "react";
 import "./Settings.css";
+import Modal from "../Modal.jsx";
+import "../Modal.css"
 import { BrowserRouter as Router, Route, Switch, Link, Redirect } from "react-router-dom";
+
+// toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
+// contents of the modal dialog are set separately before calling toggle - this is just responsible
+// for showing and hiding the component
+function toggleModal(app) {
+    app.setState({
+      openModal: !app.state.openModal,
+    });
+  }
 
 export default class AccountSettings extends React.Component {
   constructor(props) {
@@ -13,6 +24,7 @@ export default class AccountSettings extends React.Component {
       clickedSubmit: false,
       originalUsername: "",
       originalEmail: "",
+      openModal: false,
     };
     this.fieldChangeHandler.bind(this);
   }
@@ -25,9 +37,6 @@ export default class AccountSettings extends React.Component {
   }
 
   componentDidMount() {
-    console.log("In profile");
-    console.log(this.props);
-
     // first fetch the user data to allow update of username
     fetch(process.env.REACT_APP_API_PATH+"/users/"+sessionStorage.getItem("user"), {
       method: "get",
@@ -169,38 +178,40 @@ export default class AccountSettings extends React.Component {
         });
   }
 
+    confirmDelete(){
+        this.setState({
+            openModal: true
+        })
+    }
     async deleteAccount() {
-        var dialogResult = window.confirm("Are you sure you want to delete your account? This is irreverisible!");
-        if (dialogResult){
-            var requestOptionsDelete = {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer '+sessionStorage.getItem("token")
-                },
-            };
-            await this.deleteGeneral("/user-preferences", "?userID=",sessionStorage.getItem("user")) // user-preferences
-                .then(await this.deleteGeneral("/user-artifacts", "?ownerID=",sessionStorage.getItem("user"))) // user-artifacts
-                .then(await this.deleteGeneral("/connections", "?userID=",sessionStorage.getItem("user"))) // following
-                .then(await this.deleteGeneral("/connections", "?connectedUserID=",sessionStorage.getItem("user"))) // followers
-                .then(await this.deletePosts()) // posts
-                .then(await this.deleteGeneral("/post-tags", "?userID=",sessionStorage.getItem("user"))) // post-tags
-                .then(await this.deleteGroups()) // groups
-                .then(await this.deleteGeneral("/group-members", "?userID=",sessionStorage.getItem("user"))) // group member
-                .then(await this.deleteGeneral("/messages", "?authorID=",sessionStorage.getItem("user"))) // messages sent
-                .then(await this.deleteGeneral("/messages", "?recipientUserID=", sessionStorage.getItem("user"))) // messages recieved
-                .then(await fetch(process.env.REACT_APP_API_PATH + "/users/"+sessionStorage.getItem("user"), requestOptionsDelete)
-                    .then(response => response.json())
-                    .then(result =>console.log(result))
-                    .catch(error => console.log(error)))
-                .then(() => {              
-                    sessionStorage.removeItem("token");
-                    sessionStorage.removeItem("user");
-                    this.setState({
-                        deletePressed: true
-                        });
-                });
-        }
+        var requestOptionsDelete = {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            },
+        };
+        await this.deleteGeneral("/user-preferences", "?userID=",sessionStorage.getItem("user")) // user-preferences
+            .then(await this.deleteGeneral("/user-artifacts", "?ownerID=",sessionStorage.getItem("user"))) // user-artifacts
+            .then(await this.deleteGeneral("/connections", "?userID=",sessionStorage.getItem("user"))) // following
+            .then(await this.deleteGeneral("/connections", "?connectedUserID=",sessionStorage.getItem("user"))) // followers
+            .then(await this.deletePosts()) // posts
+            .then(await this.deleteGeneral("/post-tags", "?userID=",sessionStorage.getItem("user"))) // post-tags
+            .then(await this.deleteGroups()) // groups
+            .then(await this.deleteGeneral("/group-members", "?userID=",sessionStorage.getItem("user"))) // group member
+            .then(await this.deleteGeneral("/messages", "?authorID=",sessionStorage.getItem("user"))) // messages sent
+            .then(await this.deleteGeneral("/messages", "?recipientUserID=", sessionStorage.getItem("user"))) // messages recieved
+            .then(await fetch(process.env.REACT_APP_API_PATH + "/users/"+sessionStorage.getItem("user"), requestOptionsDelete)
+                .then(response => response.json())
+                .then(result =>console.log(result))
+                .catch(error => console.log(error)))
+            .then(() => {              
+                sessionStorage.removeItem("token");
+                sessionStorage.removeItem("user");
+                this.setState({
+                    deletePressed: true
+                    });
+            });
     }
 
     async deleteGeneral(path, query, id){
@@ -402,7 +413,22 @@ export default class AccountSettings extends React.Component {
             <br/>
             <br/>
             
-            <button className="redButton" onClick={this.deleteAccount.bind(this)}>Delete Account</button>
+            <button className="redButton" onClick={this.confirmDelete.bind(this)}>Delete Account</button>
+
+            <Modal
+                show={this.state.openModal}
+                onClose={(e) => toggleModal(this, e)}>
+                <div className="modal-header">
+                    <h2 className="modal-header-text">Delete Account</h2>
+                </div>
+                <div className="modal-body">
+                    <p className="modalMessage">Are you sure you want to delete your account? This is irreverisible!</p>
+                </div>
+                <div className="modal-footer">
+                    <button  className="yesButton" onClick={this.deleteAccount.bind(this)}>Yes</button>
+                    <button className="noButton" onClick={e => toggleModal(this, e)}>No</button>
+                </div>
+            </Modal>
         </div>
       
     );
