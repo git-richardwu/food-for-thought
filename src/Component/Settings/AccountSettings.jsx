@@ -25,6 +25,10 @@ export default class AccountSettings extends React.Component {
       originalUsername: "",
       originalEmail: "",
       openModal: false,
+      invalidEmail: false,
+      invalidUsername: false,
+      usernameExists: false,
+      emailExists: false,
     };
     this.fieldChangeHandler.bind(this);
   }
@@ -67,7 +71,12 @@ export default class AccountSettings extends React.Component {
   submitHandler = event => {
     //keep the form from actually submitting
     event.preventDefault();
-    var message = "";
+    this.setState({
+        invalidEmail: false,
+        invalidUsername: false,
+        emailExists: false,
+        usernameExists: false
+    })
     var requestOptions = {
         method: 'GET',
         headers: {
@@ -80,24 +89,31 @@ export default class AccountSettings extends React.Component {
         .then(response => response.json())
         .then(result => {
             if (this.state.email == ""){
-                message += "ERROR: Email cannot be empty! Please enter an email!\n"
+                this.setState({
+                    invalidEmail: true
+                })
             }
             else if (result[1] != 0 && this.state.email != this.state.originalEmail){
-                message += "ERROR: Email: \""+this.state.email+"\" already exists! Please try another email!\n"
+                this.setState({
+                    emailExists: true
+                })
             }
 
             fetch(process.env.REACT_APP_API_PATH + "/users?username="+this.state.username, requestOptions)
                 .then(response => response.json())
                 .then(result2 => {
                     if (this.state.username == ""){
-                        message += "ERROR: Username cannot be empty! Please enter an username!\n"
+                        this.setState({
+                            invalidUsername: true
+                        })
                     }
                     else if (result2[1] != 0 && this.state.username != this.state.originalUsername){
-                        message += "ERROR: Username: \"" + this.state.username +"\" already exists! Please try another username!\n"
+                        this.setState({
+                            usernameExists: true
+                        })
                     }
 
-                    if (message.length != 0){
-                        alert(message);
+                    if (this.state.invalidEmail || this.state.invalidUsername || this.state.emailExists || this.state.usernameExists){
                         return;
                     }else{
                         //make the api call to the user controller
@@ -369,6 +385,8 @@ export default class AccountSettings extends React.Component {
                         />
                     </div>
                 </div>
+                {this.state.invalidEmail && <p className="errorMessage">Email cannot be empty! Please enter an email!</p>}
+                {this.state.emailExists && <p className="errorMessage">Please choose another email, this one already exists.</p>}
                 <div className="row">
                     <div className="col-25">
                         <label id="usernameID">Username:</label>
@@ -382,6 +400,8 @@ export default class AccountSettings extends React.Component {
                         />
                     </div>
                 </div>
+                {this.state.invalidUsername && <p className="errorMessage">Username cannot be empty! Please enter an username!</p>}
+                {this.state.usernameExists && <p className="errorMessage">Please choose another username, this one already exists.</p>}
                 <div className="row">
                     <div className="col-25">
                         <label>Password:</label>

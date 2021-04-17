@@ -31,16 +31,9 @@ export default class BlockingList extends React.Component {
         result => {
           if (result) {
             this.setState({
-              isLoaded: true,
               connections: result[0]
             });
           }
-        },
-        error => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
         }
       ).catch(error => console.log(error));
   }
@@ -56,7 +49,6 @@ export default class BlockingList extends React.Component {
     })
       .then(
           result => {
-          alert("User Unblocked! The page will refresh");
           this.loadBlock();
         }
       ).catch(error => console.log(error));
@@ -70,28 +62,19 @@ export default class BlockingList extends React.Component {
     }
   }
 
-  render() {
-    //this.loadPosts();
-    const {error, isLoaded, connections} = this.state;
-    if (error) {
-      return <div> Error: {error.message} </div>;
-    } else if (!isLoaded) {
-      return <div> Loading... </div>;
-    } else {
-      return (
-        <div className="post">
-          <ul>
-            {connections.map(connection => (
-              <div key={connection.id} className="userlist-block">
-                <p className = "wordfont">{connection.connectedUser.username}</p>
-                <div className="deletePost">
-                {this.conditionalAction(connection.status, connection.id)}
-                </div>
-              </div>
-            ))}
-          </ul>
-        </div>
-      );
+    render() {
+        const {connections} = this.state;
+        return (
+            <div>
+                {connections.map(connection => (
+                    <div key={connection.id} className="userlist-block">
+                        <p className = "wordfont">{connection.connectedUser.username}</p>
+                        <div className="deletePost">
+                            {this.conditionalAction(connection.status, connection.id)}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
     }
-  }
 }

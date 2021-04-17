@@ -120,25 +120,26 @@ export default class BlockingForm extends React.Component {
   render() {
     return (
       <div className = "privacyContainer">
-      <form onSubmit={this.submitHandler}>
-        <Link to="/settings/">
-            <button className = "backButton">
-              <i className = "arrow left"/>
-                Back
-            </button>      
-        </Link>
-        <br/>
-        <label>
-          <p className = "wordfont1"> Block a User! (enter username, not userid or email)</p>
-          {/* <br /> */}
-          <div className="autocomplete">
-            <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
-          </div>
-        </label>
-        <input className = "backButton" type="submit" value="Submit" />
-        {/* {this.state.responseMessage} */}
-      </form>
-      <p>Blocked Users:</p>
+        <form onSubmit={this.submitHandler}>
+            <Link to="/settings/privacy">
+                <button className = "backButton backButtonCreate">
+                <i className = "arrow left"/>
+                    Back
+                </button>      
+            </Link>
+            <br/>
+            <div className="inputContainer">
+                <div className="userInputContainer">
+                    <label className="wordfont1"> Block a User! (enter username, not userid or email)</label>
+                    <div className="autocomplete" tabIndex="0">
+                        <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
+                    </div>
+                </div>
+                <input className= "resetButton" type="submit" value="Block" />
+            </div>
+            {/* {this.state.responseMessage} */}
+        </form>
+        <p>Blocked Users:</p>
       </div>
     );
   }

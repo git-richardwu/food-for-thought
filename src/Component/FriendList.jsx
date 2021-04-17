@@ -63,7 +63,6 @@ export default class FriendList extends React.Component {
           // this.setState({
           //   responseMessage: result.Status
           // });
-          alert("You have unfollowed this user.")
           this.loadFriends();
         },
       )

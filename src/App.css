@@ -76,9 +76,6 @@
     width: calc(300px + 1rem);
 }
 
-.autocomplete{
-    min-height: 165px;
-}
 
 .suggestions {
   border: 1px solid #999;

@@ -2,12 +2,21 @@ import React from "react";
 
 import "../App.css";
 import { Redirect } from "react-router-dom";
-import "./SignUp_Page/foobar.css"
+import "./SignUp_Page/foobar.css";
+import Modal from "./Modal.jsx"
+
+// toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
+// contents of the modal dialog are set separately before calling toggle - this is just responsible
+// for showing and hiding the component
+function toggleModal(app) {
+    app.setState({
+      openModal: !app.state.openModal,
+    });
+  }
 
 // the login form will display if there is no session token stored.  This will display
 // the login form, and call the API to authenticate the user and store the token in
 // the session.
-
 export default class LoginForm extends React.Component {
   constructor(props) {
     super(props);
@@ -16,7 +25,8 @@ export default class LoginForm extends React.Component {
       password: "",
       alanmessage: "",
       sessiontoken: "",
-      redirect: false
+      redirect: false,
+      openModal: false
     };
     this.refreshPostsFromLogin = this.refreshPostsFromLogin.bind(this);
   }
@@ -68,8 +78,7 @@ export default class LoginForm extends React.Component {
             sessionStorage.setItem("user", result.userID);
 
             this.setState({
-              sessiontoken: result.token,
-              alanmessage: result.token
+              sessiontoken: result.token
             });
 
             // call refresh on the posting list
@@ -81,12 +90,14 @@ export default class LoginForm extends React.Component {
             sessionStorage.removeItem("user");
             this.setState({
               sessiontoken: "",
-              alanmessage: result.message
+              openModal: !this.state.openModal
             });
           }
         }
       )
-      .catch(error => console.log(error));
+      .catch(error => {
+         console.log(error);
+      });
   };
 
   rdReset = event => {
@@ -105,33 +116,40 @@ export default class LoginForm extends React.Component {
     if (!sessionStorage.getItem("token")) {
       return (
         // <form onSubmit={this.submitHandler}>
-        <div className="center">
-          <h2>Login</h2>
-        <form onSubmit={this.submitHandler}>
-          <label>
-            Email
-            <input className="textbox" type="text" onChange={this.myChangeHandler} />
-          </label>
-          <br />
-          <label>
-            Password
-            <input className="textbox" type="password" onChange={this.passwordChangeHandler} />
-          </label>
-          <br />
-          <input className="buttonStyle1" type="submit" value="submit" />
-          <button onClick = {this.rdReset} className = "buttonStyle1"> Forgot Password </button>
-          <p>{this.state.alanmessage}</p>
-        </form>
+        <div className="signUpContainer">
+            <h2>Login</h2>
+            <form onSubmit={this.submitHandler}>
+                <label>
+                    Email:
+                    <input className="textbox" type="text" onChange={this.myChangeHandler} />
+                </label>
+                <br />
+                <label>
+                    Password:
+                    <input className="textbox" type="password" onChange={this.passwordChangeHandler} />
+                </label>
+                <br />
+                <input className="buttonStyle1" type="submit" value="submit" />
+                <button onClick = {this.rdReset} className = "buttonStyle1"> Forgot Password </button>
+                <p>{this.state.alanmessage}</p>
+            </form>
+            <Modal
+                show={this.state.openModal}
+                onClose={(e) => toggleModal(this, e)}>
+                <div className="modal-header">
+                    <h2 className="modal-header-text">Invalid Credentials</h2>
+                </div>
+                <div className="modal-body">
+                    <p className="modalMessage">Please ensure that the correct email and password is entered. Did you mean to <a href="/signup">register</a>?</p>
+                </div>
+                <div className="modal-footer">
+                    <button  className="yesButton" onClick={e => toggleModal(this, e)}>OK</button>
+                </div>
+            </Modal>
         </div>
       );
     } else {
       return <Redirect to='/home'/>
-      // console.log("Returning welcome message");
-      // if (this.state.username) {
-      //   return <p>Welcome, {this.state.username}</p>;
-      // } else {
-      //   return <p>{this.state.alanmessage}</p>;
-      // }
     }
   }
 }

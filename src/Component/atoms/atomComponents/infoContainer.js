@@ -66,7 +66,7 @@ function InfoContainer({
         (result) => {
           console.log("This is the result: " + result.Status);
         }
-      )            .catch(error => console.log(error));
+      ).catch(error => console.log(error));
   }
 }
 

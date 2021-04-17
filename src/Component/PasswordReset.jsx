@@ -1,6 +1,21 @@
 import React from "react";
-
+import Modal from "./Modal.jsx"
 import {Redirect} from "react-router-dom";
+import { faAssistiveListeningSystems } from "@fortawesome/free-solid-svg-icons";
+
+function toggleModal1(app) {
+    app.setState({
+      openModal1: !app.state.openModal1,
+    });
+  }
+
+
+  function toggleModal2(app) {
+    app.setState({
+      openModal2: !app.state.openModal2,
+    });
+  }
+
 
 export default class PasswordReset extends React.Component {
   constructor(props) {
@@ -9,7 +24,11 @@ export default class PasswordReset extends React.Component {
       email: "",
       token: "",
       password: "",
-      redirect: false
+      redirect: false,
+      openModal1: false,
+      openModal2: false,
+      invalidEmail: false,
+      invalidPassword: false
     };
   }
 
@@ -39,9 +58,13 @@ export default class PasswordReset extends React.Component {
     event.preventDefault();
 
     const email = this.state.email
-
-    if (email == "" || (!email.includes("@"))){
-        alert("Please enter a valid email!")
+    this.setState({
+        invalidEmail: false,
+    })
+    if (email == "" || (!email.includes("@") || !email.includes("buffalo.edu"))){
+        this.setState({
+            invalidEmail: true,
+        })
         return;
     }
 
@@ -60,7 +83,9 @@ export default class PasswordReset extends React.Component {
     .then(
       result => {
         console.log(result);
-        alert("An Email has been sent!");
+        this.setState({
+            openModal2: true
+        })
       })
       .catch(error => console.log(error));
     }
@@ -69,13 +94,16 @@ export default class PasswordReset extends React.Component {
   submitHandler2 = (event) => {
     //keep the form from actually submitting
     event.preventDefault();
-
+    this.setState({
+        invalidPassword: false,
+    })
 
     const token = this.state.token
     const password = this.state.password
-
-    if(password == "" || password.length < 6){
-      alert("Please enter a valid password")
+    if(password == "" || password.length < 6 || password === password.toLowerCase()){
+        this.setState({
+            invalidPassword: true,
+        })
       return;
     }
 
@@ -93,16 +121,20 @@ export default class PasswordReset extends React.Component {
       .then(
       result => {
         console.log(result);
-        alert("New Password Submitted!");
-
         this.setState({
-          redirect: true
-        });
+            openModal1: true
+        })
       })
       .catch(error => console.log(error));
 
     }
   };
+
+  redirect(){
+    this.setState({
+        redirect: true
+      });
+  }
 
   render() {
       const { redirect } = this.state;
@@ -111,30 +143,58 @@ export default class PasswordReset extends React.Component {
       }
 
       return (
-        <div>
+        <div className="signUpContainer">
                 <h1> Reset Password </h1>
                 <p>
-                  <label> Email </label>
+                  <label> Email: </label>
                   <input name = 'email' type='email' onChange ={this.emailHandler} value = {this.state.email}></input>
                 </p>
-                <button onClick = {this.submitHandler}>Get One Time Password!</button>
+                {this.state.invalidEmail && <p className="errorMessage">Please enter a valid buffalo.edu email!</p>}
+                <button className="buttonStyle1" onClick = {this.submitHandler}>Get One Time Password!</button>
 
                 <p>
-                  <label> Token </label>
+                  <label> Token: </label>
                   <input name = 'token' type='token' onChange ={this.tokenHandler} value = {this.state.token}></input>
                 </p>
                 
                 <p>
-                  <label> New Password </label>
+                  <label> New Password: </label>
                   <input name = 'new password' type='password' onChange ={this.passwordHandler} value = {this.state.password}></input>
                 </p>
-                <button onClick = {this.submitHandler2}>Submit New Password!</button>
+                {this.state.invalidPassword && <p className="errorMessage">Please make sure your password is at least 6 
+                    characters and contains at least one capital letter!</p>}
+                <button className="buttonStyle1" onClick = {this.submitHandler2}>Submit New Password!</button>
 
                 <p>Note: </p>
                 <p>Make sure your token is typed correctly, otherwise the submitted password will not reset the old password.</p>
                 <p> Once the new password is submitted, please sign in again.</p>
                 <p> If you are unable to login, please try resetting the password again and make sure that the token is typed correctly</p>
-
+            <Modal
+                show={this.state.openModal1}
+                onClose={(e) => toggleModal1(this, e)}>
+                <div className="modal-header">
+                    <h2 className="modal-header-text">New Password</h2>
+                </div>
+                <div className="modal-body">
+                    <p className="modalMessage">Your new password has been submitted!</p>
+                </div>
+                <div className="modal-footer">
+                    <button  className="yesButton" onClick={this.redirect.bind(this)}>OK</button>
+                </div>
+            </Modal>
+            <Modal
+                show={this.state.openModal2}
+                onClose={(e) => toggleModal2(this, e)}>
+                <div className="modal-header">
+                    <h2 className="modal-header-text">Email Sent</h2>
+                </div>
+                <div className="modal-body">
+                    <p className="modalMessage">An email has been sent!</p>
+                </div>
+                <div className="modal-footer">
+                    <button  className="yesButton" onClick={e => toggleModal2(this, e)}>OK</button>
+                </div>
+            </Modal>
         </div>
       );
   }
