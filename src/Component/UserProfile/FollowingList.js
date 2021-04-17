@@ -28,7 +28,7 @@ function FollowingList() {
                 updateFollowing(jsonList)
                 // console.log(following_1)
             }
-        })
+        }).catch(error => console.log(error));
       }
     return (
         <div>

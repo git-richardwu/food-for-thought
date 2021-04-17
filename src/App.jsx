@@ -8,7 +8,6 @@ import React from "react";
 import "./App.css";
 import BlockingForm from "./Component/Blocking/BlockingForm.jsx"
 import BlockingList from "./Component/Blocking/BlockingList.jsx"
-import PostForm from "./Component/PostForm.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
 import Profile from "./Component/Settings/AccountSettings.jsx";
@@ -17,8 +16,6 @@ import Diet from "./Component/Diet.jsx"
 import Allergies from "./Component/Allergies.jsx"
 import Budget from "./Component/Budget.jsx"
 import FriendForm from "./Component/FriendForm.jsx";
-import Modal from "./Component/Modal.jsx";
-import Navbar from "./Component/Navbar.jsx";
 import SignUp from "./Component/SignUp_Page/SignUp.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
@@ -30,7 +27,6 @@ import styles from "./Component/UserProfile/UserProfile.module.css";
 import Banner from "./Component/atoms/atomComponents/banner";
 import StyleGuide from "./Component/StyleGuide/StyleGuide";
 import PasswordReset from "./Component/PasswordReset.jsx";
-import PostingList from "./Component/PostingList.jsx";
 import Posts from "./Component/Posts/Posts.js";
 import AddPostButton from "./assets/addPost.svg";
 import CreateAPost from "./Component/Posts/CreateAPost.js";
@@ -38,15 +34,6 @@ import CreateAPost from "./Component/Posts/CreateAPost.js";
 import { BrowserRouter as Router, Redirect, Route, Switch, Link } from "react-router-dom";
 import LandingPage from "./Component/LandingPage";
 import Privacy from "./Component/Settings/Privacy";
-
-// toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
-// contents of the modal dialog are set separately before calling toggle - this is just responsible
-// for showing and hiding the component
-function toggleModal(app) {
-  app.setState({
-    openModal: !app.state.openModal,
-  });
-}
 
 // the App class defines the main rendering method and state information for the app
 class App extends React.Component {
@@ -244,13 +231,6 @@ class App extends React.Component {
 
                     </Switch>
                 </div>
-
-            <Modal
-                show={this.state.openModal}
-                onClose={(e) => toggleModal(this, e)}
-            >
-                This is a modal dialog!
-            </Modal>
             </div>
       </Router>
     );

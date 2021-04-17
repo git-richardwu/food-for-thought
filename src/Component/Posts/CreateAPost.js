@@ -7,14 +7,19 @@ import { BrowserRouter as Router, Redirect, Route, Switch, Link, useHistory} fro
 
 const CreateAPost = () => {
     const [title, setTitle] = useState("");
+    const [invalidTitle, setInvalidTitle] = useState(false)
     const [steps, setSteps] = useState([]);
     const [step, setStep] = useState("");
+    const [invalidSteps, setInvalidSteps] = useState(false)
     const [ingredients, setIngredients] = useState([]);
     const [ingredient, setIngredient] = useState([]);
+    const [invalidIngredients, setInvalidIngredients] = useState(false);
     const [image, setImage] = useState("");
+    const [invalidImage, setInvalidImage] = useState(false)
     const [link, setLink] = useState("");
     const [redirect, setRedirect] = useState(false);
     const [postTags, setPostTags] = useState([]);
+    const [postTagLimit, setPostTagLimit] = useState(false);
     const [tag, setTag] = useState("");
     const [calorie, setCalorie] = useState(0);
     const fileField = document.querySelector('input[type="file"]');
@@ -43,8 +48,9 @@ const CreateAPost = () => {
                 add.push(tag);
                 setPostTags(add);
                 setTag("");
+                setPostTagLimit(false);
             }else{
-                alert("Only 10 tags are allowed per post.")
+                setPostTagLimit(true);
             }
         }
     }
@@ -54,26 +60,24 @@ const CreateAPost = () => {
     }
 
     const validatePost = () => {
-        var message = "";
+        setInvalidTitle(false);
+        setInvalidImage(false);
+        setInvalidSteps(false);
+        setInvalidIngredients(false);
         if (title.length == 0){
-            message += "A post must a title!\n";
+            setInvalidTitle(true);
         }
         if (steps.length == 0){
-            message += "A post must have at least 1 steps!\n";
+            setInvalidSteps(true);
         }
         if (ingredients.length == 0){
-            message += "A post must have at least 1 ingredient!\n";
+            setInvalidIngredients(true);
         }
         if (image.length == 0){
-            message += "A post must have an image!\n";
+            setInvalidImage(true);
         }
 
-        if (message.length == 0){
-            return true;
-        }else{
-            alert("ERROR(S):\n" + message);
-            return false;
-        }
+        return invalidIngredients && invalidTitle && invalidSteps && invalidImage;
     }
 
     const createPost = async () => {
@@ -255,6 +259,7 @@ const CreateAPost = () => {
                 <div className="createAPostTitle">
                     <label className="titleLabel">Title:</label>
                     <input className="titleInput" type="text" value={title} onChange={e => setTitle(e.target.value)}/>
+                    {invalidTitle && <p className="errorMessage">A post must have a title!</p>}
                 </div>
 
                 <div className="createContent">
@@ -266,7 +271,8 @@ const CreateAPost = () => {
                             {ingredients.map(ing => (
                                 <li key={ing}>{ing}</li>
                             ))}
-                        </ul>
+                        </ul> 
+                        {invalidIngredients && <p className="errorMessage">A post must have at least 1 ingredient!</p>}
                     </div>
                     <div className="createSteps">
                         <label className="textAreaHeader">Steps:</label>
@@ -277,10 +283,12 @@ const CreateAPost = () => {
                                 <li key={step}>{step}</li>
                             ))}
                         </ol>
+                        {invalidSteps && <p className="errorMessage">A post must have at least 1 step!</p>}
                     </div>
                     <div className="formAddImage">
                         <label className="textAreaHeader">Image:</label>
                         <input className="addImageButton" type="file" onChange={e => setImage(e.target.value)} accept=".png,.jpg,.jpeg"/>
+                        {invalidImage && <p className="errorMessage">A post must have an image!</p>}
                     </div>
                 </div>
 
@@ -290,7 +298,7 @@ const CreateAPost = () => {
                 </div>
 
                 <div className="postTagsContainer">
-                <   div className="createCalorieContainer">
+                    <div className="createCalorieContainer">
                         <label className="linkLabel">Calories:</label>
                         <input className="addTagInput" type="number" value={calorie} onChange={e => setCalorie(e.target.value)} step="25" min="0" max="10000"/>
                     </div>
@@ -298,6 +306,7 @@ const CreateAPost = () => {
                         <label className="linkLabel">Add Diet Tags:</label>
                         <input className="addTagInput" type="url" value={tag} onChange={e => setTag(e.target.value)} maxLength="14" onKeyPress={e => setTagOnKey(e.key)}/>
                         <button className="addToListButtonTags" onClick={e => addTag()}>Add Tag</button>
+                        {postTagLimit && <p className="errorMessage">Only 10 tags are allowed per post.</p>}
                         <div className="displayedPostTags">
                             {postTags.map(tag => (
                                 <div key={tag} className="postDietTag">
@@ -307,12 +316,7 @@ const CreateAPost = () => {
                             ))}
                         </div>
                     </div>
-   
-  
                 </div>
-
-
-
                 <button className="createButton" onClick={e => createPost()}>Create</button>
             </div>
         </div>

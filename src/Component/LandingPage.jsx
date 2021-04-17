@@ -8,7 +8,7 @@ render() {
     if(!sessionStorage.getItem("token")){
     return (
     <div>
-        <div className="center">
+        <div className="landingPageContainer">
             <div className="inline">
             <h2>Welcome to Food for Thought! </h2>
             </div>
