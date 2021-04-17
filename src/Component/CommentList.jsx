@@ -36,7 +36,6 @@ export default class CommentList extends React.Component {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       },
-
     })
       .then(res => res.json())
       .then(
@@ -48,15 +47,14 @@ export default class CommentList extends React.Component {
             });
             console.log("Got Posts");
           }
-        },
-        error => {
-          this.setState({
-            isLoaded: true,
-            error
+        }
+      )
+      .catch(error => {
+        this.setState({
+            error: true
           });
           console.log("ERROR loading Posts")
-        }
-      );
+      });
   }
 
   deleteComment(postID, postContent, postType){
@@ -75,11 +73,9 @@ export default class CommentList extends React.Component {
                     isLoaded: true,
                     posts: filteredPosts
                   });
-            },
-            error => {
-                alert("error!"+error);
             }
-            );
+            )
+            .catch(error => console.log(error));
   }
 
   render() {

@@ -76,17 +76,10 @@ const Posts = ({userId}) => {
           .then(res => res.json())
           .then(
             result => {
-              console.log("made it this far2");
               // once a post is complete, reload the feed
              fetchPosts()
-            },
-            error => {
-              console.log("made it this far3");
-    
-              // alert("error!");
-              alert(error)
             }
-          );
+          ).catch(error => console.log(error));
       
     
     }
@@ -265,21 +258,21 @@ const Posts = ({userId}) => {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+sessionStorage.getItem("token")
                 }
-                });
+                }).catch(error => console.log(error));;
             fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[2], {
                 method: "DELETE",
                 headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+sessionStorage.getItem("token")
                 }
-                });
+                }).catch(error => console.log(error));;
             fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+ids[3], {
                 method: "DELETE",
                 headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+sessionStorage.getItem("token")
                 }
-                });
+                }).catch(error => console.log(error));;
         }
         
         //make the api call to post
@@ -293,11 +286,8 @@ const Posts = ({userId}) => {
             .then(
                 result => {
                     setPosts(posts.filter((post) => post.id != postID ));
-                },
-                error => {
-                    alert("error!"+error);
                 }
-                );
+                ).catch(error => console.log(error));
       }
 
     const searchPosts = async (searchText, useTitle, useTags, useCalorie) => {
@@ -354,7 +344,7 @@ const Posts = ({userId}) => {
                   posts = result[0];
               }
             }
-          );
+          ).catch(error => console.log(error));
 
         return posts;
     }

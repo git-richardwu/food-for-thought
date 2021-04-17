@@ -36,10 +36,9 @@ export default class Budget extends React.Component {
                             budget: result
                           });
                        }
-                     },
-                     error => {
                      }
-                   );
+                   )
+                   .catch(error => console.log(error));
       }
 
     fieldChangeHandler(value, e) {
@@ -69,12 +68,9 @@ export default class Budget extends React.Component {
                     .then(
                       (result) => {
                         console.log("This is the result:1 " + result);
-                      },
-              
-                      (error) => {
-                        alert("errror");
                       }
-                    );  
+                    )
+                    .catch(error => console.log(error)); 
             }
             else{
               fetch(process.env.REACT_APP_API_PATH +"/user-artifacts", {
@@ -94,12 +90,9 @@ export default class Budget extends React.Component {
                 .then(
                   (result) => {
                     console.log("This is the result:1 " + result);
-                  },
-          
-                  (error) => {
-                    alert("errror");
                   }
-                );  
+                )
+                .catch(error => console.log(error));
             }
         }
       };

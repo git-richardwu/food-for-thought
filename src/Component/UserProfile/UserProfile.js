@@ -69,7 +69,7 @@ function UserProfile() {
                   setProfilePicID(json[0][0].id)
               }
         }
-    }) 
+    }).catch(error => console.log(error));
     }
 
     function fetchFollowing(){
@@ -84,7 +84,7 @@ function UserProfile() {
           if(json[1] != 0){
             setFollowState(true)
           }
-        })
+        }).catch(error => console.log(error));
     }
  
 
@@ -111,11 +111,7 @@ function UserProfile() {
               }
 
         }
-        ,
-        error=>{
-          alert("Error occurred when trying to retrieve bio")
-        }
-      );
+      ).catch(error => console.log(error));
 
   }
 
@@ -129,7 +125,7 @@ function UserProfile() {
     .then(json => {
         // console.log(json)
         setFollowCount(json[1])
-      })
+      }).catch(error => console.log(error));
   }
 
   function fetchFollowerCount(){
@@ -142,7 +138,7 @@ function UserProfile() {
     .then(json => {
         console.log(json)
         setFollowerCount(json[1])
-      })
+      }).catch(error => console.log(error));
   }
 
   function followFunction(){
@@ -174,7 +170,7 @@ function UserProfile() {
             console.log("Followed!")
             setFollowState(true)
             
-          })
+          }).catch(error => console.log(error));
         } 
         else {
           {/* delete connection */}
@@ -190,7 +186,7 @@ function UserProfile() {
             console.log("Unfollowed!")
             setFollowState(false)
             
-          })
+          }).catch(error => console.log(error));
         }
         
     }) 
@@ -216,7 +212,7 @@ function UserProfile() {
                     setURL("https://webdev.cse.buffalo.edu"+result.url);
                 }
                 setShowUpdatePictureModal(!showUpdatePictureModal);
-          });
+          }).catch(error => console.log(error));
     }else{
         await fetch(process.env.REACT_APP_API_PATH+"/user-artifacts", {
             method: "POST",
@@ -255,10 +251,10 @@ function UserProfile() {
                           }
                         setProfilePicID(pictureID);
                         setShowUpdatePictureModal(!showUpdatePictureModal);
-                    });
+                    }).catch(error => console.log(error));
                 }
             }
-        );
+        ).catch(error => console.log(error));
     }
     
 }
@@ -290,11 +286,7 @@ function fetchWeightGoal() {
           setWeightGoalID(-1);
         }
       },
-      (error) => {
-        console.log(error);
-        alert("Error occurred when trying to retrieve weight goal");
-      }
-    );
+    ).catch(error => console.log(error));
 } 
 
 const fetchUser = async () => {
@@ -343,11 +335,8 @@ const fetchUser = async () => {
               } 
             });
           }
-        },
-        (error) => {
-          alert("Error occurred when trying to retrieve calorie goal");
         }
-      );
+      ).catch(error => console.log(error));
 
   }
 
@@ -390,11 +379,8 @@ const fetchUser = async () => {
               } 
             });
           }
-        },
-        (error) => {
-          alert("Error occurred when trying to set diet tags");
         }
-      );
+      ).catch(error => console.log(error));
 
   }
 
@@ -447,7 +433,7 @@ const fetchUser = async () => {
                 <h2 className="modal-header-text">Update Profile Picture</h2>
             </div>
             <div className="modal-body">
-                <input className="addImageButton" type="file" accept=".png,.jpg,.jpeg,.gif"/>
+                <input className="modelInput" type="file" accept=".png,.jpg,.jpeg,.gif"/>
             </div>
             <div className="modal-footer">
                 <button  className="yesButton" onClick={e => updateImage()}>Submit</button>

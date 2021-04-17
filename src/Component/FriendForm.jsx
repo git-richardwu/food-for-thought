@@ -54,46 +54,9 @@ export default class FriendForm extends React.Component {
             console.log(names);
           }
         },
-        error => {
-          alert("error!");
-        }
-      );
+      )
+      .catch(error => console.log(error));
   }
-
-  // submitHandler = event => {
-  //   //keep the form from actually submitting
-  //   event.preventDefault();
-
-  //   console.log("friend is ");
-  //   console.log(this.state.friendid);
-
-
-  //   //make the api call to the user controller
-  //   fetch(process.env.REACT_APP_API_PATH+"/connections", {
-  //     method: "POST",
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //       'Authorization': 'Bearer '+sessionStorage.getItem("token")
-  //     },
-  //     body: JSON.stringify({
-  //       connectedUserID: this.state.friendid,
-  //       userID: sessionStorage.getItem("user"),
-  //       type:"friend",
-  //       status:"active"
-  //     })
-  //   })
-  //     .then(res => res.json())
-  //     .then(
-  //       result => {
-  //         this.setState({
-  //           responseMessage: result.Status
-  //         });
-  //       },
-  //       error => {
-  //         alert("error!");
-  //       }
-  //     );
-  // };
 
   render() {
     return (

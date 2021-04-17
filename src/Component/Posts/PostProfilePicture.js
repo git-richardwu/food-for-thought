@@ -34,7 +34,7 @@ const PostProfilePicture = ({id}) => {
                         setSrc("https://webdev.cse.buffalo.edu"+result[0][0].url);
                     }
                 }
-          })
+          }).catch(error => console.log(error));
     }
 
     if (src){

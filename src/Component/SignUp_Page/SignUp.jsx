@@ -64,7 +64,7 @@ export default class SignUp extends React.Component {
                     alert("error! Email is taken!")
                     return;
                 }
-            })   
+            }).catch(error => console.log(error)); 
         }
 
 
@@ -86,7 +86,7 @@ export default class SignUp extends React.Component {
                      alert("error! Username is taken!")
                      return;
                  }
-             })   
+             }).catch(error => console.log(error));  
          }
 
         if(password == "" || password.length < 6 || password == password.toLowerCase){
@@ -98,8 +98,7 @@ export default class SignUp extends React.Component {
         //     return;
         // }
         else {
-        fetch(process.env.REACT_APP_API_PATH+"/auth/signup", {
-        // fetch("http://localhost:3001/api/auth/signup", {   
+        fetch(process.env.REACT_APP_API_PATH+"/auth/signup", { 
             method: "POST",
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -132,9 +131,9 @@ export default class SignUp extends React.Component {
             .then(json => {
                 console.log(json)
                 
-        })       
+        }).catch(error => console.log(error));       
             // this.refreshPostsFromSignUp();
-        })
+        }).catch(error => console.log(error));
         }
     }
 

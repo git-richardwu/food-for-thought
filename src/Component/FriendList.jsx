@@ -41,7 +41,8 @@ export default class FriendList extends React.Component {
             error
           });
         }
-      );
+      )
+      .catch(error => console.log(error));
   }
 
   updateConnection(id, status){
@@ -65,10 +66,8 @@ export default class FriendList extends React.Component {
           alert("You have unfollowed this user.")
           this.loadFriends();
         },
-        error => {
-          alert("error!");
-        }
-      );
+      )
+      .catch(error => console.log(error));
   }
 
   conditionalAction(status, id){

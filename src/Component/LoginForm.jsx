@@ -84,11 +84,9 @@ export default class LoginForm extends React.Component {
               alanmessage: result.message
             });
           }
-        },
-        error => {
-          alert("error!");
         }
-      );
+      )
+      .catch(error => console.log(error));
   };
 
   rdReset = event => {

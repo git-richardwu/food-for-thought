@@ -42,7 +42,7 @@ export default class BlockingList extends React.Component {
             error
           });
         }
-      );
+      ).catch(error => console.log(error));
   }
 
   unblockConnection(id){
@@ -53,26 +53,13 @@ export default class BlockingList extends React.Component {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       },
-    //   body: JSON.stringify({
-    //     status: status
-    //   })
     })
-      // .then(res => res.json())
       .then(
-        // result => {
-          // this.setState({
-          //   responseMessage: result.Status
-          // });
           result => {
           alert("User Unblocked! The page will refresh");
           this.loadBlock();
         }
-        // },
-        // error => {
-        //   alert("ERROR! ERROR!");
-        //   this.loadBlock();
-        // }
-      );
+      ).catch(error => console.log(error));
   }
 
   conditionalAction(status, id){

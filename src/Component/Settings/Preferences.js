@@ -41,11 +41,8 @@ const Preferences = () => {
           } else {
             setWeightGoalID(-1);
           }
-        },
-        (error) => {
-          // alert("Error occurred when trying to retrieve weight goal");
         }
-      );
+      ).catch(error => console.log(error));
   }
 
   function fetchCalorieGoal() {
@@ -73,11 +70,8 @@ const Preferences = () => {
           } else {
             setCalorieGoalID(-1);
           }
-        },
-        (error) => {
-          // alert("Error occurred when trying to retrieve calorie goal");
         }
-      );
+      ).catch(error => console.log(error));
   }
 
   async function submitWeightGoal(goal){
@@ -105,12 +99,8 @@ const Preferences = () => {
         .then(
           (result) => {
             console.log("This is the result:1 " + result);
-          },
-  
-          (error) => {
-            alert("errror");
           }
-        );
+        ).catch(error => console.log(error));
     }else{
       fetch(
       process.env.REACT_APP_API_PATH +"/user-artifacts/"+weightGoalID,
@@ -129,12 +119,8 @@ const Preferences = () => {
       .then(
         (result) => {
           console.log("This is the result:2 " + result.Status);
-        },
-
-        (error) => {
-          alert("errror");
         }
-      );
+      ).catch(error => console.log(error));
   }
 
 
@@ -165,12 +151,8 @@ const Preferences = () => {
           .then(
             (result) => {
               console.log("This is the result:1 " + result);
-            },
-    
-            (error) => {
-              alert("errror");
             }
-          );
+          ).catch(error => console.log(error));
       }else{
         fetch(
         process.env.REACT_APP_API_PATH +"/user-artifacts/"+calorieGoalID,
@@ -190,11 +172,7 @@ const Preferences = () => {
           (result) => {
             console.log("This is the result:2 " + result.Status);
           },
-  
-          (error) => {
-            alert("errror");
-          }
-        );
+        ).catch(error => console.log(error));
     }
   
   

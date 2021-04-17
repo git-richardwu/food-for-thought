@@ -61,7 +61,8 @@ export default class PasswordReset extends React.Component {
       result => {
         console.log(result);
         alert("An Email has been sent!");
-      });
+      })
+      .catch(error => console.log(error));
     }
   };
 
@@ -89,8 +90,6 @@ export default class PasswordReset extends React.Component {
           password: password
         })
       })
-
-
       .then(
       result => {
         console.log(result);
@@ -99,7 +98,8 @@ export default class PasswordReset extends React.Component {
         this.setState({
           redirect: true
         });
-      });
+      })
+      .catch(error => console.log(error));
 
     }
   };

@@ -37,11 +37,9 @@ export default class Allergies extends React.Component {
                         //    tags: results.tags || ""
                           });
                        }
-                     },
-                     error => {
-                       alert("error!");
                      }
-                   );
+                   )
+                   .catch(error => console.log(error));
 
       }
 
@@ -69,12 +67,9 @@ export default class Allergies extends React.Component {
                     .then(
                       (result) => {
                         console.log("This is the result:1 " + result);
-                      },
-              
-                      (error) => {
-                        alert("errror");
                       }
-                    );  
+                    )
+                    .catch(error => console.log(error));
             
             }
             else{

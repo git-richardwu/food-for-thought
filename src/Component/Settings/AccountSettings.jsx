@@ -60,11 +60,8 @@ export default class AccountSettings extends React.Component {
               originalEmail: result.email || "",
             });
           }
-        },
-        error => {
-          alert("error!");
         }
-      );
+      ).catch(error => console.log(error));
   }
 
   submitHandler = event => {
@@ -122,16 +119,11 @@ export default class AccountSettings extends React.Component {
                                 responseMessage: result3.Status,
                                 clickedSubmit: true,
                                 });
-                            },
-                            error => {
-                                alert("error!");
                             }
-                            );
+                            ).catch(error => console.log(error));;
                     }
-            })
-            .catch(error => alert('error'));
-        })
-        .catch(error => alert('error'));
+            }).catch(error => console.log(error));
+        }).catch(error => console.log(error));
   };
 
   logout(){
@@ -146,7 +138,6 @@ export default class AccountSettings extends React.Component {
     fetch(process.env.REACT_APP_API_PATH + "/auth/logout", requestOptions)
       .then(response => response.text())
       .then(result => console.log(result))
-      .catch(error => alert('error'))
       .then(() => {
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("user");
@@ -155,7 +146,7 @@ export default class AccountSettings extends React.Component {
         this.setState({
             deletePressed: true
             });
-      });
+      }).catch(error => console.log(error));
 
   }
 
@@ -171,11 +162,10 @@ export default class AccountSettings extends React.Component {
       fetch(process.env.REACT_APP_API_PATH + "/auth/logout", requestOptions)
         .then(response => response.text())
         .then(result => console.log(result))
-        .catch(error => alert('error'))
         .then(() => {
           sessionStorage.removeItem("token");
           sessionStorage.removeItem("user");
-        });
+        }).catch(error => console.log(error));
   }
 
     confirmDelete(){

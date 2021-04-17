@@ -42,9 +42,6 @@ export default class BlockingForm extends React.Component {
       .then(
         result => {
           if (result) {
-              // alert(result[0][0])
-              // connections = (result[0]).users
-              // alert(result[1])
               console.log(result);
               if (blockedid != sessionStorage.getItem("user") && result[1] == 0) {
                 this.setState({
@@ -54,23 +51,7 @@ export default class BlockingForm extends React.Component {
               };
           }
         },
-        // error => {
-        //   console.log(error);
-        //   if (blockedid != sessionStorage.getItem("user")) {
-        //     this.setState({
-        //       blockedid: blockedid
-        //     })
-        //     console.log("Block User: "+blockedid)
-        //   };
-        // }
-      );
-    // alert(connections.toString())
-    // if (blockedid != sessionStorage.getItem("user")) {
-    //   this.setState({
-    //     blockedid: blockedid
-    //   })
-    //   console.log("Block User: "+blockedid)
-    // }
+      ).catch(error => console.log(error));
   }
 
   componentDidMount() {
@@ -96,11 +77,8 @@ export default class BlockingForm extends React.Component {
             });
             console.log(names);
           }
-        },
-        error => {
-          alert("error!");
         }
-      );
+      ).catch(error => console.log(error));
   }
 
   submitHandler = event => {
@@ -133,13 +111,9 @@ export default class BlockingForm extends React.Component {
           this.setState({
             // responseMessage: result.Status
           });
-          // alert(" User has been blocked, please refresh page.")
           window.location.reload()
-        },
-        error => {
-          alert("error!");
         }
-      );
+      ).catch(error => console.log(error));
     
   };
 

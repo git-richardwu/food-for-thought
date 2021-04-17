@@ -43,12 +43,9 @@ function InfoContainer({
         .then(
           (result) => {
             console.log("This is the result: " + result.Status);
-          },
-  
-          (error) => {
-            alert("errror");
           }
-        );
+        )
+        .catch(error => console.log(error));
     }else{
      setUserBio(test);
     fetch(
@@ -68,12 +65,8 @@ function InfoContainer({
       .then(
         (result) => {
           console.log("This is the result: " + result.Status);
-        },
-
-        (error) => {
-          alert("errror");
         }
-      );
+      )            .catch(error => console.log(error));
   }
 }
 

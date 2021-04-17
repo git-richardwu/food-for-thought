@@ -45,6 +45,11 @@
     text-align: center;
 }
 
+.modelInput{
+    font-family: ReemKufi;
+    font-size: 16px;
+}
+
 .noButton {
     background-color: #E85555;
     border: none;
