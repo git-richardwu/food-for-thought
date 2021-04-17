@@ -15,6 +15,7 @@
     .modal-header-text{
         font-family: ReemKufi;
         font-size: 20px;
+        text-align: left;
     }
 
     /* Modal Body */
@@ -88,56 +89,35 @@
     .noButton{
         font-size: 12px;
     }
-}
 
-@media screen and (max-height: 750px){
-    .noButton{
-        font-size: 12px;;
-    }
-
-    .yesButton{
-        font-size: 12px;
+    .modal-content {
+        height: 250px;
     }
 }
 
-@media screen and (max-height: 675px){
-    .noButton{
-        font-size: 10px;
-        padding: 2px 15px;
-        margin-left: 230px;
-    }
-
+@media screen and (max-width: 550px) {
     .yesButton{
         font-size: 10px;
-        padding: 2px 15px;
-        margin-left: 230px;
-    }
-}
-
-@media screen and (max-height: 650px) {
-    .noButton{
-        font-size: 10px;
-        padding: 2px 15px;
-        margin-left: 230px;
-    }
-
-    .yesButton{
-        font-size: 10px;
-        padding: 2px 15px;
-        margin-left: 230px;
-    }
-}
-
-@media screen and (max-height: 575px) {
-    .yesButton{
-        font-size: 10px;
-        padding: 2px 12px;
-        margin-left: 0px;
     }
 
     .noButton{
         font-size: 10px;
-        padding: 2px 12px;
-        margin-left: 0px;
+    }
+
+    .modal-content {
+        width: 80%;
+        height: 200px;
+    }
+
+    .modal-header-text{
+        font-size: 16px;
+    }
+
+    .modelInput{
+        font-size: 14px;
+    }
+
+    .modalMessage{
+        font-size: 14px;
     }
 }

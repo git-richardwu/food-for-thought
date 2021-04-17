@@ -61,3 +61,17 @@ h2 {
     font-family: RubikMonoOne;
     font-size: 20px;
 }
+
+@media screen and (max-width: 850px) {
+    .errorMessage{
+        font-size: 12px;
+    }
+    
+}
+
+@media screen and (max-width: 550px) {
+    .errorMessage{
+        font-size: 10px;
+    }
+    
+}

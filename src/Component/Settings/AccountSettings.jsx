@@ -19,7 +19,6 @@ export default class AccountSettings extends React.Component {
     this.state = {
       username: "",
       email: "",
-      responseMessage: "",
       deletePressed: false,
       clickedSubmit: false,
       originalUsername: "",
@@ -132,7 +131,6 @@ export default class AccountSettings extends React.Component {
                             .then(
                             result3 => {
                                 this.setState({
-                                responseMessage: result3.Status,
                                 clickedSubmit: true,
                                 });
                             }
@@ -365,13 +363,13 @@ export default class AccountSettings extends React.Component {
     }
     return (
         <div className="accountSettingsContainer">
+            <Link to="/settings/">
+                <button className="backButton backButtonCreate">
+                    <i className="arrow left"/>
+                    Back
+                </button>      
+            </Link>
             <form onSubmit={this.submitHandler} className="profileform">
-                <Link to="/settings/">
-                    <button className="backButton">
-                        <i className="arrow left"/>
-                        Back
-                    </button>      
-                </Link>
                 <div className="row">
                     <div className="col-25">
                         <label id="emailID">Email:</label>
@@ -415,15 +413,12 @@ export default class AccountSettings extends React.Component {
                         </Link>
                     </div>
                 </div>
-                <br/>
                 <input type="submit" value="Submit" />
-                {this.state.responseMessage}
             </form>
-            <button className="redButton" onClick={this.logout.bind(this)}>Log Out</button>    
-            <br/>
-            <br/>
-            
-            <button className="redButton" onClick={this.confirmDelete.bind(this)}>Delete Account</button>
+            <div className="redButtonContainer">
+                <button className="redButton" onClick={this.logout.bind(this)}>Log Out</button>    
+                <button className="redButton" onClick={this.confirmDelete.bind(this)}>Delete Account</button>
+            </div>
 
             <Modal
                 show={this.state.openModal}
