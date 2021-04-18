@@ -54,19 +54,19 @@ const StyleGuide = () => {
             <h2>Colors</h2>
 
             <h3> Color: Green, RGB: (111, 211, 151), Hex: #6FD397, Location: Foreground </h3>
-            <div className = "Green"> </div>
+            <div><div className="Green"/></div>
 
             <h3> Color: Light Yellow, RGB: (254, 255, 246), Hex: #FEFFF6, Location: Background </h3>
-            <div className = "LightYellow"></div>
+            <div><div className="LightYellow"/></div>
 
             <h3> Color: Dark Green, RGB: (89, 163, 118), Hex: #59A376, Location: Background </h3>
-            <div className = "DarkGreen"></div>
+            <div><div className="DarkGreen"/></div>
 
             <h3>Color: White, RGB: (255, 255, 255), Hex: #FFFFFF, Location: Background, Title Text, Icons </h3>
-            <div className = "White"></div>
+            <div><div className="White"/></div>
 
             <h3> Color: Black, RGB: (0, 0, 0), Hex: #000000, Location: Body Text</h3>
-            <div className = "Black"></div>
+            <div><div className="Black"/></div>
             <br/>
             <h2>Layout</h2>
 
@@ -99,10 +99,14 @@ const StyleGuide = () => {
                 <source src={layout} type="video/mp4"/>
             </video>
 
-            <h3 className="layoutSubHeader">Styles for Popups</h3>
+            <h3 className="layoutSubHeader">Styles for Modal Dialogs</h3>
             <p>
-                Entry Animation: Slide in pop ups for errors and confirming deleting account come from top of screen.<br/>
-                Exit Animation: Popups slide up on exit.
+                Modal Dialogs appear in three (3) scenarios: displaying a message (such as login failed), <br/>
+                requring input (such as submitting profile picture), asking for confirmation <br/>
+                (such as deleting a post or comment). <br/> 
+                All Modal Dialogs should have a header title, a body displaying the mesasge, and the buttons in the footer. <br/>
+                The OK/Yes button should be green while the No/Cancel button should be red.
+
             </p>
             <video width="750" height="500" controls>
                 <source src={popup} type="video/mp4"/>
@@ -110,8 +114,8 @@ const StyleGuide = () => {
 
             <h3 className="layoutSubHeader">Inline Error Messages</h3>
             <p>
-                Login, Sign Up, and editing account information have inline error messages <br/>
-                for when the user does not enter a valid email or password fields do not match.
+                Any input that requires validation has inline error messages <br/>
+                Inline error messages appear below the specifed input box where input validation has failed.
             </p>
             <video width="750" height="500" controls>
                 <source src={inlineError} type="video/mp4"/>
