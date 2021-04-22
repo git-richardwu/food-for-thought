@@ -86,10 +86,14 @@ const Posts = ({userId}) => {
 
     const setPostsForHomepage = async (allPosts) => {
         var postsToAdd = [];
-        var userdietTags = [];
-        var url = process.env.REACT_APP_API_PATH+"/post-tags?type=dietTags&userID="+ sessionStorage.getItem("user");
+        var postdietTags = [];
+        var dietTagfilters = [];
 
-        fetch(url, {
+        var prefurl = process.env.REACT_APP_API_PATH+"/user-preference?name=dietTags&ownerID="+sessionStorage.getItem("user");
+        var posturl = process.env.REACT_APP_API_PATH+"/post-tags?type=dietTags";
+
+        // post tags
+        fetch(posturl, {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -98,15 +102,61 @@ const Posts = ({userId}) => {
         }).then(res => res.json())
         .then(
             result => {
-                
+                if (result) {
+                    console.log(result);
+                    postdietTags = result[0];
+                }
             }
         )
-        // MAKE CHANGES HERE:
-        var sortedallPosts = [];
-        // fetch the tags for a specific person from their post-tag connection/user-artifacts
-        // for (var i=0; i <allPosts.length; i++){
+        
+        // user preference tags
+        fetch(prefurl, {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            }
+        }).then(res => res.json())
+        .then(
+            result => {
+                if (result) {
+                    console.log(result);
+                    dietTagfilters = result[0];
+                }
+            }
+        )
 
-        // }
+        prioritizedpost = []
+        for (var i=0; i <postdietTags.length; i++){
+            // if dietTagfilter includes the diet tag that is associated with a post
+            if ((dietTagfilters.toString()).includes(postdietTags[i].name)) {
+                if (!prioritizedpost.includes(postdietTags[i].post)) {
+                    // if it is associated and not exiting in prioritized list, 
+                    // add the id of the post that has the diet tag
+                    prioritizedpost.push(postdietTags[i].post.id.toString());
+                } 
+            }
+        }
+
+
+        // MAKE CHANGES HERE:
+        var topallPosts = [];
+        var normalAllPosts = [];
+        // fetch the tags for a specific person from their post-tag connection/user-artifacts
+        for (var i=0; i <allPosts.length; i++){
+            if (prioritizedpost.includes(allPost[i].id.toString())) {
+                // push post to list that will show on top of page
+                topallPosts.push(allPosts[i]);
+            }
+            else {
+                // push post to normal list
+                normalAllPosts.push(allPosts[i])
+            }
+        }
+
+        // concatenate normalAllPosts + topallposts
+        allPosts = normalAllPosts.concat(topallPosts);
+
         for (var i = 0; i < allPosts.length; i++){
             if (allPosts[i].author.id.toString() === sessionStorage.getItem("user")){
                 // add own posts
