@@ -89,11 +89,8 @@ const Posts = ({userId}) => {
         var postdietTags = [];
         var dietTagfilters = [];
 
-        var prefurl = process.env.REACT_APP_API_PATH+"/user-preference?name=dietTags&ownerID="+sessionStorage.getItem("user");
-        var posturl = process.env.REACT_APP_API_PATH+"/post-tags?type=dietTags";
-
         // post tags
-        fetch(posturl, {
+        fetch(process.env.REACT_APP_API_PATH+"/post-tags?type=dietTags", {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -110,7 +107,7 @@ const Posts = ({userId}) => {
         )
         
         // user preference tags
-        fetch(prefurl, {
+        fetch(process.env.REACT_APP_API_PATH+"/user-preference?name=dietTags&userID="+sessionStorage.getItem("user"), {
             method: "GET",
             headers: {
                 'Content-Type': 'application/json',
@@ -121,15 +118,31 @@ const Posts = ({userId}) => {
             result => {
                 if (result) {
                     console.log(result);
-                    dietTagfilters = result[0];
+                    if (result[0].value.includes("~")){
+                        dietTagfilters = result[0].value.split("~");
+                    }
+                    else{
+                        dietTagfilters = [result[0].value];
+                    }
                 }
             }
         )
 
         prioritizedpost = []
-        for (var i=0; i <postdietTags.length; i++){
+        for (var i=0; i < postdietTags.length; i++){
+            
+            var included = false;
+            // var currentposttaglist = postdietTags[i].name.split("~")
+
+            for (var j=0; j < dietTagfilters.length; j++){
+                if ((postdietTags[i].name).includes(dietTagfilters[j])){
+                    included = true;
+                }
+            }
+
             // if dietTagfilter includes the diet tag that is associated with a post
-            if ((dietTagfilters.toString()).includes(postdietTags[i].name)) {
+            if (included == true) {
+
                 if (!prioritizedpost.includes(postdietTags[i].post)) {
                     // if it is associated and not exiting in prioritized list, 
                     // add the id of the post that has the diet tag
