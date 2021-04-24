@@ -179,8 +179,11 @@ export default class Diet extends React.Component {
 
     constructor(props) {
       super(props);
+      this.inputRef = React.createRef
       this.state = {
           tags: "",
+          
+
       };
       this.fieldChangeHandler.bind(this);
     }
@@ -212,7 +215,7 @@ export default class Diet extends React.Component {
                     result => {
                     },
                     error => {
-                      alert("error!");
+                      ;
                     }
                   );
                  }
@@ -242,13 +245,76 @@ export default class Diet extends React.Component {
                     },
             
                     (error) => {
-                      alert("errror");
+                      
                     }
                   );  
           }
 
     }
+    
+    inputfieldChangeHandler(ref, e) {
+      console.log("field change");
+      if (!this.state.tags.includes(ref)){
+          // TODO: add POST here
+          if (this.state.tags == ""){
+              this.setState({
+                  tags: ref
+                });
+                fetch(process.env.REACT_APP_API_PATH+"/users-preferences?userID="+sessionStorage.getItem("user"), {
+                  method: "POST",
+                  headers: {
+                   "Content-Type": "application/json",
+                   'Authorization': "Bearer " + sessionStorage.getItem("token"),
+                  },
+                  body: JSON.stringify({
+                   "ownerID": sessionStorage.getItem("user"),
+                   "category": "dietTag",
+                   "type": this.state.ref,
+                   "url": "string",
+           
+                   })
+                })
+                  .then(res => res.json())
+                  .then(
+                    result => {
+                    },
+                    error => {
+                      ;
+                    }
+                  );
+                 }
+          }
+          else{
+              var updated = this.state.tags + ", " + ref
+              this.setState({
+                  tags: updated
+                });
+                fetch(process.env.REACT_APP_API_PATH +"/user-artifacts", {
+                  method:"PATCH",
+                  headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': "Bearer " + sessionStorage.getItem("token"),
+                  },
+                  body: JSON.stringify({
+                    "ownerID": sessionStorage.getItem("user"),
+                    "category": "dietTag",
+                    "type": this.state.ref,
+                    "url": "string",
+                  }),
+                })
+                  .then((res) => res.json())
+                  .then(
+                    (result) => {
+                      console.log("This is the result:1 " + result);
+                    },
+            
+                    (error) => {
+                      
+                    }
+                  );  
+          }
 
+    }
     componentDidMount() {
       fetch(process.env.REACT_APP_API_PATH+"/users/"+sessionStorage.getItem("user"), {
         method: "get",
@@ -268,7 +334,7 @@ export default class Diet extends React.Component {
             }
           },
           error => {
-            alert("error!");
+            
           }
         );
       }
@@ -300,7 +366,7 @@ export default class Diet extends React.Component {
                 </div>
 
                 <p className="tags">You selected "{this.state.tags}" as a Diet Tag</p>
-                <p>You would like to add: "<input type="text"></input>" as a Diet Tag <button onclick="fieldChangeHandler(value, e)">Submit</button></p>
+                <p>You would like to add: "<input type="text" ref={this.inputRef}></input>" as a Diet Tag <button onclick="inputfieldChangeHandler( {this.inputRef}, e)">Submit</button></p>
                 {/* <p id='demo' style={{display: "none"}} ref = "tag">Hello Javascript</p>      */}
 
             </div>

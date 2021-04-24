@@ -13,9 +13,9 @@ import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
 import Profile from "./Component/Settings/AccountSettings.jsx";
 import Preferences from "./Component/Settings/Preferences.js"
-import Diet from "./Component/Diet.jsx"
-import Allergies from "./Component/Allergies.jsx"
-import Budget from "./Component/Budget.jsx"
+import Diet from "./Component/Settings/Preferences/Diet.js"
+import Allergies from "./Component/Allergies.js"
+import Budget from "./Component/Budget.js"
 import FriendForm from "./Component/FriendForm.jsx";
 import Modal from "./Component/Modal.jsx";
 import Navbar from "./Component/Navbar.jsx";
