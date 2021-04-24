@@ -59,7 +59,7 @@ const CreateAPost = () => {
         setPostTags(postTags.filter(x => x != tagID));
     }
 
-    const validatePost = () => {
+    const invalidPost = () => {
         setInvalidTitle(false);
         setInvalidImage(false);
         setInvalidSteps(false);
@@ -77,11 +77,11 @@ const CreateAPost = () => {
             setInvalidImage(true);
         }
 
-        return invalidIngredients && invalidTitle && invalidSteps && invalidImage;
+        return title.length == 0 && steps.length == 0 && ingredients.length == 0 && image.length == 0;
     }
 
     const createPost = async () => {
-        if (validatePost()){
+        if (!invalidPost()){
             var stepsID = -1;
             var ingredientsID = -1;
             var pictureID = -1;
