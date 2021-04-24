@@ -194,7 +194,7 @@ class App extends React.Component {
                         <Route path="/following/:userID">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
-                                <Banner title ={"Following List"}/>
+                                <Banner title ={"Following"}/>
                                 <div className={styles.innerContent}>
                                     <FollowingList />
                                 </div>

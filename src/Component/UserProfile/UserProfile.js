@@ -40,7 +40,7 @@ function UserProfile() {
     fetchProfilePic();
     fetchFollowing();
     fetchUser();
- }, [followState, userID, url])
+ }, [followState, userID, url, userBio])
 
   function fetchProfilePic(){
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=profilePicDisplay&ownerID="+userID, {

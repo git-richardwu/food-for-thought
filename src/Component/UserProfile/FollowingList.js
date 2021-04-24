@@ -37,7 +37,7 @@ function FollowingList() {
         {following_1.map((e, index) => {
           return (
             <div className={styles.divList} key={index}>
-              <h3>{e}</h3>
+              <h2 className="followListUsername">{e}</h2>
             </div>
           )
         })}

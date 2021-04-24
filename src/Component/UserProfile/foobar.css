@@ -3,6 +3,11 @@
     height: 271px;
     width: 271px;
 }
+
+.followListUsername{
+    font-family: ReemKufi;
+    font-size: 30px;
+}
  
 /* .img1:hover {
     opacity: 0.7;

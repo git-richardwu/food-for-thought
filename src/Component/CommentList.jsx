@@ -82,9 +82,9 @@ export default class CommentList extends React.Component {
     //this.loadPosts();
     const {error, isLoaded, posts} = this.state;
     if (error) {
-      return <div> Error: {error.message} </div>;
+      return <div> <p>Error: {error} </p> </div>;
     } else if (!isLoaded) {
-      return <div> Loading... </div>;
+      return <div> <p>Loading...</p></div>;
     } else if (posts) {
 
       if (posts.length > 0){
@@ -97,7 +97,7 @@ export default class CommentList extends React.Component {
 
       );
     }else{
-      return (<div> No Comments Found </div>);
+      return (<div> <p>No Comments Found</p></div>);
     }
     } else {
       return <div> Please Log In... </div>;

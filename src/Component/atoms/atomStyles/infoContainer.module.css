@@ -13,9 +13,8 @@
 }
 .name{
     width: 100%;
-    font-size: 20px;
-    /* font-family: "Roboto"; */
-    font-family: 'Roboto', sans-serif;    
+    font-size: 18px;
+    font-family: "ReemKufi";    
 
 }
 
@@ -84,6 +83,7 @@
 
 .bioText{
     font-size: 20px;
+    font-family: "ReemKufi";
 }
 
 .invisibleButton{
