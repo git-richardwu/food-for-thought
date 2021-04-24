@@ -48,6 +48,10 @@
     box-shadow: inset 0 0px 0px;
 }
 
+.unblock {
+    background-color: #D6EBDC;
+}
+
 .redButtonContainer{
     display: flex;
     flex-direction: row;

@@ -57,7 +57,7 @@ export default class BlockingList extends React.Component {
   conditionalAction(status, id){
     if (status == "active"){
       return(
-      <button className = "backButton" onClick={e => this.unblockConnection(id)}> Unblock </button>
+        <button className="backButton unblock" onClick={e => this.unblockConnection(id)}> Unblock </button>
       )
     }
   }

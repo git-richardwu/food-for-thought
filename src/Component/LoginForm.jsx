@@ -117,7 +117,7 @@ export default class LoginForm extends React.Component {
       return (
         // <form onSubmit={this.submitHandler}>
         <div className="signUpContainer">
-            <h2>Login</h2>
+            <h1 className="header">Login</h1>
             <form onSubmit={this.submitHandler}>
                 <label>
                     Email:

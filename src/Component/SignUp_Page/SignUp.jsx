@@ -163,7 +163,7 @@ export default class SignUp extends React.Component {
         return (
 
             <div className="signUpContainer">
-                <h2 className="">Sign Up</h2>
+                <h1 className="header">Sign Up</h1>
                 <label>
                     Username: 
                     <input className="textbox" onChange={this.updateUsername} value={this.state.username}/>

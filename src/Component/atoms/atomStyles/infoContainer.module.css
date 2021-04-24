@@ -118,3 +118,15 @@
     height: fit-content;
     width: fit-content;
 }
+
+.editBioButton{
+    background-color: #D6EBDC;
+    border: none;
+    color: black;
+    padding: 7px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: ReemKufi;
+    font-weight: bold;
+    box-shadow: inset 0 0px 0px;
+}

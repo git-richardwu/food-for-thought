@@ -71,6 +71,17 @@
     
 }
 
+.userProfileButton{
+    background-color: #6FD397;
+    border: none;
+    color: black;
+    padding: 7px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: ReemKufi;
+    font-weight: bold;
+    box-shadow: inset 0 0px 0px;
+}
     
 
 

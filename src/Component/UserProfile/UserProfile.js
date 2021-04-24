@@ -389,12 +389,12 @@ const fetchUser = async () => {
             {/* Pic and info container */}
             <div className={styles.picAndInfo}>
               <div>
-                <img src={url} className="img1"></img>
+                <img src={url} className="img1" alt={username+"'s profile picture"}></img>
                 {/* <h5>{this.state.url}</h5> 
                 <h5>{this.state.artifactID}</h5> */}
 
-                {userID === sessionStorage.getItem("user") && <button onClick={() => setShowUpdatePictureModal(!showUpdatePictureModal)}>Change Profile Picture</button>}
-                {userID !== sessionStorage.getItem("user") && <button onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
+                {userID === sessionStorage.getItem("user") && <button className={styles.userProfileButton} onClick={() => setShowUpdatePictureModal(!showUpdatePictureModal)}>Change Profile Picture</button>}
+                {userID !== sessionStorage.getItem("user") && <button className={styles.userProfileButton} onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
                 {/* <ProfilePictureButton name={"Picture Place Holder"} /> */}
               </div>
               

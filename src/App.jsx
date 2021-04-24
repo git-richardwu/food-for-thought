@@ -185,7 +185,7 @@ class App extends React.Component {
                                 <div className={styles.innerContent}>
                                     <UserProfile />
                                     <Link to="/create">
-                                        <img className="addPostButtonProfile" src ={AddPostButton}></img>
+                                        <img className="addPostButtonProfile" src ={AddPostButton} alt="Navigate to the Create A Post page"/>
                                     </Link>
                                 </div>
                             </div>
@@ -214,7 +214,7 @@ class App extends React.Component {
                                 <Banner title ={"Home"}/>
                                 <Posts/>
                                 <Link to="/create">
-                                    <img className="addPostButtonHome" src ={AddPostButton}></img>
+                                    <img className="addPostButtonHome" src ={AddPostButton} alt="Navigate to the Create A Post page"/>
                                 </Link>
                             </div>
                         </Route>

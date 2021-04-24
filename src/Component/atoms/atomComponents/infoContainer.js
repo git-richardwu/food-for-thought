@@ -91,21 +91,23 @@ function InfoContainer({
           <div className={styles.bioAndButtonsContainer}>
             {editBio === false && <p className={styles.bioText}>{bio}</p>}
 
+
+            <label for="bio edit" hidden>Bio</label>
             {editBio === true && (
-              <textarea type="text" id="userBio" rows="10" cols="20"></textarea>
+                    <textarea id="bio edit" type="text" rows="10" cols="20"/>
             )}
 
             {userID === sessionStorage.getItem("user") && editBio === false && (
               <div className={styles.editBio_Photo_Container}>
-                <button onClick={() => isEditingBio(!editBio)}>
-                  Edit bio button
+                <button className={styles.editBioButton} onClick={() => isEditingBio(!editBio)}>
+                  Edit Bio
                 </button>
               </div>
             )}
 
             {editBio === true && (
               <div className={styles.editBio_Photo_Container}>
-                <button
+                <button className={styles.editBioButton}
                   onClick={ async () => {
                    console.log("Thsi is user input: " +document.getElementById("userBio").value)
                     let test = document.getElementById("userBio").value;
@@ -137,10 +139,7 @@ function InfoContainer({
               <DietTag dietTag={dietTag3} />
               <DietTag dietTag={dietTag4} />
 
-              <button className={styles.button}>
-                {" "}
-                <img className={styles.icon} src={moreIcon}></img>
-              </button>
+            <img className={styles.icon} src={moreIcon} alt="additonal diet tags"></img>
             </div>
             {/* End of diet tag container */}
           </div>

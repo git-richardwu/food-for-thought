@@ -182,23 +182,17 @@ const Preferences = () => {
   return (
     <div>
       <div className="settingsContainer">
-        <Link to="/settings/preferences/diet">
-          <button className="settingsMenuButton">
+        <Link to="/settings/preferences/diet" className="settingsMenuButton">
             Diet
             <div className="triangle-right" />
-          </button>
         </Link>
-        <Link to="/settings/preferences/allergies">
-          <button className="settingsMenuButton">
+        <Link to="/settings/preferences/allergies" className="settingsMenuButton">
             Allergies
             <div className="triangle-right" />
-          </button>
         </Link>
-        <Link to="/settings/preferences/budget">
-          <button className="settingsMenuButton">
+        <Link to="/settings/preferences/budget" className="settingsMenuButton">
             Budget
-            <div className="triangle-right" />
-          </button>
+            <div className="triangle-right" />      
         </Link>
 
         <div className="weightAndValue">

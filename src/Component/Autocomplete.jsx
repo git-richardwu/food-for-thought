@@ -143,6 +143,7 @@ class Autocomplete extends Component {
       <Fragment>
         <input
           type="text"
+          id="find user to block"
           onChange={onChange}
           onKeyDown={onKeyDown}
           value={userInput}

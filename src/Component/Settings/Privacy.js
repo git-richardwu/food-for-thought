@@ -138,6 +138,9 @@ const Privacy = () => {
             <div className="privacy">              
                 <label className="privacyLabel">Set Account to Private:</label>
                 <label className="switch">
+                    <div hidden>
+                        privacy toggle button
+                    </div>
                     <input type="checkbox" onChange={e => updatePrivacy(!isPrivate)} checked={isPrivate}/>
                     <span className="slider round"/>
                 </label>
@@ -145,14 +148,12 @@ const Privacy = () => {
                     Your posts will only be shown to people who follow you and who you follow back
                 </p>
             </div>
-            <Link to="/settings/privacy/blockedUsers">
-                <button className="settingsMenuButton">
-                    Blocked Accounts
-                    <div className="triangle-right"/>
-                    <div className="numBlock">    
-                        {numBlockedUsers}
-                    </div>
-                </button>
+            <Link to="/settings/privacy/blockedUsers" className="settingsMenuButton">
+                Blocked Accounts
+                <div className="triangle-right"/>
+                <div className="numBlock">    
+                    {numBlockedUsers}
+                </div>
             </Link>
         </div>
     )
