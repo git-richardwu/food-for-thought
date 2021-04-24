@@ -3,7 +3,7 @@ import homeIcon from "../../../assets/home-white-18dp.svg";
 import Logo from "../../../Images/logo.jpg"
 import personIcon from "../../../assets/person-white-18dp.svg";
 import settingsIcon from "../../../assets/settings-white-18dp.svg";
-import notificationsIcon from "../../../assets/circle_notifications-white-18dp.svg";
+import notificationsIcon from "../../../assets/bell.svg";
 import styles from "../atomStyles/sideMenu.module.css";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
