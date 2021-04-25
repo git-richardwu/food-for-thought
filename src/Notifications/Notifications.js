@@ -6,7 +6,6 @@ function Notifications() {
     const [notifArray, setNotifArray] = React.useState([])
   React.useEffect(() => {
     recieveNotificationData(sessionStorage.getItem("user"))
-    console.log(notifArray)
   });
  
 
