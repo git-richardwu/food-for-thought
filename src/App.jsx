@@ -262,7 +262,7 @@ class App extends React.Component {
               <Route path="/following/:userID">
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
-                  <Banner title={"Following List"} />
+                  <Banner title={"Following"} />
                   <div className={styles.innerContent}>
                     <FollowingList />
                   </div>
@@ -292,6 +292,13 @@ class App extends React.Component {
               <Route path={["/login"]}>
                 <div className="maincontent" id="mainContent">
                   <LoginForm refreshPosts={this.doRefreshPosts} />
+                </div>
+              </Route>
+              <Route path="/notifications">
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"Notifications"} />
+                    <Notifications />
                 </div>
               </Route>
               <Route path={["/"]}>

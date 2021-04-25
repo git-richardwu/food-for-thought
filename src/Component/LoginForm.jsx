@@ -96,6 +96,10 @@ export default class LoginForm extends React.Component {
         }
       )
       .catch(error => {
+        this.setState({
+            sessiontoken: "",
+            openModal: !this.state.openModal
+          });
          console.log(error);
       });
   };
