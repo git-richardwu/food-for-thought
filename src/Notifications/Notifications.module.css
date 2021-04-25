@@ -1,0 +1,27 @@
+.container{
+display: flex;
+flex: 1;
+flex-direction:column;
+justify-content: center;
+align-items: center;
+height: 200px;
+/* background-color: blue; */
+}
+
+.notification{
+    height: fit-content;
+    /* flex: 0.5; */
+    flex-direction: column;
+    width: 900px;
+    background-color: #6FD397;
+    justify-content: center;
+    align-items: center;
+}
+
+.text{
+    text-align: center;
+    align-items: center;
+    /* background-color: blue; */
+    height: "100%";
+    font-size: 30px;
+}
