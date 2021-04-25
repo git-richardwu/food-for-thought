@@ -13,8 +13,8 @@ import LoginForm from "./Component/LoginForm.jsx";
 import Profile from "./Component/Settings/AccountSettings.jsx";
 import Preferences from "./Component/Settings/Preferences.js"
 import Diet from "./Component/Settings/Preferences/Diet.js"
-import Allergies from "./Component/Allergies.js"
-import Budget from "./Component/Budget.js"
+import Allergies from "./Component/Settings/Preferences/Allergies.js"
+import Budget from "./Component/Settings/Preferences/Budget.js"
 import FriendForm from "./Component/FriendForm.jsx";
 import SignUp from "./Component/SignUp_Page/SignUp.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
