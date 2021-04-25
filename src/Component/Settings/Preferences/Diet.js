@@ -74,13 +74,11 @@ const Diet = () => {
 
                     }else{
                         var hold = result[0][0].value.split("~")
-                        // setID(result[0][0].id); //an array of arrays
+                        setID(result[0][0].id); //an array of arrays
                         setDietTags(result[0][0].value.split("~"));
                         console.log(dietTags)
-    
-        
-                        console.log(result)
                     }
+                    console.log(result)
                 }
             },
             error => {
@@ -160,7 +158,7 @@ const Diet = () => {
                                 <label className="linkLabel2">Add Diet Tags:</label>
                                 <input className="addTagInput2" type="url" value={tags} onChange={e => setDTags(e.target.value)} maxLength="14" onKeyPress={e => setTagOnKey(e.key)}/>
                                 <button className="addToListButtonTags2" onClick={e => addTag()}>Add Tag</button>
-                                <div className="displayedPostTags2">
+                                <div className="displayedPostTags">
                                     {dietTags.map(tag => (
                                         <div key={tag} className="postDietTag2">
                                             {tag}
