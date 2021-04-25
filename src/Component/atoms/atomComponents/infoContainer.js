@@ -135,14 +135,17 @@ function InfoContainer({
               {/* First row of buttons */}
               <DietTag dietTag={dietTag1} />
               <DietTag dietTag={dietTag2} />
-              <div className={styles.invisibleButton}> </div>
+              {/* <div className={styles.invisibleButton}> </div> */}
             </div>
             <div className={styles.dietTagRow}>
               {/* Second row of buttons */}
               <DietTag dietTag={dietTag3} />
               <DietTag dietTag={dietTag4} />
 
-            <img className={styles.icon} src={moreIcon} alt="additonal diet tags"></img>
+              {/* <button className={styles.button}>
+                {" "}
+                <img className={styles.icon} src={moreIcon}></img>
+              </button> */}
             </div>
             {/* End of diet tag container */}
           </div>

@@ -19,10 +19,10 @@ import FriendForm from "./Component/FriendForm.jsx";
 import SignUp from "./Component/SignUp_Page/SignUp.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
-import Settings from "./Component/Settings/Settings.js"
+import Settings from "./Component/Settings/Settings.js";
 import UserProfile from "./Component/UserProfile/UserProfile";
 import FollowingList from "./Component/UserProfile/FollowingList";
-import SideMenu from "./Component/atoms/atomComponents/sideMenu.js"
+import SideMenu from "./Component/atoms/atomComponents/sideMenu.js";
 import styles from "./Component/UserProfile/UserProfile.module.css";
 import Banner from "./Component/atoms/atomComponents/banner";
 import StyleGuide from "./Component/StyleGuide/StyleGuide";
@@ -30,10 +30,31 @@ import PasswordReset from "./Component/PasswordReset.jsx";
 import Posts from "./Component/Posts/Posts.js";
 import AddPostButton from "./assets/addPost.svg";
 import CreateAPost from "./Component/Posts/CreateAPost.js";
-
-import { BrowserRouter as Router, Redirect, Route, Switch, Link } from "react-router-dom";
+import Notifications from "./Notifications/Notifications.js"
+import { recieveNotification } from "./Notifications/lib";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+  Link,
+} from "react-router-dom";
 import LandingPage from "./Component/LandingPage";
 import Privacy from "./Component/Settings/Privacy";
+
+// toggleModal will both show and hide the modal dialog, depending on current state.  Note that the
+// contents of the modal dialog are set separately before calling toggle - this is just responsible
+// for showing and hiding the component
+let interval;
+let notifArray = new Array()
+let count = 0;
+
+
+function toggleModal(app) {
+  app.setState({
+    openModal: !app.state.openModal,
+  });
+}
 
 // the App class defines the main rendering method and state information for the app
 class App extends React.Component {
@@ -44,13 +65,45 @@ class App extends React.Component {
     this.state = {
       openModal: false,
       refreshPosts: false,
+      windowWidth: window.innerWidth
     };
 
     // in the event we need a handle back to the parent from a child component,
     // we can create a reference to this and pass it down.
     this.mainContent = React.createRef();
     this.doRefreshPosts = this.doRefreshPosts.bind(this);
+
   }
+
+  
+  
+  handleResize = (e) => {
+    this.setState({ windowWidth: window.innerWidth });
+   };
+
+  componentDidMount() {
+    // if(sessionStorage.getItem("token") !== null){
+      window.addEventListener("resize", this.handleResize);
+
+    interval = setInterval(() => {
+     let trigger = async function(){
+       if(sessionStorage.getItem("user") == null){
+         return;
+       }
+     await recieveNotification(sessionStorage.getItem("user"), notifArray,count)
+      }
+      trigger();
+     
+    }, 3000);
+  // }
+  }
+
+  componentWillUnmount() {
+    window.addEventListener("resize", this.handleResize);
+
+    clearInterval(interval);
+  }
+
 
   // doRefreshPosts is called after the user logs in, to display relevant posts.
   // there are probably more elegant ways to solve this problem, but this is... a way
@@ -71,157 +124,182 @@ class App extends React.Component {
       // know this.
       <Router basename={process.env.PUBLIC_URL}>
         <div className={styles.container}>
-            <div className={styles.mainContent}>
-                    <Switch>
-                        {/* <Route path="/friends">
-                            <div>
-                            <p>Friends</p>
-                            <FriendForm userid={sessionStorage.getItem("user")} />
-                            <FriendList userid={sessionStorage.getItem("user")} />
-                            </div>
-                        </Route> */}
-                        <Route path="/settings/privacy/blockedUsers">
-                            <SideMenu/>
-                            {/* <Banner title = {"Block User"}/> */}
-                            <div className="maincontent" id="mainContent">
-                                <Banner title = {"Block User"}/>
-                                <BlockingForm userid={sessionStorage.getItem("user")} />
-                                <BlockingList userid={sessionStorage.getItem("user")} />
-                            </div>
-                        </Route>
-                        <Route path="/settings/account">
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Account"}/>
-                                <Profile/>
-                            </div>
-                        </Route>
-                        <Route
-                            path="/settings/general/aboutus/andrew"
-                            component={AboutAndrew}
-                            />
-                        <Route
-                            path="/settings/general/aboutus/william"
-                            component={AboutWilliam}
-                            />
-                        <Route path="/reset">
-                            <div className="maincontent" id="mainContent">
-                                <PasswordReset/>
-                            </div>
-                        </Route>
-                        <Route path="/settings/preferences/diet">
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Diet"}/>
-                                <Diet/>
-                            </div>
-                          </Route> 
-                        <Route path="/settings/preferences/allergies">
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Allergies"}/>
-                                <Allergies/>
-                            </div>
-                          </Route>  
-                          <Route path="/settings/preferences/budget">
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Budget"}/>
-                                <Budget/>
-                            </div>
-                          </Route>                              
-                        <Route path="/settings/preferences">
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Preferences"}/>
-                                <Preferences/>
-                            </div>
-                          </Route>
-                        <Route path="/settings/privacy">
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Privacy"}/>
-                                <Privacy/>
-                            </div>
-                        </Route> 
-                        <Route path="/settings">
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Settings"}/>
-                                <Settings/>
-                            </div>
-                        </Route>
-                        <Route path={["/signup"]}>
-                            <div className="maincontent" id="mainContent">
-                                <SignUp/>
-                            </div>
-                        </Route>
-                        <Route path="/styleguide">
-                            <SideMenu/>
-                            <div className="mainHome">
-                                <Banner title ={"Style Guide"}/>
-                                <StyleGuide/>
-                            </div>
-                        </Route>
-                        <Route path="/friends">
-                            <div>
-                                <p>Friends</p>
-                                <FriendForm userid={sessionStorage.getItem("user")} />
-                                <FriendList userid={sessionStorage.getItem("user")} />
-                            </div>
-                        </Route>
-                        <Route path="/profile/:userID">
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Profile"}/>
-                                <div className={styles.innerContent}>
-                                    <UserProfile />
-                                    <Link to="/create">
-                                        <img className="addPostButtonProfile" src ={AddPostButton} alt="Navigate to the Create A Post page"/>
-                                    </Link>
-                                </div>
-                            </div>
-                        </Route>
+          <div className={styles.mainContent}>
+            <Switch>
+              <Route path="/settings/privacy/blockedUsers">
+                <SideMenu />
+                {/* <Banner title = {"Block User"}/> */}
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"Block User"} />
+                  <BlockingForm userid={sessionStorage.getItem("user")} />
+                  <BlockingList userid={sessionStorage.getItem("user")} />
+                </div>
+              </Route>
+              <Route path="/settings/account">
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"Account"} />
+                  <Profile />
+                </div>
+              </Route>
+              <Route
+                path="/settings/general/aboutus/andrew"
+                component={AboutAndrew}
+              />
+              <Route
+                path="/settings/general/aboutus/william"
+                component={AboutWilliam}
+              />
+              <Route path="/reset">
+                <div className="maincontent" id="mainContent">
+                  <PasswordReset />
+                </div>
+              </Route>
+              <Route path="/settings/preferences/diet">
+                <SideMenu/>
+                <div className="maincontent" id="mainContent">
+                    <Banner title ={"Diet"}/>
+                    <Diet/>
+                </div>
+              </Route>
+              <Route path="/settings/preferences/allergies">
+                <SideMenu/>
+                <div className="maincontent" id="mainContent">
+                    <Banner title ={"Allergies"}/>
+                    <Allergies/>
+                </div>
+              </Route>  
+              <Route path="/settings/preferences/budget">
+                <SideMenu/>
+                <div className="maincontent" id="mainContent">
+                    <Banner title ={"Budget"}/>
+                    <Budget/>
+                </div>
+              </Route>   
+              <Route path="/settings/notifications">
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"Notifications"} />
+                    <Notifications />
+                </div>
+              </Route>
+              <Route path="/settings/preferences">
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"Preferences"} />
+                  <Preferences />
+                </div>
+              </Route>
+              <Route path="/settings/privacy">
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"Privacy"} />
+                  <Privacy />
+                </div>
+              </Route>
+              <Route path="/settings">
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"Settings"} />
+                  <Settings />
+                </div>
+              </Route>
+              <Route path={["/signup"]}>
+                <div className="maincontent" id="mainContent">
+                  <SignUp />
+                </div>
+              </Route>
+              <Route path="/styleguide">
+                <SideMenu />
+                <div className="mainHome">
+                  <Banner title={"Style Guide"} />
+                  <StyleGuide />
+                </div>
+              </Route>
+              <Route path="/profile/:userID">
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"Profile"} />
+                    
 
-                        <Route path="/following/:userID">
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Following"}/>
-                                <div className={styles.innerContent}>
-                                    <FollowingList />
-                                </div>
-                            </div>
-                        </Route>
 
-                        <Route path={["/create"]}>
-                            <SideMenu/>
-                            <div className="maincontent" id="mainContent">
-                                <Banner title ={"Create"}/>
-                                <CreateAPost/>
-                            </div>
-                        </Route>
-                        <Route path={["/home"]}>
-                            <SideMenu/>
-                            <div className="mainHome">
-                                <Banner title ={"Home"}/>
-                                <Posts/>
-                                <Link to="/create">
-                                    <img className="addPostButtonHome" src ={AddPostButton} alt="Navigate to the Create A Post page"/>
-                                </Link>
-                            </div>
-                        </Route>
-                        <Route path={["/login"]}>
-                            <div className="maincontent" id="mainContent">
-                                <LoginForm refreshPosts={this.doRefreshPosts} />
-                            </div>
-                        </Route>
-                        <Route path={["/"]}>
-                            <div className="maincontent" id="mainContent">                               
-                                <LandingPage/>
-                            </div>
-                        </Route>
+                    {window.innerWidth > 850 && ( 
+                  <div className={styles.innerContent}>
+                  {/* <div> */}
+                    <UserProfile />
+                    <Link to="/create">
+                      <img
+                        className="addPostButtonProfile"
+                        src={AddPostButton}
+                      ></img>
+                    </Link>
+                  </div>
+                  )}
+                  
+                    {window.innerWidth <= 850 && ( 
+                  // <div className={styles.innerContent}>
+                   <div> 
+                    <UserProfile />
+                    <div>
+                    <Link to="/create">
+                      <img
+                        className="addPostButtonProfile"
+                        // style= {{height:50, width:50}}
+                        src={AddPostButton}
+                      ></img>
+                    </Link>
+                    </div>
+                   </div>
+                  )}
+          
 
-                    </Switch>
+
+
+
+                </div>
+              </Route>
+
+              <Route path="/following/:userID">
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"Following List"} />
+                  <div className={styles.innerContent}>
+                    <FollowingList />
+                  </div>
+                </div>
+              </Route>
+
+              <Route path={["/create"]}>
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"Create"} />
+                  <CreateAPost />
+                </div>
+              </Route>
+              <Route path={["/home"]}>
+                <SideMenu />
+                <div className="mainHome">
+                  <Banner title={"Home"} />
+                  <Posts />
+                  <Link to="/create">
+                    <img
+                      className="addPostButtonHome"
+                      src={AddPostButton}
+                    ></img>
+                  </Link>
+                </div>
+              </Route>
+              <Route path={["/login"]}>
+                <div className="maincontent" id="mainContent">
+                  <LoginForm refreshPosts={this.doRefreshPosts} />
+                </div>
+              </Route>
+              <Route path={["/"]}>
+                <div className="maincontent" id="mainContent">
+                  <LandingPage />
+                </div>
+                </Route>
+                </Switch>
                 </div>
             </div>
       </Router>

@@ -121,6 +121,7 @@ export default class Post extends React.Component {
               onAddComment={this.setCommentCount}
               parent={this.props.post.id}
               commentCount={this.getCommentCount()}
+              authorID = {this.props.post.author.id}
             />
           </div>
         </div>

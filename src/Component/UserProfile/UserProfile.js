@@ -33,6 +33,7 @@ function UserProfile() {
   fetchCalorieGoal();
   fetchDietTags();
 
+  
  React.useEffect(()=>{
     fetchUserBio();
     fetchFollowingCount();
@@ -418,11 +419,15 @@ const fetchUser = async () => {
   }
 
     return (
-          <div >
-            {/* Pic and info container */}
-            <div className={styles.picAndInfo}>
+          <div classname={styles.innerContent}>
+           <div className={styles.picAndInfo}>
+           
+                {/* Pic and info container */}
+                {window.innerWidth > 850 && (
               <div>
-                <img src={url} className="img1" alt={username+"'s profile picture"}></img>
+                
+                <img src={url} className={styles.img1} alt={username+"'s profile picture"}/>
+
                 {/* <h5>{this.state.url}</h5> 
                 <h5>{this.state.artifactID}</h5> */}
 
@@ -430,7 +435,23 @@ const fetchUser = async () => {
                 {userID !== sessionStorage.getItem("user") && <button className={styles.userProfileButton} onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
                 {/* <ProfilePictureButton name={"Picture Place Holder"} /> */}
               </div>
-              
+              )}
+
+              {window.innerWidth < 850 && (
+                <div>
+                <div>
+                  <img src={url} className={styles.img1}></img>
+                </div>
+                
+                <div>
+                {userID === sessionStorage.getItem("user") && <button onClick={url}>Change Profile Picture</button>}
+                {userID !== sessionStorage.getItem("user") && <button onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
+              </div>
+              </div>
+              )}
+
+
+
               {/* User info container */}
               <div className={styles.infoContainer}>
                 
@@ -448,11 +469,9 @@ const fetchUser = async () => {
                 bioID = {bioID}
                 userID = {userID}
                 />
-              </div>
-            </div>
-            {/* End of pic and info container*/}
-
-          <div className={styles.followAndActivityContainer}>
+              </div> 
+        </div>
+        <div className={styles.followAndActivityContainer}>
             <FollowerComponent
             
               numOfFollowers={followerCount}
@@ -461,18 +480,7 @@ const fetchUser = async () => {
             />
             <ActivityComponent userID={userID}/>
           </div>
-          <Modal show={showUpdatePictureModal} onClose={e => setShowUpdatePictureModal(!showUpdatePictureModal)}>
-            <div className="modal-header">
-                <h2 className="modal-header-text">Update Profile Picture</h2>
-            </div>
-            <div className="modal-body">
-                <input className="modelInput" type="file" accept=".png,.jpg,.jpeg,.gif"/>
-            </div>
-            <div className="modal-footer">
-                <button  className="yesButton" onClick={e => updateImage()}>Submit</button>
-                <button className="noButton" onClick={e => setShowUpdatePictureModal(!showUpdatePictureModal)}>Cancel</button>
-            </div>
-        </Modal>
+        
         </div>
     );
 }

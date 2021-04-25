@@ -256,6 +256,16 @@
 }
 
 @media screen and (max-width: 850px) {
+
+    .addPostButtonProfile{
+        position: absolute;
+        right: 0px;
+        bottom: -5px;
+        height: 40px;
+        width: 40px;
+    }
+
+
     .postsOuter{
         margin-bottom: 90px;
         margin-left: 10px;
