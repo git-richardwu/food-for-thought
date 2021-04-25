@@ -19,6 +19,7 @@ const Allergies = () => {
     const [treeNChecked, setTreeN] = useState(false)
     const [wheatChecked, setWheat] = useState(false)
 
+
     const [isRedirect, setIsRedirect] = useState(false) //setting the state to false, initial state
 
     useEffect(() => {  //this function is called every time the page loads

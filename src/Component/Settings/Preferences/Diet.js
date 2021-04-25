@@ -11,6 +11,8 @@ const Diet = () => {
     const [tags, setDTags] = useState("");
     const [dietTagsID, setID] = useState(-1)
     const fileField = document.querySelector('input[type="file"]');
+    const [postTagLimit, setPostTagLimit] = useState(false);
+
 
     useEffect(() => {  //this function is called every time the page loads
         const getDietSettings = async () => {
@@ -27,8 +29,10 @@ const Diet = () => {
                 setDietTags(add);
                 setDTags("");
                 postDiet(dietTags)
+                setPostTagLimit(false);
             }else{
                 alert("Only 10 tags are allowed on your profile.") //in line message for limit
+                setPostTagLimit(true);
             }
         }
         else if (tags != "" && !dietTags.includes(tags) && dietTagsID !== -1){
@@ -38,8 +42,9 @@ const Diet = () => {
                 setDietTags(add);
                 setDTags("");
                 patchDiet(dietTags)
+                setPostTagLimit(false);
             }else{
-                alert("Only 10 tags are allowed on your profile.")
+                setPostTagLimit(true);
             }
         }
     }
@@ -158,6 +163,7 @@ const Diet = () => {
                                 <label className="linkLabel2">Add Diet Tags:</label>
                                 <input className="addTagInput2" type="url" value={tags} onChange={e => setDTags(e.target.value)} maxLength="14" onKeyPress={e => setTagOnKey(e.key)}/>
                                 <button className="addToListButtonTags2" onClick={e => addTag()}>Add Tag</button>
+                                {postTagLimit && <p className="errorMessage">Only 10 tags are allowed in your preferences.</p>}
                                 <div className="displayedPostTags">
                                     {dietTags.map(tag => (
                                         <div key={tag} className="postDietTag2">
