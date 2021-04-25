@@ -50,7 +50,6 @@ let interval;
 let notifArray = new Array()
 let count = 0;
 
-
 function toggleModal(app) {
   app.setState({
     openModal: !app.state.openModal,
@@ -66,14 +65,15 @@ class App extends React.Component {
     this.state = {
       openModal: false,
       refreshPosts: false,
-      windowWidth: window.innerWidth
+      windowWidth: window.innerWidth,
+      count: 0,
     };
 
     // in the event we need a handle back to the parent from a child component,
     // we can create a reference to this and pass it down.
     this.mainContent = React.createRef();
     this.doRefreshPosts = this.doRefreshPosts.bind(this);
-
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   
@@ -87,16 +87,23 @@ class App extends React.Component {
       window.addEventListener("resize", this.handleResize);
 
     interval = setInterval(() => {
-     let trigger = async function(){
+     let trigger = async () => {
        if(sessionStorage.getItem("user") == null){
          return;
        }
-       await recieveNotification(sessionStorage.getItem("user"), notifArray,count)
+
+       var count = await recieveNotification(sessionStorage.getItem("user"), notifArray,count);
+       console.log(count);
+        if(count > 0){
+            this.setState({
+                count: count
+            })
+            toggleModal(this);
+        }
       }
       trigger();
      
     }, 3000);
-  // }
   }
 
   componentWillUnmount() {
@@ -311,7 +318,7 @@ class App extends React.Component {
                     <h2 className="modal-header-text">Notifications</h2>
                 </div>
                 <div className="modal-body">
-                    <p className="modalMessage">You have new notifications</p>
+                    <p className="modalMessage">You have recieved {this.state.count} notification(s)!</p>
                 </div>
                 <div className="modal-footer">
                     <button  className="yesButton" onClick={e => toggleModal(this, e)}>OK</button>
