@@ -69,6 +69,7 @@ export default class CommentList extends React.Component {
         .then(
             result => {
                 var filteredPosts = this.state.posts.filter((post) => post.id != postID )
+                this.props.onDeleteComment(this.props.commentCount - 1);
                 this.setState({
                     isLoaded: true,
                     posts: filteredPosts

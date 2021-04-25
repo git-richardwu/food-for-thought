@@ -30,7 +30,8 @@ import PasswordReset from "./Component/PasswordReset.jsx";
 import Posts from "./Component/Posts/Posts.js";
 import AddPostButton from "./assets/addPost.svg";
 import CreateAPost from "./Component/Posts/CreateAPost.js";
-import Notifications from "./Notifications/Notifications.js"
+import Notifications from "./Notifications/Notifications.js";
+import Modal from "./Component/Modal.jsx"
 import { recieveNotification } from "./Notifications/lib";
 import {
   BrowserRouter as Router,
@@ -90,7 +91,7 @@ class App extends React.Component {
        if(sessionStorage.getItem("user") == null){
          return;
        }
-     await recieveNotification(sessionStorage.getItem("user"), notifArray,count)
+       await recieveNotification(sessionStorage.getItem("user"), notifArray,count)
       }
       trigger();
      
@@ -220,9 +221,6 @@ class App extends React.Component {
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
                   <Banner title={"Profile"} />
-                    
-
-
                     {window.innerWidth > 850 && ( 
                   <div className={styles.innerContent}>
                   {/* <div> */}
@@ -231,11 +229,11 @@ class App extends React.Component {
                       <img
                         className="addPostButtonProfile"
                         src={AddPostButton}
+                        alt="Create A Post"
                       ></img>
                     </Link>
                   </div>
                   )}
-                  
                     {window.innerWidth <= 850 && ( 
                   // <div className={styles.innerContent}>
                    <div> 
@@ -246,16 +244,12 @@ class App extends React.Component {
                         className="addPostButtonProfile"
                         // style= {{height:50, width:50}}
                         src={AddPostButton}
+                        alt="Create A Post"
                       ></img>
                     </Link>
                     </div>
                    </div>
                   )}
-          
-
-
-
-
                 </div>
               </Route>
 
@@ -285,6 +279,7 @@ class App extends React.Component {
                     <img
                       className="addPostButtonHome"
                       src={AddPostButton}
+                      alt="Create A Post"
                     ></img>
                   </Link>
                 </div>
@@ -309,6 +304,19 @@ class App extends React.Component {
                 </Switch>
                 </div>
             </div>
+            <Modal
+                show={this.state.openModal}
+                onClose={(e) => toggleModal(this, e)}>
+                <div className="modal-header">
+                    <h2 className="modal-header-text">Notifications</h2>
+                </div>
+                <div className="modal-body">
+                    <p className="modalMessage">You have new notifications</p>
+                </div>
+                <div className="modal-footer">
+                    <button  className="yesButton" onClick={e => toggleModal(this, e)}>OK</button>
+                </div>
+            </Modal>
       </Router>
     );
   }

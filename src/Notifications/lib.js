@@ -17,7 +17,7 @@ function sendNotification  (userID, recipientID, message ) {
        console.log("Notification was sent ")
       },
       error => {
-        alert("Error occured when send notification!");
+        console.log("Error occured when send notification!");
       }
     );
 };
@@ -73,6 +73,7 @@ function sendNotification  (userID, recipientID, message ) {
             // console.log("This is the notification array length " + notifArray.length)
             // console.log("This is counter at the end: " + counter)
             if(counter > 0){
+                
               alert("You have recieved " + counter + " notifications!");
             }
             // return JSON.stringify(counter);

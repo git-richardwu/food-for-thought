@@ -5,12 +5,9 @@ import "./Diet.css"
 import { BrowserRouter as Router, Redirect, Route, Switch, Link, useHistory} from "react-router-dom";
 
 const Diet = () => {
-  
-    const [redirect, setRedirect] = useState(false);
     const [dietTags, setDietTags] = useState([]);
     const [tags, setDTags] = useState("");
     const [dietTagsID, setID] = useState(-1)
-    const fileField = document.querySelector('input[type="file"]');
     const [postTagLimit, setPostTagLimit] = useState(false);
 
 
@@ -31,7 +28,6 @@ const Diet = () => {
                 postDiet(dietTags)
                 setPostTagLimit(false);
             }else{
-                alert("Only 10 tags are allowed on your profile.") //in line message for limit
                 setPostTagLimit(true);
             }
         }
