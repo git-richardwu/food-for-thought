@@ -89,7 +89,7 @@ const Posts = ({userId}) => {
         var postdietTags = [];
         var dietTagfilters = [];
 
-        // post tags
+        // get post tags of all existing posts
         fetch(process.env.REACT_APP_API_PATH+"/post-tags?type=dietTags", {
             method: "GET",
             headers: {
@@ -106,7 +106,7 @@ const Posts = ({userId}) => {
             }
         )
         
-        // user preference tags
+        // get user preference tags of yourself
         fetch(process.env.REACT_APP_API_PATH+"/user-preference?name=dietTags&userID="+sessionStorage.getItem("user"), {
             method: "GET",
             headers: {
@@ -127,10 +127,11 @@ const Posts = ({userId}) => {
                 }
             }
         )
-
+        // prioritize existing post by whether or not they have a tag from the user's preference
+        // if dietTagfilters != [""], then enact this change, otherwise it means the user has not set any preferences
+        // if (dietTagfilters != [""]) {
         prioritizedpost = []
         for (var i=0; i < postdietTags.length; i++){
-            
             var included = false;
             // var currentposttaglist = postdietTags[i].name.split("~")
 
@@ -152,7 +153,7 @@ const Posts = ({userId}) => {
         }
 
 
-        // MAKE CHANGES HERE:
+        
         var topallPosts = [];
         var normalAllPosts = [];
         // fetch the tags for a specific person from their post-tag connection/user-artifacts
@@ -169,6 +170,7 @@ const Posts = ({userId}) => {
 
         // concatenate normalAllPosts + topallposts
         allPosts = normalAllPosts.concat(topallPosts);
+        // }
 
         for (var i = 0; i < allPosts.length; i++){
             if (allPosts[i].author.id.toString() === sessionStorage.getItem("user")){
