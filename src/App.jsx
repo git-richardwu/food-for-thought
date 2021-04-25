@@ -67,36 +67,42 @@ class App extends React.Component {
     this.state = {
       openModal: false,
       refreshPosts: false,
+      windowWidth: window.innerWidth
     };
 
     // in the event we need a handle back to the parent from a child component,
     // we can create a reference to this and pass it down.
     this.mainContent = React.createRef();
     this.doRefreshPosts = this.doRefreshPosts.bind(this);
-    // this.notifArray = new Array()
-    // recieveNotification(sessionStorage.getItem("user"), notifArray );
+
   }
+
   
+  
+  handleResize = (e) => {
+    this.setState({ windowWidth: window.innerWidth });
+   };
 
   componentDidMount() {
+    // if(sessionStorage.getItem("token") !== null){
+      window.addEventListener("resize", this.handleResize);
+
     interval = setInterval(() => {
      let trigger = async function(){
+       if(sessionStorage.getItem("user") == null){
+         return;
+       }
      await recieveNotification(sessionStorage.getItem("user"), notifArray,count)
-        //  console.log(notifArray)
-        //  console.log("Return val from recieveNotifications: " + count);
       }
       trigger();
-      // do what you want here.
-      // let count = recieveNotification(sessionStorage.getItem("user"), this.notifArray)
-      // if (count > 0){
-      //   alert("You have recieved "+ count + " notifications!") 
-      // }
-      // console.log("count: " + count)
      
     }, 3000);
+  // }
   }
 
   componentWillUnmount() {
+    window.addEventListener("resize", this.handleResize);
+
     clearInterval(interval);
   }
 
@@ -172,15 +178,8 @@ class App extends React.Component {
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
                   <Banner title={"Notifications"} />
-                  {/* <div> */}
-                    {/* <p>Hello world</p> */}
-                  {/* </div> */}
+                  
                     <Notifications />
-                    
-                    {/* <div className="diet">
-                    
-                  </div>
-                     */}
                   
                 </div>
               </Route>
@@ -230,7 +229,12 @@ class App extends React.Component {
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
                   <Banner title={"Profile"} />
+                    
+
+
+                    {window.innerWidth > 850 && ( 
                   <div className={styles.innerContent}>
+                  {/* <div> */}
                     <UserProfile />
                     <Link to="/create">
                       <img
@@ -239,6 +243,27 @@ class App extends React.Component {
                       ></img>
                     </Link>
                   </div>
+                  )}
+                  
+                    {window.innerWidth <= 850 && ( 
+                  // <div className={styles.innerContent}>
+                   <div> 
+                    <UserProfile />
+                    <div>
+                    <Link to="/create">
+                      <img
+                        className="addPostButtonProfile"
+                        src={AddPostButton}
+                      ></img>
+                    </Link>
+                    </div>
+                   </div>
+                  )}
+          
+
+
+
+
                 </div>
               </Route>
 
