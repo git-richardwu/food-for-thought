@@ -341,9 +341,56 @@ const fetchUser = async () => {
 
   }
 
+  // function fetchDietTags(){
+
+  //   fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=dietTag&ownerID="+userID,{
+  //     method: "get",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: "Bearer " + sessionStorage.getItem("token"),
+  //       },
+  //     }
+  //   )
+  //     .then((res) => res.json())
+  //     .then(
+  //       (result) => {
+  //         if (result[0].length != 0) {
+  //           result[0].forEach(function (artifacts) {
+  //             if (artifacts.category == "dietTag"){
+  //               if(artifacts.url == "1"){
+  //                 let dietTag = artifacts.type;
+  //                 console.log("Goal from user preferences: " + dietTag);
+  //                 setDietTag1(dietTag);
+  //               }
+  //               if(artifacts.url == "2"){
+  //                 let dietTag = artifacts.type;
+  //                 console.log("Goal from user preferences: " + dietTag);
+  //                 setDietTag2(dietTag);
+  //               }
+  //               if(artifacts.url == "3"){
+  //                 let dietTag = artifacts.type;
+  //                 console.log("Goal from user preferences: " + dietTag);
+  //                 setDietTag3(dietTag);
+  //               }
+  //               if(artifacts.url == "4"){
+  //                 let dietTag = artifacts.type;
+  //                 console.log("Goal from user preferences: " + dietTag);
+  //                 setDietTag4(dietTag);
+  //               }
+  //             } 
+  //           });
+  //         }
+  //       },
+  //       (error) => {
+  //         alert("Error occurred when trying to set diet tags");
+  //       }
+  //     );
+
+  // }
+
   function fetchDietTags(){
 
-    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=dietTag&ownerID="+userID,{
+    fetch(process.env.REACT_APP_API_PATH+"/user-preferences?name=dietTags&userID="+userID,{
       method: "get",
         headers: {
           "Content-Type": "application/json",
@@ -354,31 +401,17 @@ const fetchUser = async () => {
       .then((res) => res.json())
       .then(
         (result) => {
-          if (result[0].length != 0) {
-            result[0].forEach(function (artifacts) {
-              if (artifacts.category == "dietTag"){
-                if(artifacts.url == "1"){
-                  let dietTag = artifacts.type;
-                  console.log("Goal from user preferences: " + dietTag);
-                  setDietTag1(dietTag);
-                }
-                if(artifacts.url == "2"){
-                  let dietTag = artifacts.type;
-                  console.log("Goal from user preferences: " + dietTag);
-                  setDietTag2(dietTag);
-                }
-                if(artifacts.url == "3"){
-                  let dietTag = artifacts.type;
-                  console.log("Goal from user preferences: " + dietTag);
-                  setDietTag3(dietTag);
-                }
-                if(artifacts.url == "4"){
-                  let dietTag = artifacts.type;
-                  console.log("Goal from user preferences: " + dietTag);
-                  setDietTag4(dietTag);
-                }
-              } 
-            });
+          if (result[1] !== 0) {
+            var holder = result[0][0].value.split("~")
+            for (var i = 0; i < holder.length; i++) {
+              setDietTag1(holder[0]);
+              setDietTag2(holder[1]);
+              setDietTag3(holder[2]);
+              setDietTag4(holder[3])
+          }
+            
+
+
           }
         },
         (error) => {
