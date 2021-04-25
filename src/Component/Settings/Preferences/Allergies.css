@@ -7,11 +7,12 @@
     padding-left: 35px;
     margin-bottom: 12px;
     cursor: pointer;
-    font-size: 22px;
+    font-size: 20px;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+    font-family: "ReemKufi";
   }
   
   /* Hide the browser's default checkbox */
@@ -66,4 +67,8 @@
     -webkit-transform: rotate(45deg);
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
+  }
+
+  .allergy-choices{
+      margin-top: 20px;
   }

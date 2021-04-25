@@ -112,7 +112,8 @@ const Budget = () => {
         return (
             <div className="pref">
                 <h2>Budget</h2>
-                <p>You would like to spend $<input value={budget} type="number" min="0" max="1,000" step="10" onChange={e => setBudget(e.target.value)} ></input> dollars a week<button className="Submit" onClick={() => updateBudget(budget) }>Submit</button></p>
+                <label className="budgetLabel">You would like to spend $<input className="budgetInput" value={budget} type="number" min="0" max="1,000" step="10" onChange={e => setBudget(e.target.value)} ></input> dollars a week</label>
+                <button className="Submit" onClick={() => updateBudget(budget) }>Submit</button>
                 {/* e is event, target is input and .value is specific value */}
 
             </div>

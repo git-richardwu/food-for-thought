@@ -113,29 +113,21 @@ class App extends React.Component {
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Diet"}/>
-                                <div className="diet">
-                                    <Diet/>
-                                </div>
+                                <Diet/>
                             </div>
                           </Route> 
                         <Route path="/settings/preferences/allergies">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Allergies"}/>
-                                <div className="Allergies">
-                                <p>Allergies</p>
-                                    <Allergies/>
-                                </div>
+                                <Allergies/>
                             </div>
                           </Route>  
                           <Route path="/settings/preferences/budget">
                             <SideMenu/>
                             <div className="maincontent" id="mainContent">
                                 <Banner title ={"Budget"}/>
-                                <div className="Budget">
-                                <p>Budget</p>
-                                    <Budget/>
-                                </div>
+                                <Budget/>
                             </div>
                           </Route>                              
                         <Route path="/settings/preferences">

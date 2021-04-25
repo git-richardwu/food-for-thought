@@ -80,7 +80,7 @@ const Diet = () => {
                     }else{
                         var hold = result[0][0].value.split("~")
                         setID(result[0][0].id); //an array of arrays
-                        setDietTags(result[0][0].value.split("~"));
+                        setDietTags(result[0][0].value.split("~").filter(x => x !== ""));
                         console.log(dietTags)
                     }
                     console.log(result)
@@ -160,20 +160,20 @@ const Diet = () => {
                 <div className="createAPostContainer">     
                     <h2>Diet Tags</h2>           
                     <div className="addDietTagsContainer">
-                                <label className="linkLabel2">Add Diet Tags:</label>
-                                <input className="addTagInput2" type="url" value={tags} onChange={e => setDTags(e.target.value)} maxLength="14" onKeyPress={e => setTagOnKey(e.key)}/>
-                                <button className="addToListButtonTags2" onClick={e => addTag()}>Add Tag</button>
-                                {postTagLimit && <p className="errorMessage">Only 10 tags are allowed in your preferences.</p>}
-                                <div className="displayedPostTags">
-                                    {dietTags.map(tag => (
-                                        <div key={tag} className="postDietTag2">
-                                            {tag}
-                                            <button className="deleteTag" onClick={e => deleteTag(tag)}>x</button>
-                                        </div>
-                                    ))}
-
+                        <label for="add tag" className="linkLabel2">Add Diet Tags:</label>
+                        <input id="add tag" className="addTagInput2" type="url" value={tags} onChange={e => setDTags(e.target.value)} maxLength="14" onKeyPress={e => setTagOnKey(e.key)}/>
+                        <button className="addToListButtonTags2" onClick={e => addTag()}>Add Tag</button>
+                        {postTagLimit && <p className="errorMessage">Only 10 tags are allowed in your preferences.</p>}
+                        <div className="displayedPostTags">
+                            {dietTags.map(tag => (
+                                <div key={tag} className="postDietTag">
+                                    {tag}
+                                    <button className="deleteTag" onClick={e => deleteTag(tag)}>X</button>
                                 </div>
-                            </div>
+                            ))}
+
+                        </div>
+                    </div>
                 </div>      
                 )
                     }
