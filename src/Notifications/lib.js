@@ -39,7 +39,7 @@ function sendNotification  (userID, recipientID, message ) {
         result => {
           if (result) {
             // console.log(result[0])
-            result[0].forEach( async function(notification){
+            result[0].forEach(async function(notification){
                 // console.log("This is notification: " + notification)
                 // console.log("This is userid type:  "  + typeof JSON.parse(userID))
                 // console.log("This is notification.recipientUser.id " + notification.recipientUser.id )

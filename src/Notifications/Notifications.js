@@ -60,14 +60,6 @@ function Notifications() {
         </div>
 
     </div>
-    // {notifArray.map(notif=>(
-    //     <NotificationComponent message={notif}/>
-    // ))}
-    // <NotificationComponent message={notifArray[0]}/>
-
-    // {posts.map(post => (
-    //     <Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts} parentid={this.props.parentid}/>
-    //   ))}
   );
 }
 
