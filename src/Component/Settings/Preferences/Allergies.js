@@ -301,9 +301,7 @@ const Allergies = () => {
             result => {
                 if (result) {
                     setAllergies(value);
- 
-
-                    // setIsRedirect(true);
+                    setIsRedirect(true);
                 }
             },
             error => {
@@ -334,7 +332,7 @@ const Allergies = () => {
                 if (result) { //if you get something back ("result") then you set the value to what you get
                     setAllergies(value);
                     setID(result.id);
-                    // setIsRedirect(true);
+                    setIsRedirect(true);
                 }
             },
             error => {
@@ -342,7 +340,10 @@ const Allergies = () => {
             }
             );
     }
-
+    if (isRedirect === true){
+        return <Redirect to='/settings/preferences'></Redirect>
+    }
+    else{
         return (
             <div className="pref">
                 <h2>Allergies</h2>
@@ -398,5 +399,6 @@ const Allergies = () => {
         );
         
         }
+    }
 
 export default Allergies
