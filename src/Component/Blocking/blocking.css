@@ -17,3 +17,13 @@
 .wordfont2{
     font-family: ReemKufi;
 }
+
+.inputContainer{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.userInputContainer{
+    margin-right: 10px;
+}

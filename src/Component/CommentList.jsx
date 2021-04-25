@@ -1,7 +1,7 @@
 import React from "react";
 import Post from "./Posts/Post.jsx";
 
-export default class PostingList extends React.Component {
+export default class CommentList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +11,6 @@ export default class PostingList extends React.Component {
       listType: props.listType
     };
     this.postingList = React.createRef();
-    this.loadPosts = this.loadPosts.bind(this);
   }
 
   componentDidMount() {
@@ -30,7 +29,6 @@ export default class PostingList extends React.Component {
     let url = process.env.REACT_APP_API_PATH+"/posts?parentID=";
     if (this.props && this.props.parentid){
       url += this.props.parentid;
-      console.log("THIS IS PARENT ID: " + this.props.parentid)
     }
     fetch(url, {
       method: "get",
@@ -38,7 +36,6 @@ export default class PostingList extends React.Component {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       },
-
     })
       .then(res => res.json())
       .then(
@@ -50,15 +47,35 @@ export default class PostingList extends React.Component {
             });
             console.log("Got Posts");
           }
-        },
-        error => {
-          this.setState({
-            isLoaded: true,
-            error
+        }
+      )
+      .catch(error => {
+        this.setState({
+            error: true
           });
           console.log("ERROR loading Posts")
+      });
+  }
+
+  deleteComment(postID, postContent, postType){
+    //make the api call to post
+    fetch(process.env.REACT_APP_API_PATH+"/posts/"+postID, {
+        method: "DELETE",
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer '+sessionStorage.getItem("token")
         }
-      );
+        })
+        .then(
+            result => {
+                var filteredPosts = this.state.posts.filter((post) => post.id != postID )
+                this.setState({
+                    isLoaded: true,
+                    posts: filteredPosts
+                  });
+            }
+            )
+            .catch(error => console.log(error));
   }
 
   render() {
@@ -72,18 +89,15 @@ export default class PostingList extends React.Component {
 
       if (posts.length > 0){
       return (
-
-        <div className="posts">
-
-          {posts.map(post => (
-            <Post key={post.id} post={post} type={this.props.type} loadPosts={this.loadPosts} parentid={this.props.parentid}/>
-          ))}
-
-        </div>
+            <div className="postsProfilePage">
+                {posts.map(post => (
+                <Post key={post.id} post={post} type={this.props.type} deletePost={this.deleteComment.bind(this)} parentid={this.props.parentid}/>
+                ))}
+            </div>
 
       );
     }else{
-      return (<div> No Posts Found </div>);
+      return (<div> No Comments Found </div>);
     }
     } else {
       return <div> Please Log In... </div>;

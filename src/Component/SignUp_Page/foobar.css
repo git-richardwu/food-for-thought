@@ -9,8 +9,8 @@
 }
 
 
-.center {
-    text-align: center;
+.signUpContainer {
+    margin-left: 100px;
     padding-left: 10px;
     font-family: RubikMonoOne;
     font-size: 20px;
@@ -18,6 +18,7 @@
 
 h2 {
     font-family: RubikOne;
+    text-align: center;
 }
 
 .buttonStyle {
@@ -27,6 +28,8 @@ h2 {
     border-radius: 12px;
     background-color: #6fd397;
     font-size: 25px;
+    cursor: pointer;
+    margin-bottom: 10px;
 }
 
 .buttonStyle1 {
@@ -36,9 +39,39 @@ h2 {
     border-radius: 12px;
     background-color: #6fd397;
     font-size: 15px;
+    margin-right: 10px;
+    cursor: pointer;
 }
 
 .textbox {
     margin-bottom: 10px;
     border-radius: 5px;
+}
+
+.errorMessage{
+    margin-left: 10px;
+    font-size: 14px;
+    color: red;
+    text-align: inherit;
+}
+
+.landingPageContainer{
+    text-align: center;
+    padding-left: 10px;
+    font-family: RubikMonoOne;
+    font-size: 20px;
+}
+
+@media screen and (max-width: 850px) {
+    .errorMessage{
+        font-size: 12px;
+    }
+    
+}
+
+@media screen and (max-width: 550px) {
+    .errorMessage{
+        font-size: 10px;
+    }
+    
 }

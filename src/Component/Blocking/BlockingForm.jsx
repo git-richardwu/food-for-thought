@@ -42,9 +42,6 @@ export default class BlockingForm extends React.Component {
       .then(
         result => {
           if (result) {
-              // alert(result[0][0])
-              // connections = (result[0]).users
-              // alert(result[1])
               console.log(result);
               if (blockedid != sessionStorage.getItem("user") && result[1] == 0) {
                 this.setState({
@@ -54,23 +51,7 @@ export default class BlockingForm extends React.Component {
               };
           }
         },
-        // error => {
-        //   console.log(error);
-        //   if (blockedid != sessionStorage.getItem("user")) {
-        //     this.setState({
-        //       blockedid: blockedid
-        //     })
-        //     console.log("Block User: "+blockedid)
-        //   };
-        // }
-      );
-    // alert(connections.toString())
-    // if (blockedid != sessionStorage.getItem("user")) {
-    //   this.setState({
-    //     blockedid: blockedid
-    //   })
-    //   console.log("Block User: "+blockedid)
-    // }
+      ).catch(error => console.log(error));
   }
 
   componentDidMount() {
@@ -96,11 +77,8 @@ export default class BlockingForm extends React.Component {
             });
             console.log(names);
           }
-        },
-        error => {
-          alert("error!");
         }
-      );
+      ).catch(error => console.log(error));
   }
 
   submitHandler = event => {
@@ -133,38 +111,35 @@ export default class BlockingForm extends React.Component {
           this.setState({
             // responseMessage: result.Status
           });
-          // alert(" User has been blocked, please refresh page.")
           window.location.reload()
-        },
-        error => {
-          alert("error!");
         }
-      );
+      ).catch(error => console.log(error));
     
   };
 
   render() {
     return (
       <div className = "privacyContainer">
-      <form onSubmit={this.submitHandler}>
-        <Link to="/settings/">
-            <button className = "backButton">
-              <i className = "arrow left"/>
-                Back
-            </button>      
-        </Link>
-        <br/>
-        <label>
-          <p className = "wordfont1"> Block a User! (enter username, not userid or email)</p>
-          {/* <br /> */}
-          <div className="autocomplete">
-            <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
-          </div>
-        </label>
-        <input className = "backButton" type="submit" value="Submit" />
-        {/* {this.state.responseMessage} */}
-      </form>
-      <p>Blocked Users:</p>
+        <form onSubmit={this.submitHandler}>
+            <Link to="/settings/privacy">
+                <button className = "backButton backButtonCreate">
+                <i className = "arrow left"/>
+                    Back
+                </button>      
+            </Link>
+            <br/>
+            <div className="inputContainer">
+                <div className="userInputContainer">
+                    <label className="wordfont1"> Block a User! (enter username, not userid or email)</label>
+                    <div className="autocomplete" tabIndex="0">
+                        <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
+                    </div>
+                </div>
+                <input className= "resetButton" type="submit" value="Block" />
+            </div>
+            {/* {this.state.responseMessage} */}
+        </form>
+        <p>Blocked Users:</p>
       </div>
     );
   }

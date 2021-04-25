@@ -27,6 +27,8 @@
     align-items:center;
     width: 90%;
     background-color: #FEFFF6;
+    margin-left: 100px;
+    margin-top: 75px;
 }
 
 .backButton {
@@ -44,6 +46,13 @@
     font-family: ReemKufi;
     font-weight: bold;
     box-shadow: inset 0 0px 0px;
+}
+
+.redButtonContainer{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
 }
 
 .redButton {
@@ -153,7 +162,6 @@
     font-weight: bold;
     box-shadow: inset 0 0px 0px;
 }
-
 
 /* https://www.w3schools.com/howto/howto_css_responsive_form.asp */
 
@@ -286,6 +294,9 @@
       margin-top: 0;
     }
 
+    .accountSettingsContainer{
+        margin-left: 0px;
+    }
     .profileform label {
         float: left;
         font-size: 12px;
@@ -396,7 +407,6 @@
     .redButton{
         font-size: 10px;
         padding: 2px 15px;
-        margin-left: 230px;
     }
 
     .resetButton{
@@ -421,6 +431,9 @@
 }
 
 @media screen and (max-height: 650px) {
+    .profileform{
+        margin-bottom: 30px;
+    }
 
     .backButton{
         font-size: 10px;
@@ -430,7 +443,6 @@
     .redButton{
         font-size: 10px;
         padding: 2px 15px;
-        margin-left: 230px;
     }
 
     .resetButton{
@@ -456,6 +468,10 @@
 }
 
 @media screen and (max-height: 575px) {
+    .profileform{
+        margin-bottom: 10px;
+    }
+    
     .backButton{
         font-size: 10px;
         padding: 2px 12px;

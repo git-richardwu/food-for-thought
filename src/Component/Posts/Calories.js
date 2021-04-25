@@ -28,11 +28,8 @@ const Calories = ({postID}) => {
                         setCalories(result[0][0].name);
                     }
                 }
-              },
-              error => {
-                console.log(error);
               }
-            );
+            ).catch(error => console.log(error));
     }
 
     if (calories){
