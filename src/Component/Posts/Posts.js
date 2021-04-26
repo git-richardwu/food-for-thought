@@ -537,9 +537,18 @@ const Posts = ({userId}) => {
                                 
                                 // concatenate normalAllPosts + topallposts
                                 // var allPosts = normalAllPosts.concat(topallPosts);
-                                var allPosts = topallPosts.concat(normalAllPosts);
-                                // }
-                                setPosts(allPosts)
+                                // var allPosts = topallPosts.concat(normalAllPosts);
+                                // // }
+                                // setPosts(allPosts)
+                                console.log(topallPosts, "TOP ALL POSTS")
+                                if (topallPosts.length > 0){
+                                    var allPosts = topallPosts.concat(normalAllPosts);
+                                    // }
+                                    setPosts(allPosts)
+                                }
+                                else{
+                                    alert("None of the posts have a preferred tag!")
+                                }
                             }
 
                             else{
@@ -610,7 +619,7 @@ const Posts = ({userId}) => {
             }
             return (
                 <div className="postsOuter"> 
-                    <SearchBar searchPosts={searchPosts} shuffle={shuffle}/> <br/>
+                    <SearchBar searchPosts={searchPosts} shuffle={shuffle} preferredTags={preferredTags}/> <br/>
                     <div className="posts">
                         <p>No Posts Found</p> 
                     </div>
