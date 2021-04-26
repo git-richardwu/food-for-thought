@@ -13,12 +13,15 @@
     width: 550px;
 }
 
+
 .settingsContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-evenly;
     background-color: #FEFFF6;
+    height: 100vh;
+    
 }
 
 .accountSettingsContainer {
@@ -333,6 +336,11 @@
 
     .settingsMenuButton {
         font-size: 18px;
+        /* width: 300px; */
+          align-content: center;
+        justify-content: center;
+    }
+    .setWeightGoalButtonContainer{
         width: 250px;
     }
 
@@ -401,6 +409,11 @@
 @media screen and (max-height: 675px){
     .settingsMenuButton {
         margin-top: 30px;
+    }
+    .setWeightGoalButtonContainer{
+        /* margin-top: 30px; */
+        align-content: center;
+        justify-content: center;
     }
 
     .backButton{
@@ -516,18 +529,27 @@
     .settingsMenuButton {
         margin-top: 20px;
     }
+    .setWeightGoalButtonContainer{
+        /* margin-top: 20px; */
+        align-content: center;
+        justify-content: center;
+    }
+    
 }
 
 .weightAndValue{
   display: flex;
   flex-direction: row;
-  /* padding-right: 10px; */
-  /* background-color: green; */
+  margin-top: 10px;
+  /* background-color: blue; */
   width: fit-content;
   height: fit-content;
+  margin-bottom: 32px;
  
 
 }
+
+
 .weightBox{
   background-color: #6FD397;
   width: fit-content;
@@ -559,8 +581,8 @@
 
 .setWeightGoalButtonContainer{
   height: 100%;
-  width: 50%;
   margin-top: 32px;
+  width: 550px;
 }
 
 .setWeightGoalButton{
@@ -571,8 +593,6 @@
 .calorieAndValue{
   display: flex;
   flex-direction: row;
-  /* padding-right: 10px; */
-  /* background-color: green; */
   width: fit-content;
   height: fit-content;
  
@@ -610,8 +630,9 @@
 
 .setCalorieGoalButtonContainer{
   height: 100%;
-  width: 50%;
+  /* width: 50%; */
   margin-top: 32px;
+  width: 550px;
 }
 
 .setCalorieGoalButton{

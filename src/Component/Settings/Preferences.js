@@ -195,6 +195,12 @@ const Preferences = () => {
             <div className="triangle-right" />      
         </Link>
 
+       
+
+
+        
+        {/* <div className="temp"> */}
+        <div className="setWeightGoalButtonContainer">
         <div className="weightAndValue">
           <div className="weightBox">Weight Goal:</div>
           
@@ -205,8 +211,7 @@ const Preferences = () => {
                <input className="inputBox" type = "number" id="weightGoal"/> 
           }
         </div>
-
-        <div className="setWeightGoalButtonContainer">
+        
         {weightGoalButton === false &&
           <button className="setWeightGoalButton" onClick={()=>{
               pressedWeightGoalButton(true)
@@ -221,6 +226,8 @@ const Preferences = () => {
           }}>Submit Weight Goal</button>
         }
 
+        
+
 
         <div className="calorieAndValue">
           <div className="calorieBox">Calorie Goal:</div>
@@ -232,9 +239,12 @@ const Preferences = () => {
                <input className="inputBox" type = "number" id="calorieGoal"/> 
           }
         </div>
+
+        
           
 
         </div> 
+
         <div className="setCalorieGoalButtonContainer">
         {calorieGoalButton === false &&
           <button className="setCalorieGoalButton" onClick={()=>{
@@ -253,6 +263,7 @@ const Preferences = () => {
 
         </div> 
       </div>
+      {/* </div> */}
     </div>
   );
 };
