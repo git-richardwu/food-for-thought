@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import SearchImage from "../../assets/icons8-search.svg";
 import ShuffleImage from "../../assets/shuffle-svgrepo-com.svg"
+import Thumbs from "../../assets/thumbsup.jpg";
 import "./Posts.css";
 
-const SearchBar = ({searchPosts, shuffle}) => {
+const SearchBar = ({searchPosts, shuffle, preferredTags}) => {
     const [searchText, setText] = useState("");
     const [searchTitle, setSearchTitle] = useState(true);
     const [searchTag, setSearchTag] = useState(true);
@@ -62,6 +63,12 @@ const SearchBar = ({searchPosts, shuffle}) => {
         }
     }
 
+    const sortPrefOnKey = (key) => {
+        if (key == "Enter"){
+            preferredTags();
+        }
+    }
+
     return (
         <div className="searchContainer">
             <div className="searchBarContainer">
@@ -92,8 +99,15 @@ const SearchBar = ({searchPosts, shuffle}) => {
                     onKeyPress={e => shuffleOnKey(e.key)}
                     onClick={e => shuffle()}
                 />
+                <img
+                    src={Thumbs}
+                    tabIndex="0"
+                    alt="preferrence"
+                    className="shuffleButton"
+                    onKeyPress={e => sortPrefOnKey(e.key)}
+                    onClick={e => preferredTags()}
+                />
             </div>
-
 
             <p>{results}</p>
         </div>

@@ -81,9 +81,10 @@ const Diet = () => {
                         var hold = result[0][0].value.split("~")
                         setID(result[0][0].id); //an array of arrays
                         setDietTags(result[0][0].value.split("~"));
-                        console.log(dietTags)
+                        console.log(dietTags, "DIET TAGS")
                     }
-                    console.log(result)
+                    console.log(dietTags, "DIET TAGS 2")
+                    console.log(result, "RESULT")
                 }
             },
             error => {
@@ -111,7 +112,8 @@ const Diet = () => {
             result => {
                 if (result) {
                     setDietTags(value);
-                    console.log(result)
+                    console.log(result, "PATCHED");
+                    console.log("PATCHED");
  
 
                     // setIsRedirect(true);
@@ -145,7 +147,7 @@ const Diet = () => {
                 if (result) { //if you get something back ("result") then you set the value to what you get
                     setDietTags(value);
                     setID(result.id)
-                    console.log(result)
+                    console.log(result, "POSTED")
 
                 }
             },
@@ -179,5 +181,6 @@ const Diet = () => {
                     }
 
 export default Diet
+
 
 
