@@ -11,6 +11,7 @@
     height: fit-content;
     width: 100%;
     background: #6FD397;
+    /* margin-left: 20px */
     
 }
 
@@ -20,4 +21,13 @@
     font-size: 20px;
     font-family: 'Rubik Mono One', sans-serif;
 
+}
+
+@media screen and (max-width: 850px) {
+
+    .activityLog{
+
+        margin-right: 40px
+        
+    }
 }
