@@ -476,7 +476,6 @@ const Posts = ({userId}) => {
                     console.log(result[0]);
                     postdietTags = result[0];
                     
-
                     fetch(process.env.REACT_APP_API_PATH+"/user-preferences/"+dietTagsID, {
                         method: "GET",
                         headers: {
@@ -488,12 +487,10 @@ const Posts = ({userId}) => {
                     result => {
                         if (result) {
                             console.log(result);
-                            if (result.value.includes("~")){
+                            if (result.value !== ""){
                                 dietTagfilters = result.value.split("~");
                                 console.log(dietTagfilters, "DIET TAG FILTERS")
                                 console.log(postdietTags, "POST DIET TAGS")
-
-                                
 
                                 var prioritizedpost = [];
 
@@ -504,8 +501,10 @@ const Posts = ({userId}) => {
                                     // var currentposttaglist = postdietTags[i].name.split("~")
                         
                                     for (var j=0; j < dietTagfilters.length; j++){
-                                        if ((postdietTags[i].name).includes(dietTagfilters[j])){
+                                        if (dietTagfilters[j] !== ""){
+                                            if ((postdietTags[i].name).includes(dietTagfilters[j])){
                                             included = true;
+                                            }
                                         }
                                     }
                         
@@ -544,10 +543,10 @@ const Posts = ({userId}) => {
                             }
 
                             else{
-                                dietTagfilters = [result.value];
-                                console.log(dietTagfilters, "DIET TAG FILTERS")
-                                console.log(postdietTags, "POST DIET TAGS")
-
+                                alert("You have no preferred diet tags set!")
+                                // dietTagfilters = [result.value];
+                                // console.log(dietTagfilters, "DIET TAG FILTERS")
+                                // console.log(postdietTags, "POST DIET TAGS")
 
                             }
                         }
@@ -555,58 +554,6 @@ const Posts = ({userId}) => {
                 }
             }
         )
-        // get user preference tags of yourself
-
-        // prioritize existing post by whether or not they have a tag from the user's preference
-        // if dietTagfilters != [""], then enact this change, otherwise it means the user has not set any preferences
-        // if (dietTagfilters != [""]) {
-        // var prioritizedpost = [];
-
-        // // console.log(postdietTags, "POST DIET TAGS")
-        
-
-        // for (var i=0; i < postdietTags.length; i++){
-        //     var included = false;
-        //     // var currentposttaglist = postdietTags[i].name.split("~")
-
-        //     for (var j=0; j < dietTagfilters.length; j++){
-        //         if ((postdietTags[i].name).includes(dietTagfilters[j])){
-        //             included = true;
-        //         }
-        //     }
-
-        //     // if dietTagfilter includes the diet tag that is associated with a post
-        //     if (included == true) {
-
-        //         if (!prioritizedpost.includes(postdietTags[i].post)) {
-        //             // if it is associated and not exiting in prioritized list, 
-        //             // add the id of the post that has the diet tag
-        //             prioritizedpost.push(postdietTags[i].post.id.toString());
-        //         } 
-        //     }
-        // }
-
-        // console.log(prioritizedpost);
-
-        
-        // var topallPosts = [];
-        // var normalAllPosts = [];
-        // // fetch the tags for a specific person from their post-tag connection/user-artifacts
-        // for (var i=0; i <preferredPosts.length; i++){
-        //     if (prioritizedpost.includes(preferredPosts[i].id.toString())) {
-        //         // push post to list that will show on top of page
-        //         topallPosts.push(preferredPosts[i]);
-        //     }
-        //     else {
-        //         // push post to normal list
-        //         normalAllPosts.push(preferredPosts[i])
-        //     }
-        // }
-        
-        // // concatenate normalAllPosts + topallposts
-        // var allPosts = normalAllPosts.concat(topallPosts);
-        // // }
-        // setPosts(allPosts)
     }
 
 

@@ -99,6 +99,8 @@ const SearchBar = ({searchPosts, shuffle, preferredTags}) => {
                     onKeyPress={e => shuffleOnKey(e.key)}
                     onClick={e => shuffle()}
                 />
+            </div>
+            <div className="preferrenceButton" >
                 <img
                     src={Thumbs}
                     tabIndex="0"
