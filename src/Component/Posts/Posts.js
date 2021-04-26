@@ -11,6 +11,7 @@ const Posts = ({userId}) => {
     const [isLoading, setLoading] = useState(true);
     const [showSearchBar, setShowSearchBar] = useState(true); // used if we decide to toggle search bar
 
+    // copied from diet.js
     const [dietTags, setDietTags] = useState([]);
     const [tags, setDTags] = useState("");
     const [dietTagsID, setID] = useState(-1)
@@ -423,7 +424,7 @@ const Posts = ({userId}) => {
 
         setPosts(shuffledPosts);
     }
-
+    // copied from diet.js
     const fetchDietTags = async () => {
         var url = process.env.REACT_APP_API_PATH+"/user-preferences?name=dietTags&userID="+sessionStorage.getItem("user");
         fetch(url, {
@@ -547,11 +548,13 @@ const Posts = ({userId}) => {
                                     setPosts(allPosts)
                                 }
                                 else{
+                                    // switch to modal later
                                     alert("None of the posts have a preferred tag!")
                                 }
                             }
 
                             else{
+                                // switch to modal later
                                 alert("You have no preferred diet tags set!")
                                 // dietTagfilters = [result.value];
                                 // console.log(dietTagfilters, "DIET TAG FILTERS")
