@@ -166,7 +166,7 @@ class App extends React.Component {
               <Route path="/settings/general/aboutus/andrew">
                 <SideMenu />
                 <div className="mainHome">
-                  <Banner title={"Style Guide"} />
+                  <Banner title={"About Me"} />
                   <AboutAndrew />
                 </div>
               </Route>
@@ -174,7 +174,7 @@ class App extends React.Component {
               <Route path="/settings/general/aboutus/li">
                 <SideMenu />
                 <div className="mainHome">
-                  <Banner title={"Style Guide"} />
+                  <Banner title={"About Me"} />
                   <AboutLi />
                 </div>
               </Route>
@@ -182,7 +182,7 @@ class App extends React.Component {
               <Route path="/settings/general/aboutus/william">
                 <SideMenu />
                 <div className="mainHome">
-                  <Banner title={"Style Guide"} />
+                  <Banner title={"About Me"} />
                   <AboutWilliam />
                 </div>
               </Route>
@@ -190,7 +190,7 @@ class App extends React.Component {
               <Route path="/settings/general/aboutus/richard">
                 <SideMenu />
                 <div className="mainHome">
-                  <Banner title={"Style Guide"} />
+                  <Banner title={"About Me"} />
                   <AboutRichard />
                 </div>
               </Route>
@@ -198,7 +198,7 @@ class App extends React.Component {
               <Route path="/settings/general/aboutus/hector">
                 <SideMenu />
                 <div className="mainHome">
-                  <Banner title={"Style Guide"} />
+                  <Banner title={"About Me"} />
                   <AboutHector />
                 </div>
               </Route>

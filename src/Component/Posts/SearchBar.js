@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import SearchImage from "../../assets/icons8-search.svg";
 import ShuffleImage from "../../assets/shuffle-svgrepo-com.svg"
-import Thumbs from "../../assets/thumbsup.jpg";
+import Heart from "../../assets/heart3.png";
 import "./Posts.css";
 
 const SearchBar = ({searchPosts, shuffle, preferredTags}) => {
@@ -102,7 +102,7 @@ const SearchBar = ({searchPosts, shuffle, preferredTags}) => {
             </div>
             <div className="preferrenceButton" >
                 <img
-                    src={Thumbs}
+                    src={Heart}
                     tabIndex="0"
                     alt="preferrence"
                     className="shuffleButton"
