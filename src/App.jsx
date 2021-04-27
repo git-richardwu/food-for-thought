@@ -8,7 +8,6 @@ import React from "react";
 import "./App.css";
 import BlockingForm from "./Component/Blocking/BlockingForm.jsx";
 import BlockingList from "./Component/Blocking/BlockingList.jsx";
-import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
 import Aboutus from "./Component/Settings/Aboutus.js";
 import General from "./Component/Settings/General.js";
@@ -17,7 +16,6 @@ import Preferences from "./Component/Settings/Preferences.js";
 import Diet from "./Component/Settings/Preferences/Diet.js";
 import Allergies from "./Component/Settings/Preferences/Allergies.js";
 import Budget from "./Component/Settings/Preferences/Budget.js";
-import FriendForm from "./Component/FriendForm.jsx";
 import SignUp from "./Component/SignUp_Page/SignUp.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutLi from "./Component/ProfilePages/AboutLiWei.js";
@@ -166,7 +164,7 @@ class App extends React.Component {
 
               <Route path="/settings/general/aboutus/andrew">
                 <SideMenu />
-                <div className="mainHome">
+                <div className="mainContent">
                   <Banner title={"About Me"} />
                   <AboutAndrew />
                 </div>
@@ -174,7 +172,7 @@ class App extends React.Component {
               
               <Route path="/settings/general/aboutus/li">
                 <SideMenu />
-                <div className="mainHome">
+                <div className="mainContent">
                   <Banner title={"About Me"} />
                   <AboutLi />
                 </div>
@@ -182,7 +180,7 @@ class App extends React.Component {
 
               <Route path="/settings/general/aboutus/william">
                 <SideMenu />
-                <div className="mainHome">
+                <div className="mainContent">
                   <Banner title={"About Me"} />
                   <AboutWilliam />
                 </div>
@@ -190,7 +188,7 @@ class App extends React.Component {
 
               <Route path="/settings/general/aboutus/richard">
                 <SideMenu />
-                <div className="mainHome">
+                <div className="mainContent">
                   <Banner title={"About Me"} />
                   <AboutRichard />
                 </div>
@@ -198,7 +196,7 @@ class App extends React.Component {
 
               <Route path="/settings/general/aboutus/hector">
                 <SideMenu />
-                <div className="mainHome">
+                <div className="mainContent">
                   <Banner title={"About Me"} />
                   <AboutHector />
                 </div>
@@ -279,13 +277,6 @@ class App extends React.Component {
               <Route path={["/signup"]}>
                 <div className="maincontent" id="mainContent">
                   <SignUp />
-                </div>
-              </Route>
-              <Route path="/styleguide">
-                <SideMenu />
-                <div className="mainHome">
-                  <Banner title={"Style Guide"} />
-                  <StyleGuide />
                 </div>
               </Route>
               <Route path="/profile/:userID">
