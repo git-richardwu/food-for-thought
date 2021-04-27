@@ -11,9 +11,15 @@ const Posts = ({userId}) => {
     const [isLoading, setLoading] = useState(true);
     const [showSearchBar, setShowSearchBar] = useState(true); // used if we decide to toggle search bar
 
+    // copied from diet.js
+    const [dietTags, setDietTags] = useState([]);
+    const [tags, setDTags] = useState("");
+    const [dietTagsID, setID] = useState(-1)
+
     useEffect(() => {
         const getPosts = async () => {
             await fetchPosts();
+            await fetchDietTags();
         }
         getPosts();
     }, [userId])
@@ -418,11 +424,156 @@ const Posts = ({userId}) => {
 
         setPosts(shuffledPosts);
     }
+    // copied from diet.js
+    const fetchDietTags = async () => {
+        var url = process.env.REACT_APP_API_PATH+"/user-preferences?name=dietTags&userID="+sessionStorage.getItem("user");
+        fetch(url, {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+          },
+    
+        })
+           .then(res => res.json())
+           .then(
+            result => {
+                if (result) {
+                    if (result[1] === 0){ // index 1 == length, index 0 ==content
+                        setID(-1); //if there is nothing there setID to -1 
+
+                    }else{
+                        var hold = result[0][0].value.split("~")
+                        setID(result[0][0].id); //an array of arrays
+                        setDietTags(result[0][0].value.split("~"));
+                        console.log(dietTags, "DIET TAGS")
+                    }
+                    console.log(result, "RESULT")
+                }
+            },
+            error => {
+              console.log(error);
+            }
+          );
+      }
+    const preferredTags = () => {
+        var preferredPosts = posts.slice();
+        console.log(preferredPosts, "PREFERRED POSTS");
+        // var postsToAdd = [];
+        var postdietTags = [];
+        var dietTagfilters = [];
+
+        // get post tags of all existing posts
+        fetch(process.env.REACT_APP_API_PATH+"/post-tags?type=dietTags", {
+            method: "GET",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            }
+        }).then(res => res.json())
+        .then(
+            result => {
+                if (result) {
+                    console.log(result[0]);
+                    postdietTags = result[0];
+                    
+                    fetch(process.env.REACT_APP_API_PATH+"/user-preferences/"+dietTagsID, {
+                        method: "GET",
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                        }
+                    }).then(res => res.json())
+                    .then(
+                    result => {
+                        if (result) {
+                            console.log(result);
+                            if (result.value !== ""){
+                                dietTagfilters = result.value.split("~");
+                                console.log(dietTagfilters, "DIET TAG FILTERS")
+                                console.log(postdietTags, "POST DIET TAGS")
+
+                                var prioritizedpost = [];
+
+                                // console.log(postdietTags, "POST DIET TAGS")
+                                
+                                for (var i=0; i < postdietTags.length; i++){
+                                    var included = false;
+                                    // var currentposttaglist = postdietTags[i].name.split("~")
+                        
+                                    for (var j=0; j < dietTagfilters.length; j++){
+                                        if (dietTagfilters[j] !== ""){
+                                            if ((postdietTags[i].name).includes(dietTagfilters[j])){
+                                            included = true;
+                                            }
+                                        }
+                                    }
+                        
+                                    // if dietTagfilter includes the diet tag that is associated with a post
+                                    if (included == true) {
+                        
+                                        if (!prioritizedpost.includes(postdietTags[i].post)) {
+                                            // if it is associated and not exiting in prioritized list, 
+                                            // add the id of the post that has the diet tag
+                                            prioritizedpost.push(postdietTags[i].post.id.toString());
+                                        } 
+                                    }
+                                }
+                        
+                                console.log(prioritizedpost, "PRIORITIZED POST");
+
+                                var topallPosts = [];
+                                var normalAllPosts = [];
+                                // fetch the tags for a specific person from their post-tag connection/user-artifacts
+                                for (var i=0; i <preferredPosts.length; i++){
+                                    if (prioritizedpost.includes(preferredPosts[i].id.toString())) {
+                                        // push post to list that will show on top of page
+                                        topallPosts.push(preferredPosts[i]);
+                                    }
+                                    else {
+                                        // push post to normal list
+                                        normalAllPosts.push(preferredPosts[i])
+                                    }
+                                }
+                                
+                                // concatenate normalAllPosts + topallposts
+                                // var allPosts = normalAllPosts.concat(topallPosts);
+                                // var allPosts = topallPosts.concat(normalAllPosts);
+                                // // }
+                                // setPosts(allPosts)
+                                console.log(topallPosts, "TOP ALL POSTS")
+                                if (topallPosts.length > 0){
+                                    var allPosts = topallPosts.concat(normalAllPosts);
+                                    // }
+                                    setPosts(allPosts)
+                                }
+                                else{
+                                    // switch to modal later
+                                    alert("None of the posts have a preferred tag!")
+                                }
+                            }
+
+                            else{
+                                // switch to modal later
+                                alert("You have no preferred diet tags set!")
+                                // dietTagfilters = [result.value];
+                                // console.log(dietTagfilters, "DIET TAG FILTERS")
+                                // console.log(postdietTags, "POST DIET TAGS")
+
+                            }
+                        }
+                    })
+                }
+            }
+        )
+    }
+
+
 
     if (isError) {
         return (
             <div className="postsOuter"> 
-                <SearchBar searchPosts={searchPosts} shuffle={shuffle}/> <br/>
+                <SearchBar searchPosts={searchPosts} shuffle={shuffle} preferredTags={preferredTags}/> <br/>
                 <div className="posts">
                     <p>Error Loading Posts</p> 
                 </div>
@@ -431,7 +582,7 @@ const Posts = ({userId}) => {
     } else if (isLoading) {
         return (
             <div className="postsOuter"> 
-                <SearchBar searchPosts={searchPosts} shuffle={shuffle}/> <br/>
+                <SearchBar searchPosts={searchPosts} shuffle={shuffle} preferredTags={preferredTags}/> <br/>
                 <div className="posts">
                     <p>Loading...</p> 
                 </div>
@@ -450,7 +601,7 @@ const Posts = ({userId}) => {
             }else{
                 return (
                     <div className="postsOuter">
-                        {showSearchBar && <SearchBar searchPosts={searchPosts} shuffle={shuffle}/>}
+                        {showSearchBar && <SearchBar searchPosts={searchPosts} shuffle={shuffle} preferredTags={preferredTags}/>}
                         <div className="posts">
                             {posts.map(post => (
                                 <Post key={post.id} post={post} type="postlist" deletePost={deletePost} resharePost={resharePost} />
@@ -471,7 +622,7 @@ const Posts = ({userId}) => {
             }
             return (
                 <div className="postsOuter"> 
-                    <SearchBar searchPosts={searchPosts} shuffle={shuffle}/> <br/>
+                    <SearchBar searchPosts={searchPosts} shuffle={shuffle} preferredTags={preferredTags}/> <br/>
                     <div className="posts">
                         <p>No Posts Found</p> 
                     </div>
@@ -484,3 +635,4 @@ const Posts = ({userId}) => {
 }
 
 export default Posts
+

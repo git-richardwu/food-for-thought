@@ -6,19 +6,24 @@
 
 import React from "react";
 import "./App.css";
-import BlockingForm from "./Component/Blocking/BlockingForm.jsx"
-import BlockingList from "./Component/Blocking/BlockingList.jsx"
+import BlockingForm from "./Component/Blocking/BlockingForm.jsx";
+import BlockingList from "./Component/Blocking/BlockingList.jsx";
 import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
+import Aboutus from "./Component/Settings/Aboutus.js";
+import General from "./Component/Settings/General.js";
 import Profile from "./Component/Settings/AccountSettings.jsx";
-import Preferences from "./Component/Settings/Preferences.js"
-import Diet from "./Component/Settings/Preferences/Diet.js"
-import Allergies from "./Component/Settings/Preferences/Allergies.js"
-import Budget from "./Component/Settings/Preferences/Budget.js"
+import Preferences from "./Component/Settings/Preferences.js";
+import Diet from "./Component/Settings/Preferences/Diet.js";
+import Allergies from "./Component/Settings/Preferences/Allergies.js";
+import Budget from "./Component/Settings/Preferences/Budget.js";
 import FriendForm from "./Component/FriendForm.jsx";
 import SignUp from "./Component/SignUp_Page/SignUp.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
+import AboutLi from "./Component/ProfilePages/AboutLiWei.js";
 import AboutWilliam from "./Component/ProfilePages/William_Phillips_Profile_Page/AboutWilliam";
+import AboutHector from "./Component/ProfilePages/AboutHector.js";
+import AboutRichard from "./Component/ProfilePages/AboutRichard.js";
 import Settings from "./Component/Settings/Settings.js";
 import UserProfile from "./Component/UserProfile/UserProfile";
 import FollowingList from "./Component/UserProfile/FollowingList";
@@ -150,19 +155,61 @@ class App extends React.Component {
                   <Profile />
                 </div>
               </Route>
-              <Route
-                path="/settings/general/aboutus/andrew"
-                component={AboutAndrew}
-              />
-              <Route
-                path="/settings/general/aboutus/william"
-                component={AboutWilliam}
-              />
+
+              <Route path="/settings/general/styleguide">
+                <SideMenu />
+                <div className="mainHome">
+                  <Banner title={"Style Guide"} />
+                  <StyleGuide />
+                </div>
+              </Route>
+
+              <Route path="/settings/general/aboutus/andrew">
+                <SideMenu />
+                <div className="mainHome">
+                  <Banner title={"About Me"} />
+                  <AboutAndrew />
+                </div>
+              </Route>
+              
+              <Route path="/settings/general/aboutus/li">
+                <SideMenu />
+                <div className="mainHome">
+                  <Banner title={"About Me"} />
+                  <AboutLi />
+                </div>
+              </Route>
+
+              <Route path="/settings/general/aboutus/william">
+                <SideMenu />
+                <div className="mainHome">
+                  <Banner title={"About Me"} />
+                  <AboutWilliam />
+                </div>
+              </Route>
+
+              <Route path="/settings/general/aboutus/richard">
+                <SideMenu />
+                <div className="mainHome">
+                  <Banner title={"About Me"} />
+                  <AboutRichard />
+                </div>
+              </Route>
+
+              <Route path="/settings/general/aboutus/hector">
+                <SideMenu />
+                <div className="mainHome">
+                  <Banner title={"About Me"} />
+                  <AboutHector />
+                </div>
+              </Route>
+
               <Route path="/reset">
                 <div className="maincontent" id="mainContent">
                   <PasswordReset />
                 </div>
               </Route>
+
               <Route path="/settings/preferences/diet">
                 <SideMenu/>
                 <div className="maincontent" id="mainContent">
@@ -191,6 +238,20 @@ class App extends React.Component {
                     <Notifications />
                 </div>
               </Route>
+              <Route path="/settings/general/aboutus">
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"About Us"} />
+                    <Aboutus/>
+                </div>
+              </Route>
+              <Route path="/settings/general">
+                <SideMenu />
+                <div className="maincontent" id="mainContent">
+                  <Banner title={"General"} />
+                  <General/>
+                </div>
+              </Route>
               <Route path="/settings/preferences">
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
@@ -198,6 +259,7 @@ class App extends React.Component {
                   <Preferences />
                 </div>
               </Route>
+
               <Route path="/settings/privacy">
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
@@ -205,6 +267,7 @@ class App extends React.Component {
                   <Privacy />
                 </div>
               </Route>
+
               <Route path="/settings">
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
@@ -212,6 +275,7 @@ class App extends React.Component {
                   <Settings />
                 </div>
               </Route>
+
               <Route path={["/signup"]}>
                 <div className="maincontent" id="mainContent">
                   <SignUp />
@@ -307,7 +371,7 @@ class App extends React.Component {
                 <div className="maincontent" id="mainContent">
                   <LandingPage />
                 </div>
-                </Route>
+              </Route>
                 </Switch>
                 </div>
             </div>

@@ -234,6 +234,14 @@
     width: 100%;
 }
 
+.preferrenceButton{
+    display:flex;
+    flex-direction: row;
+    justify-content: right;
+    padding-right: 5px;
+    width: 100%;
+}
+
 .searchFilters {
     font-family: "ReemKufi";
     font-size: 16px;

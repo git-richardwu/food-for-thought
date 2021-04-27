@@ -1,13 +1,14 @@
 import React from "react";
 import image from "../../Images/andrew.JPG"
 import "./AboutAndrew.css";
+import "../Settings/Settings.css";
 
 const AboutAndrew = () => {
     return (
-        <div>
-            <img src={image} alt="Andrew Jank" />
+        <div className="settingsContainer">
+            <img className="imaging" src={image} alt="Andrew Jank" />
             <h2>Andrew Jank</h2>
-            <h3>Computer Science BS, Senior</h3>
+            <h3 className="subheader">Computer Science BS, Senior</h3>
             <p className="paragraph">
                 &nbsp;&nbsp;&nbsp;&nbsp;My name is Andrew Jank. I am a currently in my 4th year majoring in Computer Science at University at Buffalo.
                 I grew up in the Buffalo area. I started my educational journey going to elementary school at Saint John Vianney and then attending Canisius High School. 
