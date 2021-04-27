@@ -237,8 +237,9 @@
 .preferrenceButton{
     display:flex;
     flex-direction: row;
-    justify-content: right;
+    justify-content: flex-end;
     padding-right: 5px;
+    margin-left: 1px;
     width: 100%;
 }
 
