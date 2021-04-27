@@ -1,12 +1,36 @@
 .paragraph{
-    font-size: medium;
+    /* font-size: medium;
     margin-left: 110px;
     text-align: left;
-    color: black;
+    color: black; */
+    /* margin-left: 100px; */
+    text-align: "justify";
+    margin-left: 250px;
+    margin-right: 250px;
+    font-size: 20px;
 }
 
 .contact{
-    font-size: medium;
+    /* font-size: medium;
     text-align: left;
-    margin-left: 110px;
+    margin-left: 110px; */
+    text-align: "justify";
+    margin-left: 150px;
+    margin-right: 150px;
+    font-size: 20px;
+}
+
+.subheader {
+    text-align: center;
+    justify-content: center;
+}
+
+.imaging {
+    border-radius: 50%;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 25px;
+    height: 250px;
+    width: 250px;
 }
