@@ -29,11 +29,6 @@ function UserProfile() {
   const [dietTag4, setDietTag4] = React.useState("")
   const [showUpdatePictureModal, setShowUpdatePictureModal] = React.useState(false);
 
-  fetchWeightGoal();
-  fetchCalorieGoal();
-  fetchDietTags();
-
-  
  React.useEffect(()=>{
     fetchUserBio();
     fetchFollowingCount();
@@ -41,7 +36,31 @@ function UserProfile() {
     fetchProfilePic();
     fetchFollowing();
     fetchUser();
+    fetchWeightGoal();
+    fetchCalorieGoal();
+    fetchDietTags();
+    fetchFollowState();
  }, [followState, userID, url, userBio])
+
+ function fetchFollowState() {
+    fetch(process.env.REACT_APP_API_PATH+"/connections?userID="+sessionStorage.getItem("user")+"&connectedUserID="+userID,{
+        method: "GET",
+          headers: new Headers({
+            'Content-Type': 'application/json',
+          }),
+      })
+      .then(response => response.json())
+      .then(json => {
+          console.log(json)
+          if(json[1] == 0 ){ {/* no connection */}
+              setFollowState(false);
+          } 
+          else {
+            setFollowState(true);
+          
+      }
+    })
+ }
 
   function fetchProfilePic(){
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=profilePicDisplay&ownerID="+userID, {
@@ -285,6 +304,7 @@ function fetchWeightGoal() {
           });
         } else {
           setWeightGoalID(-1);
+          setWeightGoal("");
         }
       },
     ).catch(error => console.log(error));
@@ -335,6 +355,9 @@ const fetchUser = async () => {
                 setCalorieID(artifacts.id);
               } 
             });
+          }else{
+              setCalorieID(-1);
+              setCalorieGoal("");
           }
         }
       ).catch(error => console.log(error));
@@ -365,6 +388,11 @@ const fetchUser = async () => {
             
 
 
+          }else{
+              setDietTag1("");
+              setDietTag2("");
+              setDietTag3("");
+              setDietTag4("");
           }
         }
       ).catch(error => console.log(error));
