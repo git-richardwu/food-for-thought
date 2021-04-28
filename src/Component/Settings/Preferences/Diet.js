@@ -152,7 +152,13 @@ const Diet = () => {
 
 
         return (
-                <div className="createAPostContainer">     
+                <div className="createAPostContainer">
+                    <Link to="/settings/preferences">   
+                        <button className="backButton backButtonCreate">
+                            <i className="arrow left"/>
+                            Back
+                        </button>
+                    </Link>  
                     <h2>Diet Tags</h2>           
                     <div className="addDietTagsContainer">
                         <label for="add tag" className="linkLabel2">Add Diet Tags:</label>

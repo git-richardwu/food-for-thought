@@ -13,10 +13,6 @@ const Settings = () => {
                 Privacy
                 <div className="triangle-right"/>
             </Link>
-            <Link to="/settings/notifications" className="settingsMenuButton">
-                Notifications
-                <div className="triangle-right"/>
-            </Link>
             <Link to="/settings/preferences" className="settingsMenuButton">
                 Preferences
                 <div className="triangle-right"/>

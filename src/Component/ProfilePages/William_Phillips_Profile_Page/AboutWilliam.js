@@ -3,10 +3,17 @@ import React from "react";
 import image from "../../../Images/William.png";
 import "../AboutAndrew.css";
 import "../../Settings/Settings.css";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 function AboutWilliam() {
   return (
     <div className="settingsContainer">
+        <Link to="/settings/general/aboutus">   
+            <button className="backButton backButtonCreate">
+                <i className="arrow left"/>
+                Back
+            </button>
+        </Link>
       <img className="imaging"src={image} alt="Picture of William Phillips" />
       <h2>William Phillips</h2>
       <h3 className="subheader">Computer Science BS, Senior</h3>

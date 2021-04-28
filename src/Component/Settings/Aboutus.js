@@ -6,6 +6,12 @@ import SideMenu from "../atoms/atomComponents/sideMenu"
 const Aboutus = () => {
     return (
         <div className="settingsContainer">
+            <Link to="/settings/general">   
+                <button className="backButton backButtonCreate">
+                    <i className="arrow left"/>
+                    Back
+                </button>
+            </Link>
             <Link to="/settings/general/aboutus/andrew" className="settingsMenuButton">
                 Andrew Jank
                 <div className="triangle-right"/>

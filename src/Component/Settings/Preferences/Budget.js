@@ -111,6 +111,12 @@ const Budget = () => {
     else{
         return (
             <div className="pref">
+                <Link to="/settings/preferences">   
+                    <button className="backButton backButtonCreate">
+                        <i className="arrow left"/>
+                        Back
+                    </button>
+                </Link>
                 <h2>Budget</h2>
                 <label className="budgetLabel">You would like to spend $<input className="budgetInput" value={budget} type="number" min="0" max="1,000" step="10" onChange={e => setBudget(e.target.value)} ></input> dollars a week</label>
                 <button className="Submit" onClick={() => updateBudget(budget) }>Submit</button>
