@@ -2,6 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import Post from "./Post.jsx";
 import SearchBar from "./SearchBar";
+import Modal from "../Modal.jsx";
 
 import "./Posts.css";
 
@@ -15,6 +16,7 @@ const Posts = ({userId}) => {
     const [dietTags, setDietTags] = useState([]);
     const [tags, setDTags] = useState("");
     const [dietTagsID, setID] = useState(-1)
+    const [showModal, updateModal] = useState(false);
 
     useEffect(() => {
         const getPosts = async () => {
@@ -453,8 +455,9 @@ const Posts = ({userId}) => {
             error => {
               console.log(error);
             }
-          );
-      }
+        );
+    }
+
     const preferredTags = () => {
         var preferredPosts = posts.slice();
         console.log(preferredPosts, "PREFERRED POSTS");
@@ -548,13 +551,15 @@ const Posts = ({userId}) => {
                                 }
                                 else{
                                     // switch to modal later
-                                    alert("None of the posts have a preferred tag!")
+                                    // alert("None of the posts have a preferred tag!")
+                                    updateModal(!showModal)
                                 }
                             }
 
                             else{
                                 // switch to modal later
-                                alert("You have no preferred diet tags set!")
+                                // alert("You have no preferred diet tags set!")
+                                updateModal(!showModal)
                                 // dietTagfilters = [result.value];
                                 // console.log(dietTagfilters, "DIET TAG FILTERS")
                                 // console.log(postdietTags, "POST DIET TAGS")
@@ -576,6 +581,18 @@ const Posts = ({userId}) => {
                 <div className="posts">
                     <p>Error Loading Posts</p> 
                 </div>
+                <Modal show={showModal} onClose={e => updateModal(!showModal)}>
+                    <div className="modal-header">
+                        <h2 className="modal-header-text">Error</h2>
+                    </div>
+                    <div className="modal-body">
+                        <div className="modalMessage">Sorry, we are unable to find any posts on the current listing that have your preferred diet tags or similar! </div>
+                        <div className="modalMessage">Please add a diet tag under Diets in the Preferences settings if you have not set any preferred diet tags and try again! </div>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="yesButton" onClick={e => updateModal(!showModal)}>OK</button>
+                    </div>
+                </Modal>
             </div>
         );
     } else if (isLoading) {
@@ -585,6 +602,17 @@ const Posts = ({userId}) => {
                 <div className="posts">
                     <p>Loading...</p> 
                 </div>
+                <Modal show={showModal} onClose={e => updateModal(!showModal)}>
+                    <div className="modal-header">
+                        <h2 className="modal-header-text">Error</h2>
+                    </div>
+                    <div className="modal-body">
+                        <p className="modalMessage">The posts are currently loading, please try again once the posts load!</p>
+                    </div>
+                    <div className="modal-footer">
+                        <button className="yesButton" onClick={e => updateModal(!showModal)}>OK</button>
+                    </div> 
+                </Modal>
             </div>
         );
     } else if (posts) {
@@ -606,6 +634,18 @@ const Posts = ({userId}) => {
                                 <Post key={post.id} post={post} type="postlist" deletePost={deletePost} resharePost={resharePost} />
                             ))}
                         </div>
+                        <Modal show={showModal} onClose={e => updateModal(!showModal)}>
+                            <div className="modal-header">
+                                <h2 className="modal-header-text">Error</h2>
+                            </div>
+                            <div className="modal-body">
+                                <div className="modalMessage">Sorry, we are unable to find any posts on the current listing that have your preferred diet tags or similar! </div>
+                                <div className="modalMessage">Please add a diet tag under Diets in the Preferences settings if you have not set any preferred diet tags and try again! </div>
+                            </div>
+                            <div className="modal-footer">
+                             <button className="yesButton" onClick={e => updateModal(!showModal)}>OK</button>
+                            </div>
+                        </Modal>
                     </div>
                 );
             }
@@ -625,6 +665,18 @@ const Posts = ({userId}) => {
                     <div className="posts">
                         <p>No Posts Found</p> 
                     </div>
+                    <Modal show={showModal} onClose={e => updateModal(!showModal)}>
+                        <div className="modal-header">
+                            <h2 className="modal-header-text">Error</h2>
+                        </div>
+                        <div>
+                            <div className="modalMessage"> Sorry, we are unable to find any posts on the current listing that have your preferred diet tags or similar! </div>
+                            <div className="modalMessage"> Please try again once there are posts showing under your search condition. </div>
+                        </div>
+                        <div className="modal-footer">
+                             <button className="yesButton" onClick={e => updateModal(!showModal)}>OK</button>
+                        </div>
+                    </Modal>
                 </div>
             );
         }
