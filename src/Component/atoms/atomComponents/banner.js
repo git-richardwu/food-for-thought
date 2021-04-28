@@ -41,9 +41,9 @@ function Banner({title}){
         // console.log("Set Friend ID to "+friendID)
     }
 
-      function submitHandler(name) {
-        // console.log(name)
-      }
+      // function submitHandler(name) {
+      //   // console.log(name)
+      // }
       // document.addEventListener("mousedown", handleClickOutside);
       // document.removeEventListener("mousedown", handleClickOutside);
 
@@ -60,7 +60,7 @@ function Banner({title}){
                 <h2 className="modal-header-text">Find users to follow!</h2>
             </div>
             <div>
-            <form onSubmit={submitHandler}onChange={e => updateField(e.target.value)}>
+            <form onChange={e => updateField(e.target.value)}>
                 <div className="autocomplete">
                     <Autocomplete suggestions={users} selectAutocomplete={e => selectAutocomplete(e)} />
                 </div>
