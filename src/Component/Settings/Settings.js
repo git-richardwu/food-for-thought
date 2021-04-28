@@ -1,40 +1,29 @@
 import React from 'react';
 import "./Settings.css";
 import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
-import SideMenu from "../atoms/atomComponents/sideMenu"
 
 const Settings = () => {
     return (
         <div className="settingsContainer">
-            <Link to="/settings/account" className="link">
-                <button className="settingsMenuButton">
-                    Account
-                    <div className="triangle-right"/>
-                </button>
+            <Link to="/settings/account" className="settingsMenuButton">
+                Account
+                <div className="triangle-right"/>   
             </Link>
-            <Link to="/settings/privacy">
-                <button className="settingsMenuButton">
-                    Privacy
-                    <div className="triangle-right"/>
-                </button>
+            <Link to="/settings/privacy" className="settingsMenuButton">
+                Privacy
+                <div className="triangle-right"/>
             </Link>
-            <Link to="/settings/notifications">
-                <button className="settingsMenuButton">
-                    Notifications
-                    <div className="triangle-right"/>
-                </button>
+            <Link to="/settings/notifications" className="settingsMenuButton">
+                Notifications
+                <div className="triangle-right"/>
             </Link>
-            <Link to="/settings/preferences">
-                <button className="settingsMenuButton">
-                    Preferences
-                    <div className="triangle-right"/>
-                </button>
+            <Link to="/settings/preferences" className="settingsMenuButton">
+                Preferences
+                <div className="triangle-right"/>
             </Link>
-            <Link to="/settings/general">
-                <button className="settingsMenuButton">
-                    General
-                    <div className="triangle-right"/>
-                </button>
+            <Link to="/settings/general" className="settingsMenuButton">
+                General
+                <div className="triangle-right"/>
             </Link>
         </div>
     )

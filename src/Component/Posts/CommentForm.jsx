@@ -1,6 +1,7 @@
 import React from "react";
 import "../../App.css";
-import PostingList from "../PostingList.jsx";
+import CommentList from "../CommentList.jsx";
+import {sendNotification} from "../../Notifications/lib"
 
 export default class CommentForm extends React.Component {
   constructor(props) {
@@ -10,6 +11,7 @@ export default class CommentForm extends React.Component {
       postmessage: ""
     };
     this.postListing = React.createRef();
+    this.submitHandler.bind(this);
   }
 
   submitHandler = event => {
@@ -37,12 +39,25 @@ export default class CommentForm extends React.Component {
         result => {
           // update the count in the UI manually, to avoid a database hit
           this.props.onAddComment(this.props.commentCount + 1);
+          this.setState({
+            post_text: "",
+            });
+          
           this.postListing.current.loadPosts();
-        },
+        }, 
         error => {
-          alert("error!");
+          console.log(error);
         }
+      
+      // ).catch(error => console.log(error));
       );
+      let userid = sessionStorage.getItem("user");
+      let recpientID = this.props.authorID;
+      let content = "Your post, "+  this.state.post_text  + ", recieved a comment";
+      // let content = "Your post "+  this.state.post_text  + " recieved a comment";
+
+      console.log("Author ID: " + this.props.authorID);
+      sendNotification(userid,recpientID , content);
   };
 
   myChangeHandler = event => {
@@ -55,21 +70,17 @@ export default class CommentForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.submitHandler}>
-          <label>
-            Add A Comment to Post {this.props.parent}
-            <br />
-            <textarea rows="5" cols="120" onChange={this.myChangeHandler} />
-          </label>
-          <br />
+          <label for={"comment box"+this.props.parent} className="commentformLabel">Add A Comment To This Post</label>  
+          <textarea id={"comment box"+this.props.parent} className="commentForm" value={this.state.post_text} onChange={this.myChangeHandler} />
 
-          <input type="submit" value="submit" />
-          <br />
-          {this.state.postmessage}
+          <input className="addComment" type="submit" value="Comment" />
         </form>
-        <PostingList
+        <CommentList
           ref={this.postListing}
           parentid={this.props.parent}
           type="commentlist"
+          onDeleteComment={this.props.onAddComment}
+          commentCount={this.props.commentCount}
         />
       </div>
     );

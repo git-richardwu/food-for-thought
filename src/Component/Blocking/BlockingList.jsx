@@ -31,18 +31,11 @@ export default class BlockingList extends React.Component {
         result => {
           if (result) {
             this.setState({
-              isLoaded: true,
               connections: result[0]
             });
           }
-        },
-        error => {
-          this.setState({
-            isLoaded: true,
-            error
-          });
         }
-      );
+      ).catch(error => console.log(error));
   }
 
   unblockConnection(id){
@@ -53,58 +46,35 @@ export default class BlockingList extends React.Component {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer '+sessionStorage.getItem("token")
       },
-    //   body: JSON.stringify({
-    //     status: status
-    //   })
     })
-      // .then(res => res.json())
       .then(
-        // result => {
-          // this.setState({
-          //   responseMessage: result.Status
-          // });
           result => {
-          alert("User Unblocked! The page will refresh");
           this.loadBlock();
         }
-        // },
-        // error => {
-        //   alert("ERROR! ERROR!");
-        //   this.loadBlock();
-        // }
-      );
+      ).catch(error => console.log(error));
   }
 
   conditionalAction(status, id){
     if (status == "active"){
       return(
-      <button className = "backButton" onClick={e => this.unblockConnection(id)}> Unblock </button>
+        <button className="backButton unblock" onClick={e => this.unblockConnection(id)}> Unblock </button>
       )
     }
   }
 
-  render() {
-    //this.loadPosts();
-    const {error, isLoaded, connections} = this.state;
-    if (error) {
-      return <div> Error: {error.message} </div>;
-    } else if (!isLoaded) {
-      return <div> Loading... </div>;
-    } else {
-      return (
-        <div className="post">
-          <ul>
-            {connections.map(connection => (
-              <div key={connection.id} className="userlist-block">
-                <p className = "wordfont">{connection.connectedUser.username}</p>
-                <div className="deletePost">
-                {this.conditionalAction(connection.status, connection.id)}
-                </div>
-              </div>
-            ))}
-          </ul>
-        </div>
-      );
+    render() {
+        const {connections} = this.state;
+        return (
+            <div>
+                {connections.map(connection => (
+                    <div key={connection.id} className="userlist-block">
+                        <p className = "wordfont">{connection.connectedUser.username}</p>
+                        <div className="deletePost">
+                            {this.conditionalAction(connection.status, connection.id)}
+                        </div>
+                    </div>
+                ))}
+            </div>
+        );
     }
-  }
 }

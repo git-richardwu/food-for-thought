@@ -10,7 +10,7 @@ function FollowerComponent({numOfFollowers, numOfFollowing, userID}){
            <p className={styles.subTitleText}> Following: {numOfFollowing}</p>
            {/* <button ><p className={styles.subTitleText}>Following List</p></button> */}
            <Link to={`/following/${userID}`}>
-            <button >
+            <button className={styles.followingListButton}>
                <p className={styles.subTitleText}>Following List</p>
             </button>
             </Link>

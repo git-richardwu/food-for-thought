@@ -26,7 +26,7 @@ const PostTags = ({postID}) => {
               async result => {
                 if (result) {
                     if (result[0][0]){
-                        setTags(result[0][0].name.split("~"));
+                        setTags(result[0][0].name.split("~").filter(x => x !== ""));
                     }
                 }
               },
@@ -39,7 +39,7 @@ const PostTags = ({postID}) => {
 
     if (dietTags){
         return (
-            <div className="postTagsContainer">
+            <div className="displayedPostTags">
                 {dietTags.map(tag => (
                     <div key={tag} className="postDietTag">
                         {tag}

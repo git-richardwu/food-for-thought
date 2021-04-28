@@ -1,9 +1,15 @@
+import { auto } from "@popperjs/core";
 import React from "react";
 import image from "../../../Images/William.png";
+import "../AboutAndrew.css";
+import "../../Settings/Settings.css";
+
 function AboutWilliam() {
   return (
-    <div>
-      <img src={image} style={wills_style.imageStyle} />
+    <div className="settingsContainer">
+      <img className="imaging"src={image} alt="Picture of William Phillips" />
+      <h2>William Phillips</h2>
+      <h3 className="subheader">Computer Science BS, Senior</h3>
       <p style={wills_style.text}>
         Hello my name is William Phillips. I am currently a senior studying
         Computer Science at the University at Buffalo. I am currently taking CSE
@@ -45,8 +51,8 @@ const wills_style = {
   },
   text: {
     textAlign: "justify",
-    marginLeft: 150,
-    marginRight: 150,
+    marginLeft: 250,
+    marginRight: 250,
     fontSize: 20,
   },
 };

@@ -164,8 +164,11 @@
 .deleteTag{
     background-color: transparent;
     border: none;
-    float: right;
     cursor: pointer;
+    font-family: "RubikOne";
+    justify-items: flex-end;
+    margin-left: 10px;
+    align-self: center;
 }
 
 @media screen and (max-width: 850px) {
@@ -211,6 +214,10 @@
     }
 
     .createTextArea{
+        width: 100%;
+    }
+
+    .formAddImage{
         width: 100%;
     }
 

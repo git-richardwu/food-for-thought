@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-const FoodPhoto = ({id}) => {
+const FoodPhoto = ({id, title}) => {
     const [foodPhoto, setFoodPhoto] = useState("");
 
     useEffect(() => {
@@ -26,9 +26,9 @@ const FoodPhoto = ({id}) => {
               .then(result=>{
                   if (result){
                       if (process.env.REACT_APP_API_PATH.includes("localhost")){
-                        setFoodPhoto("http://localhost:3001/"+result.url);
+                        setFoodPhoto("http://localhost:3001"+result.url);
                       }else{
-                        setFoodPhoto("https://webdev.cse.buffalo.edu/"+result.url);
+                        setFoodPhoto("https://webdev.cse.buffalo.edu"+result.url);
                       }
                   }
               })
@@ -42,7 +42,7 @@ const FoodPhoto = ({id}) => {
     if (foodPhoto){
         return (
             <div className="postImageContainer">
-                <img className="postImage" src={foodPhoto} alt="Food"/>
+                <img className="postImage" src={foodPhoto} alt={title}/>
             </div>
         )
     }else{

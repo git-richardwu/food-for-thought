@@ -3,6 +3,7 @@ import React from 'react'
 // import "../App.css";
 import "./foobar.css";
 import { Redirect } from "react-router-dom";
+import { faKaaba, faShareSquare } from '@fortawesome/free-solid-svg-icons';
 
 
 export default class SignUp extends React.Component {
@@ -13,8 +14,11 @@ export default class SignUp extends React.Component {
             email: "",
             password: "",
             username: "",
-            // errorStatus: false,
-            // errorStatus2: false, 
+            invalidEmail: false, 
+            emailExists: false,
+            usernameExists: false,
+            invalidUsername: false,
+            invalidPassword: false,
             redirect: false
         };
 
@@ -42,11 +46,19 @@ export default class SignUp extends React.Component {
         const email = this.state.email
         const password = this.state.password
         const username = this.state.username
-
+        this.setState({
+            invalidEmail: false,
+            invalidUsername: false,
+            invalidPassword: false,
+            emailExists: false,
+            usernameExists: false
+        });
         var errorStatusEmail =  false;
 
         if(email == "" || !email.includes("@")){
-           alert("Please enter a valid email!")
+            this.setState({
+                invalidEmail: true,
+            });
            return;
         }
         else {
@@ -61,15 +73,19 @@ export default class SignUp extends React.Component {
                 // console.log(json)
                 if(json[1] != 0){
                     errorStatusEmail = true
-                    alert("error! Email is taken!")
+                    this.setState({
+                        emailExists: true,
+                    });
                     return;
                 }
-            })   
+            }).catch(error => console.log(error)); 
         }
 
 
         if(username == ""){
-            alert("Please enter a valid username!")
+            this.setState({
+                invalidUsername: true,
+            });
             return;
          }
          else {
@@ -83,23 +99,22 @@ export default class SignUp extends React.Component {
              .then(json => {
                  // console.log(json)
                  if(json[1] != 0){
-                     alert("error! Username is taken!")
+                    this.setState({
+                        usernameExists: true,
+                    });
                      return;
                  }
-             })   
+             }).catch(error => console.log(error));  
          }
-
-        if(password == "" || password.length < 6 || password == password.toLowerCase){
-            alert("Please make sure your password is at least 6 characters and contains at least one capital letter!")
+         
+        if(password == "" || password.length < 6 || password === password.toLowerCase()){
+            this.setState({
+                invalidPassword: true,
+            });
             return;
         }
-
-        // if(errorStatusEmail){    
-        //     return;
-        // }
-        else {
-        fetch(process.env.REACT_APP_API_PATH+"/auth/signup", {
-        // fetch("http://localhost:3001/api/auth/signup", {   
+        else if (!this.state.emailExists && !this.state.usernameExists) {
+        fetch(process.env.REACT_APP_API_PATH+"/auth/signup", { 
             method: "POST",
             headers: new Headers({
                 'Content-Type': 'application/json',
@@ -132,9 +147,9 @@ export default class SignUp extends React.Component {
             .then(json => {
                 console.log(json)
                 
-        })       
+        }).catch(error => console.log(error));       
             // this.refreshPostsFromSignUp();
-        })
+        }).catch(error => console.log(error));
         }
     }
 
@@ -147,27 +162,32 @@ export default class SignUp extends React.Component {
 
         return (
 
-            <div className="center">
-                <h2>Sign Up</h2>
+            <div className="signUpContainer">
+                <h1 className="header">Sign Up</h1>
                 <label>
-                Username
-                <input className="textbox" onChange={this.updateUsername} value={this.state.username}/>
+                    Username: 
+                    <input className="textbox" onChange={this.updateUsername} value={this.state.username}/>
                 </label>
+                
+                {this.state.invalidUsername && <p className="errorMessage">Please enter a valid username!</p>}
+                {this.state.usernameExists && <p className="errorMessage">Please choose another username, this one already exists. Did you mean to <a href="/login">login</a>?</p>}
                 <br />
                 <label>
-                Email
-                <input className="textbox" type="email" onChange={this.updateEmail} value={this.state.email} />
+                    Email: 
+                    <input className="textbox" type="email" onChange={this.updateEmail} value={this.state.email} />
                 </label>
+                {this.state.invalidEmail && <p className="errorMessage">Please enter a valid email!</p>}
+                {this.state.emailExists && <p className="errorMessage">Please choose another email, this one already exists. Did you mean to <a href="/login">login</a>?</p>}
                 <br />
                 <label>
-                Password
-                <input className="textbox" type="password" onChange={this.updatePassword} value={this.state.password}/>
-                <br />
+                    Password:
+                    <input className="textbox" type="password" onChange={this.updatePassword} value={this.state.password}/>
                 </label>
+                {this.state.invalidPassword && <p className="errorMessage">Please make sure your password is at least 6 
+                    characters and contains at least one capital letter!</p>}
+                <br/>
 
                 <button className="buttonStyle1" onClick={this.submission}>Sign Up!</button>
-                {/* { this.state.errorStatus ? <p>Error: Please enter a valid email!</p> : <div/> }
-                { this.state.errorStatus2 ? <p>Error: Please enter a valid password! (Min. Length of 6)</p> : <div/> } */}
             </div>
         )
     }

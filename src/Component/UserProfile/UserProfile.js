@@ -5,6 +5,7 @@ import ProfilePictureButton from "../atoms/atomComponents/profilePictureButton";
 import InfoContainer from "../atoms/atomComponents/infoContainer";
 import FollowerComponent from "../atoms/atomComponents/followerComponent";
 import ActivityComponent from "../atoms/atomComponents/activityComponent";
+import Modal from "../Modal.jsx"
 import { BrowserRouter as Router, Redirect, Route, Switch, Link, useParams} from "react-router-dom";
 
 function UserProfile() {
@@ -14,7 +15,7 @@ function UserProfile() {
   const [bioID, setBioID] = React.useState();
   const [followingCount, setFollowCount] = React.useState(0);
   const [followerCount, setFollowerCount] = React.useState(0);
-  const [artifactID, setArtifactID] =  React.useState(0);
+  const [profilePicID, setProfilePicID] =  React.useState(-1);
   const [url, setURL] = React.useState("");
   const [followState, setFollowState] = React.useState(false)
   const [username, setUsername] = React.useState("");
@@ -26,10 +27,13 @@ function UserProfile() {
   const [dietTag2, setDietTag2] = React.useState("")
   const [dietTag3, setDietTag3] = React.useState("")
   const [dietTag4, setDietTag4] = React.useState("")
+  const [showUpdatePictureModal, setShowUpdatePictureModal] = React.useState(false);
+
   fetchWeightGoal();
   fetchCalorieGoal();
   fetchDietTags();
 
+  
  React.useEffect(()=>{
     fetchUserBio();
     fetchFollowingCount();
@@ -37,7 +41,7 @@ function UserProfile() {
     fetchProfilePic();
     fetchFollowing();
     fetchUser();
- }, [followState, userID])
+ }, [followState, userID, url, userBio])
 
   function fetchProfilePic(){
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=profilePicDisplay&ownerID="+userID, {
@@ -48,24 +52,25 @@ function UserProfile() {
     })
     .then(response => response.json())
     .then(json => {
-        console.log(json)
-        if(json[1] == 0){
-          // this.setState({
-          //   url: "https://i.redd.it/32ztztrp4m541.jpg"
-          // });
-          setURL("https://i.redd.it/32ztztrp4m541.jpg")
-          return;
+        if (json){
+            if(json[1] == 0){
+                setURL("https://i.redd.it/32ztztrp4m541.jpg")
+                return;
+              }
+              else {
+                  if (json[0][0].url.includes("http")){
+                      // backwards compatability
+                      setURL(json[0][0].url);
+                  }
+                  else if (process.env.REACT_APP_API_PATH.includes("localhost")){
+                      setURL("http://localhost:3001"+json[0][0].url);
+                  }else{
+                      setURL("https://webdev.cse.buffalo.edu"+json[0][0].url);
+                  }
+                  setProfilePicID(json[0][0].id)
+              }
         }
-        else {
-          // this.setState({
-          //   url: json[0][0].url,
-          //   artifactID: json[0][0].id
-          // });
-          setURL(json[0][0].url)
-          setArtifactID(json[0][0].id)
-        }
-        // console.log(json[0][0].url)
-    }) 
+    }).catch(error => console.log(error));
     }
 
     function fetchFollowing(){
@@ -80,7 +85,7 @@ function UserProfile() {
           if(json[1] != 0){
             setFollowState(true)
           }
-        })
+        }).catch(error => console.log(error));
     }
  
 
@@ -107,11 +112,7 @@ function UserProfile() {
               }
 
         }
-        ,
-        error=>{
-          alert("Error occurred when trying to retrieve bio")
-        }
-      );
+      ).catch(error => console.log(error));
 
   }
 
@@ -125,7 +126,7 @@ function UserProfile() {
     .then(json => {
         // console.log(json)
         setFollowCount(json[1])
-      })
+      }).catch(error => console.log(error));
   }
 
   function fetchFollowerCount(){
@@ -138,7 +139,7 @@ function UserProfile() {
     .then(json => {
         console.log(json)
         setFollowerCount(json[1])
-      })
+      }).catch(error => console.log(error));
   }
 
   function followFunction(){
@@ -170,7 +171,7 @@ function UserProfile() {
             console.log("Followed!")
             setFollowState(true)
             
-          })
+          }).catch(error => console.log(error));
         } 
         else {
           {/* delete connection */}
@@ -186,71 +187,77 @@ function UserProfile() {
             console.log("Unfollowed!")
             setFollowState(false)
             
-          })
+          }).catch(error => console.log(error));
         }
         
     }) 
   }
 
-  const updateImageURL = () => {
-    const imgTypes = [".jpg", ".jpeg", ".png", ".gif"]
-    const user_ID = userID
-    const artifact_ID = artifactID
-    const newURL = prompt("Please enter the image URL of your new profile picture: [Chrome/Safari/Opera: 'Copy Image Address', Firefox: 'Copy Image Location', Edge: 'Copy']")
-    if(newURL == null){ //for cancelling
-      return;
-    }
-    if(!newURL.includes("https://") && newURL.length < 6){
-      alert("Please enter a valid URL!")
-      return;
-    }
-    if(!imgTypes.some(i => newURL.includes(i))){
-      alert("Please enter a valid image URL!")
-      return;
-    }
-    else {
-      if(artifact_ID == 0) { /*User does not have an artifact*/
-        fetch(process.env.REACT_APP_API_PATH+"/user-artifacts", {
-          method: "POST",
-          headers: new Headers({
+  const updateImage = async () => {
+    var pictureID = -1;
+    var fileField = document.querySelector('input[type="file"]');
+    if (profilePicID !== -1){
+        var formData = new FormData();
+        formData.append('file', fileField.files[0]);
+        await fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+profilePicID+"/upload", {
+            method: "POST",
+            headers: {
+                'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            },
+            body: formData
+        }).then(res => res.json())
+          .then(result => {    
+                if (process.env.REACT_APP_API_PATH.includes("localhost")){
+                    setURL("http://localhost:3001"+result.url);
+                }else{
+                    setURL("https://webdev.cse.buffalo.edu"+result.url);
+                }
+                setShowUpdatePictureModal(!showUpdatePictureModal);
+          }).catch(error => console.log(error));
+    }else{
+        await fetch(process.env.REACT_APP_API_PATH+"/user-artifacts", {
+            method: "POST",
+            headers: {
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer '+ sessionStorage.getItem("token")
-          }),
-          body: JSON.stringify({
-            ownerID: user_ID,
-            type: "string",
-            url: newURL,
-            category: "profilePicDisplay"
-
+              'Authorization': 'Bearer '+sessionStorage.getItem("token")
+            },
+            body: JSON.stringify({
+                ownerID: sessionStorage.getItem("user"),
+                type: "",
+                url: "",
+                category: "profilePicDisplay"
+            })
+      
           })
-      }).then(response => response.json())
-      .then(json => {
-            setArtifactID(json.id)
-            setURL(json.url)
-            return;
-      })
+        .then(res => res.json())
+        .then(
+            async result => {
+            var formData = new FormData();
+            formData.append('file', fileField.files[0]);
+            if (result) {
+                pictureID = result.id;
+                await fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+pictureID+"/upload", {
+                    method: "POST",
+                    headers: {
+                        'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                    },
+                    body: formData
+                    })
+                    .then(response => response.json())
+                    .then(result => {
+                        if (process.env.REACT_APP_API_PATH.includes("localhost")){
+                            setURL("http://localhost:3001"+result.url);
+                          }else{
+                            setURL("https://webdev.cse.buffalo.edu"+result.url);
+                          }
+                        setProfilePicID(pictureID);
+                        setShowUpdatePictureModal(!showUpdatePictureModal);
+                    }).catch(error => console.log(error));
+                }
+            }
+        ).catch(error => console.log(error));
     }
-    else { /*User has an artifact*/
-      fetch(process.env.REACT_APP_API_PATH+"/user-artifacts/"+artifact_ID, {
-        method: "PUT",
-        headers: new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer '+ sessionStorage.getItem("token")
-        }),
-        body: JSON.stringify({
-          ownerID: user_ID,
-          type: "string",
-          url: newURL,
-          category: "profilePicDisplay"
-
-        })
-    }).then(response => response.json())
-    .then(json => {
-          setURL(json.url)
-          return;
-      })
-    }
-  }
+    
 }
 
   
@@ -280,11 +287,7 @@ function fetchWeightGoal() {
           setWeightGoalID(-1);
         }
       },
-      (error) => {
-        console.log(error);
-        alert("Error occurred when trying to retrieve weight goal");
-      }
-    );
+    ).catch(error => console.log(error));
 } 
 
 const fetchUser = async () => {
@@ -333,17 +336,14 @@ const fetchUser = async () => {
               } 
             });
           }
-        },
-        (error) => {
-          alert("Error occurred when trying to retrieve calorie goal");
         }
-      );
+      ).catch(error => console.log(error));
 
   }
 
   function fetchDietTags(){
 
-    fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=dietTag&ownerID="+userID,{
+    fetch(process.env.REACT_APP_API_PATH+"/user-preferences?name=dietTags&userID="+userID,{
       method: "get",
         headers: {
           "Content-Type": "application/json",
@@ -354,54 +354,57 @@ const fetchUser = async () => {
       .then((res) => res.json())
       .then(
         (result) => {
-          if (result[0].length != 0) {
-            result[0].forEach(function (artifacts) {
-              if (artifacts.category == "dietTag"){
-                if(artifacts.url == "1"){
-                  let dietTag = artifacts.type;
-                  console.log("Goal from user preferences: " + dietTag);
-                  setDietTag1(dietTag);
-                }
-                if(artifacts.url == "2"){
-                  let dietTag = artifacts.type;
-                  console.log("Goal from user preferences: " + dietTag);
-                  setDietTag2(dietTag);
-                }
-                if(artifacts.url == "3"){
-                  let dietTag = artifacts.type;
-                  console.log("Goal from user preferences: " + dietTag);
-                  setDietTag3(dietTag);
-                }
-                if(artifacts.url == "4"){
-                  let dietTag = artifacts.type;
-                  console.log("Goal from user preferences: " + dietTag);
-                  setDietTag4(dietTag);
-                }
-              } 
-            });
+          if (result[1] !== 0) {
+            var holder = result[0][0].value.split("~")
+            for (var i = 0; i < holder.length; i++) {
+              setDietTag1(holder[0]);
+              setDietTag2(holder[1]);
+              setDietTag3(holder[2]);
+              setDietTag4(holder[3])
           }
-        },
-        (error) => {
-          alert("Error occurred when trying to set diet tags");
+            
+
+
+          }
         }
-      );
+      ).catch(error => console.log(error));
 
   }
 
     return (
-          <div >
-            {/* Pic and info container */}
-            <div className={styles.picAndInfo}>
+          <div classname={styles.innerContent}>
+           <div className={styles.picAndInfo}>
+           
+                {/* Pic and info container */}
+                {window.innerWidth > 850 && (
               <div>
-                <img src={url} className="img1"></img>
+                
+                <img src={url} className={styles.img1} alt={username+"'s profile picture"}/>
+
                 {/* <h5>{this.state.url}</h5> 
                 <h5>{this.state.artifactID}</h5> */}
 
-                {userID === sessionStorage.getItem("user") && <button onClick={updateImageURL}>Change Profile Picture</button>}
-                {userID !== sessionStorage.getItem("user") && <button onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
+                {userID === sessionStorage.getItem("user") && <button className={styles.userProfileButton} onClick={() => setShowUpdatePictureModal(!showUpdatePictureModal)}>Change Profile Picture</button>}
+                {userID !== sessionStorage.getItem("user") && <button className={styles.userProfileButton} onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
                 {/* <ProfilePictureButton name={"Picture Place Holder"} /> */}
               </div>
-              
+              )}
+
+              {window.innerWidth < 850 && (
+                <div>
+                <div>
+                  <img src={url} className={styles.img1}></img>
+                </div>
+                
+                <div>
+                {userID === sessionStorage.getItem("user") && <button onClick={() => setShowUpdatePictureModal(!showUpdatePictureModal)}>Change Profile Picture</button>}
+                {userID !== sessionStorage.getItem("user") && <button onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
+              </div>
+              </div>
+              )}
+
+
+
               {/* User info container */}
               <div className={styles.infoContainer}>
                 
@@ -419,11 +422,9 @@ const fetchUser = async () => {
                 bioID = {bioID}
                 userID = {userID}
                 />
-              </div>
-            </div>
-            {/* End of pic and info container*/}
-
-          <div className={styles.followAndActivityContainer}>
+              </div> 
+        </div>
+        <div className={styles.followAndActivityContainer}>
             <FollowerComponent
             
               numOfFollowers={followerCount}
@@ -432,6 +433,19 @@ const fetchUser = async () => {
             />
             <ActivityComponent userID={userID}/>
           </div>
+          <Modal show={showUpdatePictureModal} onClose={e => setShowUpdatePictureModal(!showUpdatePictureModal)}>
+            <div className="modal-header">
+                <h2 className="modal-header-text">Update Profile Picture</h2>
+            </div>
+            <div className="modal-body">
+                <label for="addImageInput" hidden>Select an image</label>
+                <input id="addImageInput" className="addImageButton" type="file" accept=".png,.jpg,.jpeg,.gif"/>
+            </div>
+            <div className="modal-footer">
+                <button  className="yesButton" onClick={e => updateImage()}>Submit</button>
+                <button className="noButton" onClick={e => setShowUpdatePictureModal(!showUpdatePictureModal)}>Cancel</button>
+            </div>
+        </Modal>
         </div>
     );
 }

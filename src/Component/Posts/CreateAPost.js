@@ -7,15 +7,21 @@ import { BrowserRouter as Router, Redirect, Route, Switch, Link, useHistory} fro
 
 const CreateAPost = () => {
     const [title, setTitle] = useState("");
+    const [invalidTitle, setInvalidTitle] = useState(false)
     const [steps, setSteps] = useState([]);
     const [step, setStep] = useState("");
+    const [invalidSteps, setInvalidSteps] = useState(false)
     const [ingredients, setIngredients] = useState([]);
     const [ingredient, setIngredient] = useState([]);
+    const [invalidIngredients, setInvalidIngredients] = useState(false);
     const [image, setImage] = useState("");
+    const [invalidImage, setInvalidImage] = useState(false)
     const [link, setLink] = useState("");
     const [redirect, setRedirect] = useState(false);
     const [postTags, setPostTags] = useState([]);
+    const [postTagLimit, setPostTagLimit] = useState(false);
     const [tag, setTag] = useState("");
+    const [calorie, setCalorie] = useState(0);
     const fileField = document.querySelector('input[type="file"]');
     const history = useHistory()
 
@@ -42,8 +48,9 @@ const CreateAPost = () => {
                 add.push(tag);
                 setPostTags(add);
                 setTag("");
+                setPostTagLimit(false);
             }else{
-                alert("Only 10 tags are allowed per post.")
+                setPostTagLimit(true);
             }
         }
     }
@@ -52,31 +59,29 @@ const CreateAPost = () => {
         setPostTags(postTags.filter(x => x != tagID));
     }
 
-    const validatePost = () => {
-        var message = "";
+    const invalidPost = () => {
+        setInvalidTitle(false);
+        setInvalidImage(false);
+        setInvalidSteps(false);
+        setInvalidIngredients(false);
         if (title.length == 0){
-            message += "A post must a title!\n";
+            setInvalidTitle(true);
         }
         if (steps.length == 0){
-            message += "A post must have at least 1 steps!\n";
+            setInvalidSteps(true);
         }
         if (ingredients.length == 0){
-            message += "A post must have at least 1 ingredient!\n";
+            setInvalidIngredients(true);
         }
         if (image.length == 0){
-            message += "A post must have an image!\n";
+            setInvalidImage(true);
         }
 
-        if (message.length == 0){
-            return true;
-        }else{
-            alert("ERROR(S):\n" + message);
-            return false;
-        }
+        return title.length == 0 && steps.length == 0 && ingredients.length == 0 && image.length == 0;
     }
 
     const createPost = async () => {
-        if (validatePost()){
+        if (!invalidPost()){
             var stepsID = -1;
             var ingredientsID = -1;
             var pictureID = -1;
@@ -163,28 +168,46 @@ const CreateAPost = () => {
                                                                     type: "post"
                                                                 })
                                                               }).then(res => res.json())
-                                                              .then(result => {
+                                                              .then(async result => {
+                                                                  var postId = result.id;
                                                                 if (result){
                                                                     console.log(result);
-                                                                    fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+                                                                    await fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
                                                                         method: "POST",
                                                                         headers: {
                                                                           'Content-Type': 'application/json',
                                                                           'Authorization': 'Bearer '+sessionStorage.getItem("token")
                                                                         },
                                                                         body: JSON.stringify({
-                                                                            postID: result.id,
+                                                                            postID: postId,
                                                                             userID: sessionStorage.getItem("user"),
                                                                             name: postTags.join("~"),
                                                                             type: "dietTags"
                                                                         })
                                                                       })
-                                                                      .then(result => {
+                                                                      .then(res => res.json())
+                                                                      .then(async result => {
                                                                         if (result){
-                                                                            setRedirect(true)
+                                                                            await fetch(process.env.REACT_APP_API_PATH+"/post-tags", {
+                                                                                method: "POST",
+                                                                                headers: {
+                                                                                  'Content-Type': 'application/json',
+                                                                                  'Authorization': 'Bearer '+sessionStorage.getItem("token")
+                                                                                },
+                                                                                body: JSON.stringify({
+                                                                                    postID: postId,
+                                                                                    userID: sessionStorage.getItem("user"),
+                                                                                    name: calorie.toString(),
+                                                                                    type: "calorie"
+                                                                                })
+                                                                              })
+                                                                              .then(result => {
+                                                                                  if (result){
+                                                                                      setRedirect(true);
+                                                                                  }
+                                                                              })
                                                                         }
                                                                       })
-                                                                    setRedirect(true)
                                                                 }
                                                               })
                                                         }
@@ -214,6 +237,12 @@ const CreateAPost = () => {
 
         }
     }
+
+    const setTagOnKey = (key) => {
+        if (key === "Enter"){
+            addTag()
+        }
+    }
     
     if (redirect){
         return <Redirect to="/home"/>
@@ -228,56 +257,66 @@ const CreateAPost = () => {
                 </button>
 
                 <div className="createAPostTitle">
-                    <label className="titleLabel">Title:</label>
-                    <input className="titleInput" type="text" value={title} onChange={e => setTitle(e.target.value)}/>
+                    <label for="post title" className="titleLabel">Title:</label>
+                    <input id="post title" className="titleInput" type="text" value={title} onChange={e => setTitle(e.target.value)}/>
+                    {invalidTitle && <p className="errorMessage">A post must have a title!</p>}
                 </div>
 
                 <div className="createContent">
                     <div className="createIngredients">
-                        <label className="textAreaHeader">Ingredients:</label>
+                        <label for="post ingredients" className="textAreaHeader">Ingredients:</label>
                         <button className="addToListButton" onClick={e => addIngredient()}>Add Ingredients</button>
-                        <textarea className="createTextArea" type="text" value={ingredient} onChange={e => setIngredient(e.target.value)}/>
+                        <textarea id="post ingredients" className="createTextArea" type="text" value={ingredient} onChange={e => setIngredient(e.target.value)}/>
                         <ul>
                             {ingredients.map(ing => (
                                 <li key={ing}>{ing}</li>
                             ))}
-                        </ul>
+                        </ul> 
+                        {invalidIngredients && <p className="errorMessage">A post must have at least 1 ingredient!</p>}
                     </div>
                     <div className="createSteps">
-                        <label className="textAreaHeader">Steps:</label>
+                        <label for="post steps" className="textAreaHeader">Steps:</label>
                         <button className="addToListButton" onClick={e => addStep()}>Add Steps</button>
-                        <textarea className="createTextArea" type="text" value={step} onChange={e => setStep(e.target.value)}/>
+                        <textarea id="post steps" className="createTextArea" type="text" value={step} onChange={e => setStep(e.target.value)}/>
                         <ol>
                             {steps.map(step => (
                                 <li key={step}>{step}</li>
                             ))}
                         </ol>
+                        {invalidSteps && <p className="errorMessage">A post must have at least 1 step!</p>}
                     </div>
                     <div className="formAddImage">
-                        <label className="textAreaHeader">Image:</label>
-                        <input className="addImageButton" type="file" onChange={e => setImage(e.target.value)} accept=".png,.jpg,.jpeg"/>
+                        <label for="post image" className="textAreaHeader">Image:</label>
+                        <input id="post image" className="addImageButton" type="file" onChange={e => setImage(e.target.value)} accept=".png,.jpg,.jpeg"/>
+                        {invalidImage && <p className="errorMessage">A post must have an image!</p>}
                     </div>
                 </div>
 
                 <div>
-                    <label className="linkLabel">Link:</label>
-                    <input className="linkInput" type="url" value={link} onChange={e => setLink(e.target.value)}/>
+                    <label for="post link" className="linkLabel">Link:</label>
+                    <input id="post link" className="linkInput" type="url" value={link} onChange={e => setLink(e.target.value)}/>
                 </div>
 
-                <div>
-                    <label className="linkLabel">Add Diet Tags:</label>
-                    <input className="addTagInput" type="url" value={tag} onChange={e => setTag(e.target.value)} maxLength="14"/>
-                    <button className="addToListButtonTags" onClick={e => addTag()}>Add Tag</button>
-                    <div className="postTagsContainer">
-                        {postTags.map(tag => (
-                            <div key={tag} className="postDietTag">
-                                {tag}
-                                <button className="deleteTag" onClick={e => deleteTag(tag)}>x</button>
-                            </div>
-                        ))}
+                <div className="postTagsContainer">
+                    <div className="createCalorieContainer">
+                        <label for="post calories" className="linkLabel">Calories:</label>
+                        <input id="post calories" className="addTagInput" type="number" value={calorie} onChange={e => setCalorie(e.target.value)} step="25" min="0" max="10000"/>
+                    </div>
+                    <div className="addDietTagsContainer">
+                        <label for="post diet tags" className="linkLabel">Add Diet Tags:</label>
+                        <input id="post diet tags" className="addTagInput" type="url" value={tag} onChange={e => setTag(e.target.value)} maxLength="14" onKeyPress={e => setTagOnKey(e.key)}/>
+                        <button className="addToListButtonTags" onClick={e => addTag()}>Add Tag</button>
+                        {postTagLimit && <p className="errorMessage">Only 10 tags are allowed per post.</p>}
+                        <div className="displayedPostTags">
+                            {postTags.map(tag => (
+                                <div key={tag} className="postDietTag">
+                                    {tag}
+                                    <button className="deleteTag" onClick={e => deleteTag(tag)}>X</button>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
-
                 <button className="createButton" onClick={e => createPost()}>Create</button>
             </div>
         </div>

@@ -1,0 +1,65 @@
+.container{
+    display:flex;
+    flex-direction: column;
+    overflow-y: auto;
+    margin-left: 200px;
+    height: 100vh;
+}
+
+.notifications{
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+}
+
+.notification{
+    display: flex;
+    padding: 10px 20px;
+    border-radius: 4px;
+    background-color: #6FD397;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.text{
+    text-align: center;
+    align-items: center;
+    height: 100%;
+    font-size: 30px;
+    font-family: "ReemKufi";
+}
+
+
+@media screen and (max-width: 850px) {
+    .text{
+        font-size: 20px;
+    }
+
+    .container{
+        margin-left: 0px;
+    }
+
+    .notifications{
+        margin-bottom: 100px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .text{
+        font-size: 16px;
+    }
+    .container{
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    .text{
+        font-size: 12px;
+    }
+    .container{
+        margin-left: 0px;
+    }
+}
