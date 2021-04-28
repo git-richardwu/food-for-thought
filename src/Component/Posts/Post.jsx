@@ -139,7 +139,6 @@ export default class Post extends React.Component {
         src={helpIcon}
         className="deleteIcon"
         alt="Delete Post"
-        title="Delete Post"
         onClick={e => this.showDeleteModal()}
       />
     );
@@ -179,19 +178,19 @@ export default class Post extends React.Component {
             className={[this.props.type, "postbody"].join(" ")}>
             <div className="deletePost">
                 {this.showDelete()}
-                <div className="profilePictureContainer"> 
-                    <Link to={`/profile/${this.props.post.author.id}`}>
-                        <PostProfilePicture id={this.props.post.author.id} />
+                   
+                <div className="userProfileContainer">
+                    <Link to={`/profile/${this.props.post.author.id}`} className="userProfileContainer">
+                        <div className="profilePictureContainer"> 
+                            <PostProfilePicture id={this.props.post.author.id} />
+                        </div>
+                        <div className="postUsername">
+                            {this.props.post.author.username}
+                        </div>
                     </Link>
-                </div>
-                <div className="postUsername">
-                    <Link to={`/profile/${this.props.post.author.id}`}>
-                        {sessionStorage.setItem("profileUser", this.props.post.author.id)}
-                        {this.props.post.author.username}
-                    </Link>
-                </div>
-                <div className="postDate">
-                    {new Date(this.props.post.createdAt).toLocaleString()}
+                    <div className="postDate">
+                        {new Date(this.props.post.createdAt).toLocaleString()}
+                    </div>
                 </div>
             </div>
             <div className="postTitle">
@@ -200,7 +199,7 @@ export default class Post extends React.Component {
             <div className="content">
                 <Ingredients id={this.getIngredientsID()}/>
                 <Steps id={this.getStepsID()}/>
-                <FoodPhoto id={this.getFoodPhotoID()}/>
+                <FoodPhoto id={this.getFoodPhotoID()} title={this.getTitle()}/>
             </div>
             <PostURL link={this.props.post.thumbnailURL}/>
             <Calories postID={this.props.post.id} />
@@ -230,24 +229,21 @@ export default class Post extends React.Component {
             className={[this.props.type, "commentBody"].join(" ")}>
             <div className="deletePost">
                 {this.showDelete()}
-
-                <div className="profilePictureContainer"> 
-                    <Link to="/profile">
-                        {/* need to connect with profile page to get poster's profile*/}
-                        <PostProfilePicture id={this.props.post.author.id} />
+   
+                <div className="userProfileContainer">
+                    <Link to={`/profile/${this.props.post.author.id}`} className="userProfileContainer">
+                        <div className="profilePictureContainer"> 
+                            <PostProfilePicture id={this.props.post.author.id} />
+                        </div>
+                        <div className="postUsername">
+                            {this.props.post.author.username}
+                        </div>
                     </Link>
+                    <div className="postDate">
+                        {new Date(this.props.post.createdAt).toLocaleString()}
+                    </div>
                 </div>
 
-                <div className="postUsername">
-                    <Link to="/profile">
-                        {/* need to connect with profile page to get poster's profile*/}
-                        {this.props.post.author.username}
-                    </Link>
-                </div>
-
-                <div className="postDate">
-                    {new Date(this.props.post.createdAt).toLocaleString()}
-                </div>
 
                 <div className="commentBody">
                     {this.getCommentBody()}

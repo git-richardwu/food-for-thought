@@ -46,17 +46,11 @@ function FollowingList() {
           const followPicture = following_userID[index]
           return (
             <div>
-                {/* <div className="profilePictureContainer"> 
-                    <Link to={`/profile/${followPicture}`}>
-                        <PostProfilePicture id={followPicture} />
-                    </Link>
-                </div> */}
                 <Link style={{ textDecoration: 'none' }} to={`/profile/${followPicture}`}>
                   <div className={styles.divList} key={index}>
-                    <h3>{e}</h3>
+                    <h2 className="header3">{e}</h2>
                   </div>
                 </Link>
-              {/* <h3>{followPicture}</h3> */}
             </div>
           )
         })}

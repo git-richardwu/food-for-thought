@@ -146,20 +146,20 @@ export default class PasswordReset extends React.Component {
         <div className="signUpContainer">
                 <h1> Reset Password </h1>
                 <p>
-                  <label> Email: </label>
-                  <input name = 'email' type='email' onChange ={this.emailHandler} value = {this.state.email}></input>
+                  <label for="reset email"> Email: </label>
+                  <input id="reset email" name = 'email' type='email' onChange ={this.emailHandler} value = {this.state.email}></input>
                 </p>
                 {this.state.invalidEmail && <p className="errorMessage">Please enter a valid buffalo.edu email!</p>}
                 <button className="buttonStyle1" onClick = {this.submitHandler}>Get One Time Password!</button>
 
                 <p>
-                  <label> Token: </label>
-                  <input name = 'token' type='token' onChange ={this.tokenHandler} value = {this.state.token}></input>
+                  <label for="reset token"> Token: </label>
+                  <input id="reset token" name = 'token' type='token' onChange ={this.tokenHandler} value = {this.state.token}></input>
                 </p>
                 
                 <p>
-                  <label> New Password: </label>
-                  <input name = 'new password' type='password' onChange ={this.passwordHandler} value = {this.state.password}></input>
+                  <label for="reset password"> New Password: </label>
+                  <input id="reset password" name = 'new password' type='password' onChange ={this.passwordHandler} value = {this.state.password}></input>
                 </p>
                 {this.state.invalidPassword && <p className="errorMessage">Please make sure your password is at least 6 
                     characters and contains at least one capital letter!</p>}

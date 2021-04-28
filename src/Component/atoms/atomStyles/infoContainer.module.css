@@ -18,9 +18,8 @@
 }
 .name{
     width: 100%;
-    font-size: 20px;
-    /* font-family: "Roboto"; */
-    font-family: 'Roboto', sans-serif;    
+    font-size: 18px;
+    font-family: "ReemKufi";    
 
 }
 
@@ -89,6 +88,7 @@
 
 .bioText{
     font-size: 20px;
+    font-family: "ReemKufi";
 }
 
 .invisibleButton{
@@ -124,6 +124,17 @@
     width: fit-content;
 }
 
+.editBioButton{
+    background-color: #D6EBDC;
+    border: none;
+    color: black;
+    padding: 7px 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-family: ReemKufi;
+    font-weight: bold;
+    box-shadow: inset 0 0px 0px;
+}
 @media screen and (max-width: 850px) {
     .nameContainer{
         /* padding-left: 10px; */

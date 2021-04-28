@@ -41,7 +41,7 @@ function UserProfile() {
     fetchProfilePic();
     fetchFollowing();
     fetchUser();
- }, [followState, userID, url])
+ }, [followState, userID, url, userBio])
 
   function fetchProfilePic(){
     fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=profilePicDisplay&ownerID="+userID, {
@@ -341,53 +341,6 @@ const fetchUser = async () => {
 
   }
 
-  // function fetchDietTags(){
-
-  //   fetch(process.env.REACT_APP_API_PATH+"/user-artifacts?category=dietTag&ownerID="+userID,{
-  //     method: "get",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: "Bearer " + sessionStorage.getItem("token"),
-  //       },
-  //     }
-  //   )
-  //     .then((res) => res.json())
-  //     .then(
-  //       (result) => {
-  //         if (result[0].length != 0) {
-  //           result[0].forEach(function (artifacts) {
-  //             if (artifacts.category == "dietTag"){
-  //               if(artifacts.url == "1"){
-  //                 let dietTag = artifacts.type;
-  //                 console.log("Goal from user preferences: " + dietTag);
-  //                 setDietTag1(dietTag);
-  //               }
-  //               if(artifacts.url == "2"){
-  //                 let dietTag = artifacts.type;
-  //                 console.log("Goal from user preferences: " + dietTag);
-  //                 setDietTag2(dietTag);
-  //               }
-  //               if(artifacts.url == "3"){
-  //                 let dietTag = artifacts.type;
-  //                 console.log("Goal from user preferences: " + dietTag);
-  //                 setDietTag3(dietTag);
-  //               }
-  //               if(artifacts.url == "4"){
-  //                 let dietTag = artifacts.type;
-  //                 console.log("Goal from user preferences: " + dietTag);
-  //                 setDietTag4(dietTag);
-  //               }
-  //             } 
-  //           });
-  //         }
-  //       },
-  //       (error) => {
-  //         alert("Error occurred when trying to set diet tags");
-  //       }
-  //     );
-
-  // }
-
   function fetchDietTags(){
 
     fetch(process.env.REACT_APP_API_PATH+"/user-preferences?name=dietTags&userID="+userID,{
@@ -426,13 +379,13 @@ const fetchUser = async () => {
                 {window.innerWidth > 850 && (
               <div>
                 
-                <img src={url} className={styles.img1}></img>
+                <img src={url} className={styles.img1} alt={username+"'s profile picture"}/>
 
                 {/* <h5>{this.state.url}</h5> 
                 <h5>{this.state.artifactID}</h5> */}
 
-                {userID === sessionStorage.getItem("user") && <button onClick={() => setShowUpdatePictureModal(!showUpdatePictureModal)}>Change Profile Picture</button>}
-                {userID !== sessionStorage.getItem("user") && <button onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
+                {userID === sessionStorage.getItem("user") && <button className={styles.userProfileButton} onClick={() => setShowUpdatePictureModal(!showUpdatePictureModal)}>Change Profile Picture</button>}
+                {userID !== sessionStorage.getItem("user") && <button className={styles.userProfileButton} onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
                 {/* <ProfilePictureButton name={"Picture Place Holder"} /> */}
               </div>
               )}
@@ -444,7 +397,7 @@ const fetchUser = async () => {
                 </div>
                 
                 <div>
-                {userID === sessionStorage.getItem("user") && <button onClick={url}>Change Profile Picture</button>}
+                {userID === sessionStorage.getItem("user") && <button onClick={() => setShowUpdatePictureModal(!showUpdatePictureModal)}>Change Profile Picture</button>}
                 {userID !== sessionStorage.getItem("user") && <button onClick={followFunction}> {followState ? "Unfollow" : "Follow" } </button>}
               </div>
               </div>
@@ -480,7 +433,19 @@ const fetchUser = async () => {
             />
             <ActivityComponent userID={userID}/>
           </div>
-        
+          <Modal show={showUpdatePictureModal} onClose={e => setShowUpdatePictureModal(!showUpdatePictureModal)}>
+            <div className="modal-header">
+                <h2 className="modal-header-text">Update Profile Picture</h2>
+            </div>
+            <div className="modal-body">
+                <label for="addImageInput" hidden>Select an image</label>
+                <input id="addImageInput" className="addImageButton" type="file" accept=".png,.jpg,.jpeg,.gif"/>
+            </div>
+            <div className="modal-footer">
+                <button  className="yesButton" onClick={e => updateImage()}>Submit</button>
+                <button className="noButton" onClick={e => setShowUpdatePictureModal(!showUpdatePictureModal)}>Cancel</button>
+            </div>
+        </Modal>
         </div>
     );
 }

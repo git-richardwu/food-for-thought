@@ -1,6 +1,6 @@
 import React from "react";
 import "../../App.css";
-// import PostingList from "../PostingList.jsx";
+import CommentList from "../CommentList.jsx";
 import {sendNotification} from "../../Notifications/lib"
 
 export default class CommentForm extends React.Component {
@@ -11,11 +11,8 @@ export default class CommentForm extends React.Component {
       postmessage: ""
     };
     this.postListing = React.createRef();
+    this.submitHandler.bind(this);
   }
-
-
-
-
 
   submitHandler = event => {
     //keep the form from actually submitting
@@ -42,6 +39,10 @@ export default class CommentForm extends React.Component {
         result => {
           // update the count in the UI manually, to avoid a database hit
           this.props.onAddComment(this.props.commentCount + 1);
+          this.setState({
+            post_text: "",
+            });
+          
           this.postListing.current.loadPosts();
         }, 
         error => {
@@ -69,19 +70,18 @@ export default class CommentForm extends React.Component {
     return (
       <div>
         <form onSubmit={this.submitHandler}>
-          <p>
-            Add A Comment To This Post
-            <textarea className="commentForm" onChange={this.myChangeHandler} />
-          </p>
-          <input type="submit" value="Comment" />
-          <br />
-          {this.state.postmessage}
+          <label for={"comment box"+this.props.parent} className="commentformLabel">Add A Comment To This Post</label>  
+          <textarea id={"comment box"+this.props.parent} className="commentForm" value={this.state.post_text} onChange={this.myChangeHandler} />
+
+          <input className="addComment" type="submit" value="Comment" />
         </form>
-        {/* <CommentList
+        <CommentList
           ref={this.postListing}
           parentid={this.props.parent}
           type="commentlist"
-        /> */}
+          onDeleteComment={this.props.onAddComment}
+          commentCount={this.props.commentCount}
+        />
       </div>
     );
   }

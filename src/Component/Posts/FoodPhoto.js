@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 
-const FoodPhoto = ({id}) => {
+const FoodPhoto = ({id, title}) => {
     const [foodPhoto, setFoodPhoto] = useState("");
 
     useEffect(() => {
@@ -42,7 +42,7 @@ const FoodPhoto = ({id}) => {
     if (foodPhoto){
         return (
             <div className="postImageContainer">
-                <img className="postImage" src={foodPhoto} alt="Food"/>
+                <img className="postImage" src={foodPhoto} alt={title}/>
             </div>
         )
     }else{

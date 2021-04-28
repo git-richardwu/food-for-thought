@@ -13,6 +13,13 @@
     font-weight: normal;
     font-size: 20px;
 }
+
+.followingListButton{
+    cursor: pointer;
+    background-color: #D6EBDC;
+    border: none;
+}
+
 @media screen and (max-width: 850px) {
 
     .followerContainer{

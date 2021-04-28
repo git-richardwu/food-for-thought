@@ -17,16 +17,16 @@ function sendNotification  (userID, recipientID, message ) {
        console.log("Notification was sent ")
       },
       error => {
-        alert("Error occured when send notification!");
+        console.log("Error occured when send notification!");
       }
     );
 };
 
- function recieveNotification(userID, notifArray, counter){
+ async function recieveNotification(userID, notifArray, counter){
     // let notifArray = []
      counter = 0;
     let entryFound = false
-    fetch(process.env.REACT_APP_API_PATH+"/messages",{
+    await fetch(process.env.REACT_APP_API_PATH+"/messages",{
         method: "get",
         headers: {
           'Content-Type': 'application/json',
@@ -72,9 +72,6 @@ function sendNotification  (userID, recipientID, message ) {
             // console.log("This is counter at right before the end: " + counter)
             // console.log("This is the notification array length " + notifArray.length)
             // console.log("This is counter at the end: " + counter)
-            if(counter > 0){
-              alert("You have recieved " + counter + " notifications!");
-            }
             // return JSON.stringify(counter);
             return;
           }
@@ -87,6 +84,7 @@ function sendNotification  (userID, recipientID, message ) {
        
       );
      
+      return counter;
       // counter = JSON.stringify(counter)
       // return counter;
       // return counter;

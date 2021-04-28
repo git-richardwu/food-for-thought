@@ -130,7 +130,7 @@ export default class BlockingForm extends React.Component {
             <br/>
             <div className="inputContainer">
                 <div className="userInputContainer">
-                    <label className="wordfont1"> Block a User! (enter username, not userid or email)</label>
+                    <label for="find user" className="wordfont1"> Block a User! (enter username, not userid or email)</label>
                     <div className="autocomplete" tabIndex="0">
                         <Autocomplete suggestions={this.state.users} selectAutocomplete={e => this.selectAutocomplete(e)} />
                     </div>

@@ -180,96 +180,66 @@ const Preferences = () => {
       }
   
   return (
-    <div>
       <div className="settingsContainer">
-        <Link to="/settings/preferences/diet">
-          <button className="settingsMenuButton">
+        <Link to="/settings/preferences/diet" className="settingsMenuButton">
             Diet
             <div className="triangle-right" />
-          </button>
         </Link>
-        <Link to="/settings/preferences/allergies">
-          <button className="settingsMenuButton">
+        <Link to="/settings/preferences/allergies" className="settingsMenuButton">
             Allergies
             <div className="triangle-right" />
-          </button>
         </Link>
-        <Link to="/settings/preferences/budget">
-          <button className="settingsMenuButton">
+        <Link to="/settings/preferences/budget" className="settingsMenuButton">
             Budget
-            <div className="triangle-right" />
-          </button>
+            <div className="triangle-right" />      
         </Link>
-
-       
-
-
-        
-        {/* <div className="temp"> */}
         <div className="setWeightGoalButtonContainer">
-        <div className="weightAndValue">
-          <div className="weightBox">Weight Goal:</div>
-          
-          {weightGoalButton === false &&
-          <div className="weightText">{weightGoal}</div>
-          }
-          {weightGoalButton === true &&
-               <input className="inputBox" type = "number" id="weightGoal"/> 
-          }
-        </div>
-        
-        {weightGoalButton === false &&
-          <button className="setWeightGoalButton" onClick={()=>{
-              pressedWeightGoalButton(true)
-          }}>Set Weight goal</button>
-        }
-        {weightGoalButton === true &&
-          <button className="setWeightGoalButton" onClick={ async ()=>{
-            let goal = document.getElementById("weightGoal").value + " lb"
-            await submitWeightGoal(goal)
-            console.log(document.getElementById("weightGoal").value)
-            pressedWeightGoalButton(false)
-          }}>Submit Weight Goal</button>
-        }
-
-        
-
-
-        <div className="calorieAndValue">
-          <div className="calorieBox">Calorie Goal:</div>
-          
-          {calorieGoalButton === false &&
-          <div className="calorieText">{calorieGoal}</div>
-          }
-          {calorieGoalButton === true &&
-               <input className="inputBox" type = "number" id="calorieGoal"/> 
-          }
-        </div>
-
-        
-          
-
+            <div className="weightAndValue">
+                <label for="weightGoal" className="weightBox">Weight Goal:</label>
+                {weightGoalButton === false &&
+                <   div className="weightText">{weightGoal}</div>
+                }
+                {weightGoalButton === true &&
+                    <input className="inputBox" type = "number" id="weightGoal"/> 
+                }
+                {weightGoalButton === false &&
+                    <button className="setWeightGoalButton" onClick={()=>{
+                        pressedWeightGoalButton(true)
+                    }}>Set</button>
+                }
+                {weightGoalButton === true &&
+                    <button className="setWeightGoalButton" onClick={ async ()=>{
+                        let goal = document.getElementById("weightGoal").value + " lb"
+                        await submitWeightGoal(goal)
+                        console.log(document.getElementById("weightGoal").value)
+                        pressedWeightGoalButton(false)
+                    }}>Submit</button>
+                }
+            </div>
+            <div className="weightAndValue">
+                <label for="calorieGoal" className="weightBox">Calorie Goal:</label>
+                {calorieGoalButton === false &&
+                    <div className="weightText">{calorieGoal}</div>
+                }
+                {calorieGoalButton === true &&
+                    <input className="inputBox" type = "number" id="calorieGoal"/> 
+                }
+                
+                {calorieGoalButton === false &&
+                    <button className="setWeightGoalButton" onClick={()=>{
+                        pressedCalorieGoalButton(true)
+                    }}>Set</button>
+                }
+                {calorieGoalButton === true &&
+                    <button className="setWeightGoalButton" onClick={ async ()=>{
+                        let calorie = document.getElementById("calorieGoal").value + " kcal/day"
+                        await submitCalorieGoal(calorie)
+                        console.log(document.getElementById("calorieGoal").value)
+                        pressedCalorieGoalButton(false)
+                    }}>Submit</button>
+                }
+            </div>
         </div> 
-
-        <div className="setCalorieGoalButtonContainer">
-        {calorieGoalButton === false &&
-          <button className="setCalorieGoalButton" onClick={()=>{
-              pressedCalorieGoalButton(true)
-          }}>Submit Calorie goal</button>
-        }
-        {calorieGoalButton === true &&
-          <button className="setCalorieGoalButton" onClick={ async ()=>{
-            let calorie = document.getElementById("calorieGoal").value + " calories per day"
-            await submitCalorieGoal(calorie)
-            console.log(document.getElementById("calorieGoal").value)
-            pressedCalorieGoalButton(false)
-          }}>Submit Calorie Goal</button>
-        }
-
-
-        </div> 
-      </div>
-      {/* </div> */}
     </div>
   );
 };

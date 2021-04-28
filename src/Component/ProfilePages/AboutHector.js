@@ -6,7 +6,7 @@ import "../Settings/Settings.css";
 const AboutHector = () => {
     return (
         <div className="settingsContainer">
-            <img className="imaging"  src={image} alt="Hector Sosa" />
+            <img className="imaging"  src={image} alt="Picture of Hector Sosa" />
             <h2>Hector J. Sosa</h2>
             <h3 className="subheader">Psychology BS and Computer Science Minor, Senior</h3>
             <p className="paragraph">

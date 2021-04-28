@@ -59,7 +59,7 @@ const CreateAPost = () => {
         setPostTags(postTags.filter(x => x != tagID));
     }
 
-    const validatePost = () => {
+    const invalidPost = () => {
         setInvalidTitle(false);
         setInvalidImage(false);
         setInvalidSteps(false);
@@ -77,11 +77,11 @@ const CreateAPost = () => {
             setInvalidImage(true);
         }
 
-        return invalidIngredients && invalidTitle && invalidSteps && invalidImage;
+        return title.length == 0 && steps.length == 0 && ingredients.length == 0 && image.length == 0;
     }
 
     const createPost = async () => {
-        if (validatePost()){
+        if (!invalidPost()){
             var stepsID = -1;
             var ingredientsID = -1;
             var pictureID = -1;
@@ -257,16 +257,16 @@ const CreateAPost = () => {
                 </button>
 
                 <div className="createAPostTitle">
-                    <label className="titleLabel">Title:</label>
-                    <input className="titleInput" type="text" value={title} onChange={e => setTitle(e.target.value)}/>
+                    <label for="post title" className="titleLabel">Title:</label>
+                    <input id="post title" className="titleInput" type="text" value={title} onChange={e => setTitle(e.target.value)}/>
                     {invalidTitle && <p className="errorMessage">A post must have a title!</p>}
                 </div>
 
                 <div className="createContent">
                     <div className="createIngredients">
-                        <label className="textAreaHeader">Ingredients:</label>
+                        <label for="post ingredients" className="textAreaHeader">Ingredients:</label>
                         <button className="addToListButton" onClick={e => addIngredient()}>Add Ingredients</button>
-                        <textarea className="createTextArea" type="text" value={ingredient} onChange={e => setIngredient(e.target.value)}/>
+                        <textarea id="post ingredients" className="createTextArea" type="text" value={ingredient} onChange={e => setIngredient(e.target.value)}/>
                         <ul>
                             {ingredients.map(ing => (
                                 <li key={ing}>{ing}</li>
@@ -275,9 +275,9 @@ const CreateAPost = () => {
                         {invalidIngredients && <p className="errorMessage">A post must have at least 1 ingredient!</p>}
                     </div>
                     <div className="createSteps">
-                        <label className="textAreaHeader">Steps:</label>
+                        <label for="post steps" className="textAreaHeader">Steps:</label>
                         <button className="addToListButton" onClick={e => addStep()}>Add Steps</button>
-                        <textarea className="createTextArea" type="text" value={step} onChange={e => setStep(e.target.value)}/>
+                        <textarea id="post steps" className="createTextArea" type="text" value={step} onChange={e => setStep(e.target.value)}/>
                         <ol>
                             {steps.map(step => (
                                 <li key={step}>{step}</li>
@@ -286,32 +286,32 @@ const CreateAPost = () => {
                         {invalidSteps && <p className="errorMessage">A post must have at least 1 step!</p>}
                     </div>
                     <div className="formAddImage">
-                        <label className="textAreaHeader">Image:</label>
-                        <input className="addImageButton" type="file" onChange={e => setImage(e.target.value)} accept=".png,.jpg,.jpeg"/>
+                        <label for="post image" className="textAreaHeader">Image:</label>
+                        <input id="post image" className="addImageButton" type="file" onChange={e => setImage(e.target.value)} accept=".png,.jpg,.jpeg"/>
                         {invalidImage && <p className="errorMessage">A post must have an image!</p>}
                     </div>
                 </div>
 
                 <div>
-                    <label className="linkLabel">Link:</label>
-                    <input className="linkInput" type="url" value={link} onChange={e => setLink(e.target.value)}/>
+                    <label for="post link" className="linkLabel">Link:</label>
+                    <input id="post link" className="linkInput" type="url" value={link} onChange={e => setLink(e.target.value)}/>
                 </div>
 
                 <div className="postTagsContainer">
                     <div className="createCalorieContainer">
-                        <label className="linkLabel">Calories:</label>
-                        <input className="addTagInput" type="number" value={calorie} onChange={e => setCalorie(e.target.value)} step="25" min="0" max="10000"/>
+                        <label for="post calories" className="linkLabel">Calories:</label>
+                        <input id="post calories" className="addTagInput" type="number" value={calorie} onChange={e => setCalorie(e.target.value)} step="25" min="0" max="10000"/>
                     </div>
                     <div className="addDietTagsContainer">
-                        <label className="linkLabel">Add Diet Tags:</label>
-                        <input className="addTagInput" type="url" value={tag} onChange={e => setTag(e.target.value)} maxLength="14" onKeyPress={e => setTagOnKey(e.key)}/>
+                        <label for="post diet tags" className="linkLabel">Add Diet Tags:</label>
+                        <input id="post diet tags" className="addTagInput" type="url" value={tag} onChange={e => setTag(e.target.value)} maxLength="14" onKeyPress={e => setTagOnKey(e.key)}/>
                         <button className="addToListButtonTags" onClick={e => addTag()}>Add Tag</button>
                         {postTagLimit && <p className="errorMessage">Only 10 tags are allowed per post.</p>}
                         <div className="displayedPostTags">
                             {postTags.map(tag => (
                                 <div key={tag} className="postDietTag">
                                     {tag}
-                                    <button className="deleteTag" onClick={e => deleteTag(tag)}>x</button>
+                                    <button className="deleteTag" onClick={e => deleteTag(tag)}>X</button>
                                 </div>
                             ))}
                         </div>

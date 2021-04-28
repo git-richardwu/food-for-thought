@@ -16,3 +16,15 @@
     margin-bottom: 10px;
 }
 
+.profileDietTag{
+    margin-right: 10px;
+    margin-left: 10px;
+    margin-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: #D6EBDC;
+    border-radius: 40px;
+    font-family: ReemKufi;
+    font-size: 14px;
+}
+

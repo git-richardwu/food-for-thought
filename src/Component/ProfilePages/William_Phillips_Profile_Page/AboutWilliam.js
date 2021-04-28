@@ -7,7 +7,7 @@ import "../../Settings/Settings.css";
 function AboutWilliam() {
   return (
     <div className="settingsContainer">
-      <img className="imaging"src={image} />
+      <img className="imaging"src={image} alt="Picture of William Phillips" />
       <h2>William Phillips</h2>
       <h3 className="subheader">Computer Science BS, Senior</h3>
       <p style={wills_style.text}>

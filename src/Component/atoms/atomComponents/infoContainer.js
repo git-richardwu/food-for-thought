@@ -22,10 +22,11 @@ function InfoContainer({
   const [editBio, isEditingBio] = React.useState(false);
 
   async function updateUserBio(test) {
-    await setUserBio(test)
+    setUserBio(test)
     console.log(bioID)
+    console.log(test);
     if(bioID === -1){ //If user never created a bio
-      fetch(process.env.REACT_APP_API_PATH +"/user-artifacts", {
+      await fetch(process.env.REACT_APP_API_PATH +"/user-artifacts", {
         method:"POST",
         headers: {
           "Content-Type": "application/json",
@@ -42,31 +43,34 @@ function InfoContainer({
         .then((res) => res.json())
         .then(
           (result) => {
-            console.log("This is the result: " + result.Status);
+              if (result){
+                console.log("This is the result: " + result);
+              }
           }
         )
         .catch(error => console.log(error));
     }else{
-     setUserBio(test);
-    fetch(
-      process.env.REACT_APP_API_PATH +"/user-artifacts/"+bioID,
-      {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          'Authorization': "Bearer " + sessionStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          "type": test,
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then(
-        (result) => {
-          console.log("This is the result: " + result.Status);
+        await fetch(
+        process.env.REACT_APP_API_PATH +"/user-artifacts/"+bioID,
+        {
+            method: "PATCH",
+            headers: {
+            "Content-Type": "application/json",
+            'Authorization': "Bearer " + sessionStorage.getItem("token"),
+            },
+            body: JSON.stringify({
+            "type": test,
+            }),
         }
-      ).catch(error => console.log(error));
+        )
+        .then((res) => res.json())
+        .then(
+            (result) => {
+                if (result){
+                    console.log(result);
+                }
+            }
+        ).catch(error => console.log(error));
   }
 }
 
@@ -91,25 +95,26 @@ function InfoContainer({
           <div className={styles.bioAndButtonsContainer}>
             {editBio === false && <p className={styles.bioText}>{bio}</p>}
 
+
+            <label for="bio edit" hidden>Bio</label>
             {editBio === true && (
-              <textarea type="text" id="userBio" rows="10" cols="20"></textarea>
+                    <textarea className={styles.bioText} id="bio edit" type="text" rows="10" cols="20"/>
             )}
 
             {userID === sessionStorage.getItem("user") && editBio === false && (
               <div className={styles.editBio_Photo_Container}>
-                <button onClick={() => isEditingBio(!editBio)}>
-                  Edit bio button
+                <button className={styles.editBioButton} onClick={() => isEditingBio(!editBio)}>
+                  Edit Bio
                 </button>
               </div>
             )}
 
             {editBio === true && (
               <div className={styles.editBio_Photo_Container}>
-                <button
+                <button className={styles.editBioButton}
                   onClick={ async () => {
-                   console.log("Thsi is user input: " +document.getElementById("userBio").value)
-                    let test = document.getElementById("userBio").value;
-                    
+                   console.log("Thsi is user input: " +document.getElementById("bio edit").value)
+                    let test = document.getElementById("bio edit").value;
                     isEditingBio(!editBio);
                     await updateUserBio(test);
                   }}

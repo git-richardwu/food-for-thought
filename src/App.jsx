@@ -8,7 +8,6 @@ import React from "react";
 import "./App.css";
 import BlockingForm from "./Component/Blocking/BlockingForm.jsx";
 import BlockingList from "./Component/Blocking/BlockingList.jsx";
-import FriendList from "./Component/FriendList.jsx";
 import LoginForm from "./Component/LoginForm.jsx";
 import Aboutus from "./Component/Settings/Aboutus.js";
 import General from "./Component/Settings/General.js";
@@ -17,7 +16,6 @@ import Preferences from "./Component/Settings/Preferences.js";
 import Diet from "./Component/Settings/Preferences/Diet.js";
 import Allergies from "./Component/Settings/Preferences/Allergies.js";
 import Budget from "./Component/Settings/Preferences/Budget.js";
-import FriendForm from "./Component/FriendForm.jsx";
 import SignUp from "./Component/SignUp_Page/SignUp.jsx";
 import AboutAndrew from "./Component/ProfilePages/AboutAndrew.js";
 import AboutLi from "./Component/ProfilePages/AboutLiWei.js";
@@ -36,6 +34,7 @@ import Posts from "./Component/Posts/Posts.js";
 import AddPostButton from "./assets/addPost.svg";
 import CreateAPost from "./Component/Posts/CreateAPost.js";
 import Notifications from "./Notifications/Notifications.js";
+import Modal from "./Component/Modal.jsx"
 import { recieveNotification } from "./Notifications/lib";
 import {
   BrowserRouter as Router,
@@ -54,7 +53,6 @@ let interval;
 let notifArray = new Array()
 let count = 0;
 
-
 function toggleModal(app) {
   app.setState({
     openModal: !app.state.openModal,
@@ -70,14 +68,15 @@ class App extends React.Component {
     this.state = {
       openModal: false,
       refreshPosts: false,
-      windowWidth: window.innerWidth
+      windowWidth: window.innerWidth,
+      count: 0,
     };
 
     // in the event we need a handle back to the parent from a child component,
     // we can create a reference to this and pass it down.
     this.mainContent = React.createRef();
     this.doRefreshPosts = this.doRefreshPosts.bind(this);
-
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   
@@ -91,16 +90,23 @@ class App extends React.Component {
       window.addEventListener("resize", this.handleResize);
 
     interval = setInterval(() => {
-     let trigger = async function(){
+     let trigger = async () => {
        if(sessionStorage.getItem("user") == null){
          return;
        }
-     await recieveNotification(sessionStorage.getItem("user"), notifArray,count)
+
+       var count = await recieveNotification(sessionStorage.getItem("user"), notifArray,count);
+       console.log(count);
+        if(count > 0){
+            this.setState({
+                count: count
+            })
+            toggleModal(this);
+        }
       }
       trigger();
      
     }, 3000);
-  // }
   }
 
   componentWillUnmount() {
@@ -131,13 +137,6 @@ class App extends React.Component {
         <div className={styles.container}>
           <div className={styles.mainContent}>
             <Switch>
-              {/* <Route path="/friends">
-                            <div>
-                            <p>Friends</p>
-                            <FriendForm userid={sessionStorage.getItem("user")} />
-                            <FriendList userid={sessionStorage.getItem("user")} />
-                            </div>
-                        </Route> */}
               <Route path="/settings/privacy/blockedUsers">
                 <SideMenu />
                 {/* <Banner title = {"Block User"}/> */}
@@ -165,7 +164,7 @@ class App extends React.Component {
 
               <Route path="/settings/general/aboutus/andrew">
                 <SideMenu />
-                <div className="mainHome">
+                <div className="mainContent">
                   <Banner title={"About Me"} />
                   <AboutAndrew />
                 </div>
@@ -173,7 +172,7 @@ class App extends React.Component {
               
               <Route path="/settings/general/aboutus/li">
                 <SideMenu />
-                <div className="mainHome">
+                <div className="mainContent">
                   <Banner title={"About Me"} />
                   <AboutLi />
                 </div>
@@ -181,7 +180,7 @@ class App extends React.Component {
 
               <Route path="/settings/general/aboutus/william">
                 <SideMenu />
-                <div className="mainHome">
+                <div className="mainContent">
                   <Banner title={"About Me"} />
                   <AboutWilliam />
                 </div>
@@ -189,7 +188,7 @@ class App extends React.Component {
 
               <Route path="/settings/general/aboutus/richard">
                 <SideMenu />
-                <div className="mainHome">
+                <div className="mainContent">
                   <Banner title={"About Me"} />
                   <AboutRichard />
                 </div>
@@ -197,7 +196,7 @@ class App extends React.Component {
 
               <Route path="/settings/general/aboutus/hector">
                 <SideMenu />
-                <div className="mainHome">
+                <div className="mainContent">
                   <Banner title={"About Me"} />
                   <AboutHector />
                 </div>
@@ -210,25 +209,33 @@ class App extends React.Component {
               </Route>
 
               <Route path="/settings/preferences/diet">
-                <SideMenu />
+                <SideMenu/>
                 <div className="maincontent" id="mainContent">
-                  <Banner title={"Diet"} />
-                  <div className="diet">
-                    <Diet />
-                  </div>
+                    <Banner title ={"Diet"}/>
+                    <Diet/>
                 </div>
               </Route>
-
+              <Route path="/settings/preferences/allergies">
+                <SideMenu/>
+                <div className="maincontent" id="mainContent">
+                    <Banner title ={"Allergies"}/>
+                    <Allergies/>
+                </div>
+              </Route>  
+              <Route path="/settings/preferences/budget">
+                <SideMenu/>
+                <div className="maincontent" id="mainContent">
+                    <Banner title ={"Budget"}/>
+                    <Budget/>
+                </div>
+              </Route>   
               <Route path="/settings/notifications">
                 <SideMenu />
-                <div className="maincontent" id="mainContent">
-                  <Banner title={"Notifications"} />
-                  
+                <div className="mainHome">
+                  <Banner title={"Alerts"} />
                     <Notifications />
-                  
                 </div>
               </Route>
-
               <Route path="/settings/general/aboutus">
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
@@ -236,7 +243,6 @@ class App extends React.Component {
                     <Aboutus/>
                 </div>
               </Route>
-
               <Route path="/settings/general">
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
@@ -244,8 +250,6 @@ class App extends React.Component {
                   <General/>
                 </div>
               </Route>
-              
-
               <Route path="/settings/preferences">
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
@@ -275,21 +279,10 @@ class App extends React.Component {
                   <SignUp />
                 </div>
               </Route>
-
-              <Route path="/friends">
-                <div>
-                  <p>Friends</p>
-                  <FriendForm userid={sessionStorage.getItem("user")} />
-                  <FriendList userid={sessionStorage.getItem("user")} />
-                </div>
-              </Route>
               <Route path="/profile/:userID">
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
                   <Banner title={"Profile"} />
-                    
-
-
                     {window.innerWidth > 850 && ( 
                   <div className={styles.innerContent}>
                   {/* <div> */}
@@ -298,11 +291,11 @@ class App extends React.Component {
                       <img
                         className="addPostButtonProfile"
                         src={AddPostButton}
+                        alt="Create A Post"
                       ></img>
                     </Link>
                   </div>
                   )}
-                  
                     {window.innerWidth <= 850 && ( 
                   // <div className={styles.innerContent}>
                    <div> 
@@ -313,23 +306,19 @@ class App extends React.Component {
                         className="addPostButtonProfile"
                         // style= {{height:50, width:50}}
                         src={AddPostButton}
+                        alt="Create A Post"
                       ></img>
                     </Link>
                     </div>
                    </div>
                   )}
-          
-
-
-
-
                 </div>
               </Route>
 
               <Route path="/following/:userID">
                 <SideMenu />
                 <div className="maincontent" id="mainContent">
-                  <Banner title={"Following List"} />
+                  <Banner title={"Following"} />
                   <div className={styles.innerContent}>
                     <FollowingList />
                   </div>
@@ -352,6 +341,7 @@ class App extends React.Component {
                     <img
                       className="addPostButtonHome"
                       src={AddPostButton}
+                      alt="Create A Post"
                     ></img>
                   </Link>
                 </div>
@@ -361,14 +351,34 @@ class App extends React.Component {
                   <LoginForm refreshPosts={this.doRefreshPosts} />
                 </div>
               </Route>
+              <Route path="/notifications">
+                <SideMenu />
+                <div className="mainHome">
+                  <Banner title={"Alerts"} />
+                    <Notifications />
+                </div>
+              </Route>
               <Route path={["/"]}>
                 <div className="maincontent" id="mainContent">
                   <LandingPage />
                 </div>
-                </Route>
+              </Route>
                 </Switch>
                 </div>
             </div>
+            <Modal
+                show={this.state.openModal}
+                onClose={(e) => toggleModal(this, e)}>
+                <div className="modal-header">
+                    <h2 className="modal-header-text">Notifications</h2>
+                </div>
+                <div className="modal-body">
+                    <p className="modalMessage">You have recieved {this.state.count} notification(s)!</p>
+                </div>
+                <div className="modal-footer">
+                    <button  className="yesButton" onClick={e => toggleModal(this, e)}>OK</button>
+                </div>
+            </Modal>
       </Router>
     );
   }

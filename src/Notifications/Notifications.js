@@ -5,14 +5,13 @@ import { recieveNotificationData } from "./lib.js";
 function Notifications() {
     const [notifArray, setNotifArray] = React.useState([])
   React.useEffect(() => {
-    recieveNotificationData(sessionStorage.getItem("user"))
-    console.log(notifArray)
+        recieveNotificationData(sessionStorage.getItem("user"))
   });
  
 
   function recieveNotificationData(userID) {
-      let notifArray = []
-    fetch(process.env.REACT_APP_API_PATH + "/messages", {
+      let notifArray1 = []
+    fetch(process.env.REACT_APP_API_PATH + "/messages?recipientUser="+userID, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
@@ -23,17 +22,15 @@ function Notifications() {
       .then(
         (result) => {
           if (result) {
-            // console.log(result[0])
             result[0].forEach(async function (notification) {
-              if (notification.recipientUser.id === JSON.parse(userID)) {
-                
-
                 let obj = notification.content + " from " + notification.author.username
-                notifArray.push(obj);
-              }
+                notifArray1.push(obj);
             });
-                setNotifArray(notifArray);
-            // console.log("Notif array: " + notifArray);
+ 
+            // for some reason this led to constant api calls (which never stop). This could overload the api and lead to long requests
+            if (notifArray.length !== notifArray1.length){
+                setNotifArray(notifArray1);
+            }
           }
         },
         (error) => {
@@ -44,21 +41,19 @@ function Notifications() {
 
   return (
       
-    <div >
+    <div className={styles.container}>
+        <div className={styles.notifications}>
+            {notifArray.length > 0 && (
 
-        {notifArray.length > 0 && (
+            notifArray.map(notif=>(
+                <NotificationComponent key={notifArray.indexOf(notif)} message={notif}/>
+            ))
+            )}
 
-        notifArray.map(notif=>(
-          <li><NotificationComponent key ={notifArray.indexOf(notif)} message={notif}/></li>
-        ))
-        )}
-
-        <div className={styles.container}>
-        {notifArray.length === 0 && (
-            <p>You do not have any notifications.</p>
-        )}
+            {notifArray.length === 0 && (
+                <p>You do not have any notifications.</p>
+            )}
         </div>
-
     </div>
   );
 }
@@ -67,12 +62,9 @@ function Notifications() {
 
 function NotificationComponent({key, message}){
     return(
-        <div className={styles.container}>
             <div key ={key} className={styles.notification}>
-            <p className={styles.text }>{message} </p>
-
+                <p className={styles.text }>{message} </p>
             </div>
-        </div>
     )
 }
 export default Notifications;

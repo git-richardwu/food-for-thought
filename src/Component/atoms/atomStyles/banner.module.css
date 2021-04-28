@@ -10,7 +10,6 @@
 
 .titleStyle{
     padding-left: 10px;
-    font-weight: 400px;
     font-size: 100px;
     line-height: 123.8px;
     color: #FFFFFF;
@@ -27,6 +26,14 @@
     position: absolute;
     margin-right: 50px;
     right: 0;
+    background-color: #D6EBDC;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: inset 0 0px 0px;
+    border: none;
+    padding: 8px 15px;
+    font-family: "ReemKufi";
+    font-weight: bold;
 }
 
 
@@ -38,6 +45,10 @@
     .banner {
         height: 75px;
         margin-left: 0px;
+    }
+
+    .button{
+        margin-right: 10px;
     }
  }
 

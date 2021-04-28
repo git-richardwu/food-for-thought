@@ -10,7 +10,7 @@ render() {
     <div>
         <div className="landingPageContainer">
             <div className="inline">
-            <h2>Welcome to Food for Thought! </h2>
+            <h1 className="header">Welcome to Food for Thought! </h1>
             </div>
         <Link to="/login">
       <button className="buttonStyle">Login</button>

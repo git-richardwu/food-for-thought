@@ -372,7 +372,7 @@ export default class AccountSettings extends React.Component {
             <form onSubmit={this.submitHandler} className="profileform">
                 <div className="row">
                     <div className="col-25">
-                        <label id="emailID">Email:</label>
+                        <label for="emailID">Email:</label>
                     </div>
                     <div className="col-75">
                         <input
@@ -387,7 +387,7 @@ export default class AccountSettings extends React.Component {
                 {this.state.emailExists && <p className="errorMessage">Please choose another email, this one already exists.</p>}
                 <div className="row">
                     <div className="col-25">
-                        <label id="usernameID">Username:</label>
+                        <label for="usernameID">Username:</label>
                     </div>
                     <div className="col-75">
                         <input
@@ -405,11 +405,9 @@ export default class AccountSettings extends React.Component {
                         <label>Password:</label>
                     </div>
                     <div className="col-75">
-                        <Link to="/reset">
-                            <button className="resetButton" onClick={this.reset}>
-                                Reset
-                                <i className="arrow right"></i>
-                            </button>  
+                        <Link to="/reset" className="resetButton" onClick={this.reset}>
+                            Reset
+                            <i className="arrow right"/>
                         </Link>
                     </div>
                 </div>

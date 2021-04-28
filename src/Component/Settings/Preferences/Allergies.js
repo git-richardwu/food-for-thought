@@ -346,9 +346,9 @@ const Allergies = () => {
     else{
         return (
             <div className="pref">
-                <h2>Allergies</h2>
-                <p>Please check off items and then click submit to save!</p>
                 <div className="allergy-choices">
+                    <fieldset>
+                    <legend className="legend">Please check off items and then click submit to save!</legend>
                         <label class="container"> Corn-Free
                             <input type="checkbox" name="allergen"  value="Corn-Free" onChange={e => updateCorn(!cornChecked)} checked={cornChecked} ></input>
                             <span class="checkmark"></span>
@@ -393,8 +393,10 @@ const Allergies = () => {
                             <input type="checkbox" name="allergen"  value="Wheat-Free" onChange={e => updateWheat(!wheatChecked)} checked={wheatChecked} ></input>
                             <span class="checkmark"></span>
                         </label>
+                        
+                    </fieldset>
                     </div>
-                <p className="tags"><button id="btn" onClick={() => updateAllergies(allergies,cornChecked,eggChecked,fishChecked,glutenChecked,milkChecked,peanutChecked,sesameChecked,shellfishChecked,soyChecked, treeNChecked, wheatChecked)}>Submit</button></p>
+                <button id="btn" onClick={() => updateAllergies(allergies,cornChecked,eggChecked,fishChecked,glutenChecked,milkChecked,peanutChecked,sesameChecked,shellfishChecked,soyChecked, treeNChecked, wheatChecked)}>Submit</button>
             </div>
         );
         

@@ -72,7 +72,8 @@ const SearchBar = ({searchPosts, shuffle, preferredTags}) => {
     return (
         <div className="searchContainer">
             <div className="searchBarContainer">
-                <input className="searchBar" type="text" placeholder="Search.." onChange={e => setText(e.target.value)} value={searchText} onKeyPress={e => submitOnEnter(e.key)}/>
+                <label for="search bar" hidden>Search</label>
+                <input id="search bar" className="searchBar" type="text" placeholder="Search.." onChange={e => setText(e.target.value)} value={searchText} onKeyPress={e => submitOnEnter(e.key)}/>
                 <img
                     src={SearchImage}
                     tabIndex="0"
@@ -84,17 +85,17 @@ const SearchBar = ({searchPosts, shuffle, preferredTags}) => {
             </div>
             <div className="lowerSearchContainer">
                 <div className="searchFilters">
-                    <input className="filter" type="checkbox" value="title" checked={searchTitle} onChange={e => setFilter("title")} onKeyPress={e => checkOnEnter(e.key, "title")}/>
-                    <label className="flterLabel">Title</label>
-                    <input className="filter" type="checkbox" value="dietTag" checked={searchTag} onChange={e => setFilter("tag")} onKeyPress={e => checkOnEnter(e.key, "tag")}/>
-                    <label className="flterLabel">Diet Tags</label>
-                    <input className="filter" type="checkbox" value="calroie" checked={searchCalorie} onChange={e => setFilter("calorie")} onKeyPress={e => checkOnEnter(e.key, "calorie")}/>
-                    <label className="flterLabel">Calories</label>
+                    <input id="search by title" className="filter" type="checkbox" value="title" checked={searchTitle} onChange={e => setFilter("title")} onKeyPress={e => checkOnEnter(e.key, "title")}/>
+                    <label for="search by title" className="flterLabel">Title</label>
+                    <input id="search by diet tags" className="filter" type="checkbox" value="dietTag" checked={searchTag} onChange={e => setFilter("tag")} onKeyPress={e => checkOnEnter(e.key, "tag")}/>
+                    <label for="search by diet tags" className="flterLabel">Diet Tags</label>
+                    <input id="search by calorie" className="filter" type="checkbox" value="calorie" checked={searchCalorie} onChange={e => setFilter("calorie")} onKeyPress={e => checkOnEnter(e.key, "calorie")}/>
+                    <label for="search by calorie" className="flterLabel">Calories</label>
                 </div>   
                 <img
                     src={ShuffleImage}
                     tabIndex="0"
-                    alt="shuffle"
+                    alt="shuffle posts"
                     className="shuffleButton"
                     onKeyPress={e => shuffleOnKey(e.key)}
                     onClick={e => shuffle()}
