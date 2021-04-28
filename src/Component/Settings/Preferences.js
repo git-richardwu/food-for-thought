@@ -181,6 +181,12 @@ const Preferences = () => {
   
   return (
       <div className="settingsContainer">
+        <Link to="/settings">   
+            <button className="backButton backButtonCreate">
+                <i className="arrow left"/>
+                Back
+            </button>
+        </Link>
         <Link to="/settings/preferences/diet" className="settingsMenuButton">
             Diet
             <div className="triangle-right" />

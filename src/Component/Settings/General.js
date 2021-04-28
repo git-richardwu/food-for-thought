@@ -6,6 +6,12 @@ import SideMenu from "../atoms/atomComponents/sideMenu"
 const General = () => {
     return (
         <div className="settingsContainer">
+            <Link to="/settings">   
+                <button className="backButton backButtonCreate">
+                    <i className="arrow left"/>
+                    Back
+                </button>
+            </Link>
             <Link to="/settings/general/styleguide" className="settingsMenuButton">
                 Style Guide
                 <div className="triangle-right"/>

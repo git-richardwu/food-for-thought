@@ -228,13 +228,6 @@ class App extends React.Component {
                     <Banner title ={"Budget"}/>
                     <Budget/>
                 </div>
-              </Route>   
-              <Route path="/settings/notifications">
-                <SideMenu />
-                <div className="mainHome">
-                  <Banner title={"Alerts"} />
-                    <Notifications />
-                </div>
               </Route>
               <Route path="/settings/general/aboutus">
                 <SideMenu />
