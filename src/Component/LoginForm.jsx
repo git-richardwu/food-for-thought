@@ -1,5 +1,5 @@
 import React from "react";
-
+import salad from "../assets/salad.jpg"
 import "../App.css";
 import { Redirect } from "react-router-dom";
 import "./SignUp_Page/foobar.css";
@@ -121,7 +121,8 @@ export default class LoginForm extends React.Component {
       return (
         // <form onSubmit={this.submitHandler}>
         <div className="signUpContainer">
-            <h1 className="header">Login</h1>
+          <div class="col-1">
+            <h2 style={{textAlign: "left"}}>Login</h2>
             <form onSubmit={this.submitHandler}>
                 <label>
                     Email:
@@ -137,6 +138,10 @@ export default class LoginForm extends React.Component {
                 <button onClick = {this.rdReset} className = "buttonStyle1"> Forgot Password </button>
                 <p>{this.state.alanmessage}</p>
             </form>
+            </div>
+            <div id="salad" class="col-2">
+            <img style={{ right: "0" ,position: "fixed", height: "110vh"}} src={salad}></img>
+            </div>
             <Modal
                 show={this.state.openModal}
                 onClose={(e) => toggleModal(this, e)}>

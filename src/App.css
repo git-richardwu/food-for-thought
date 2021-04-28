@@ -10,6 +10,32 @@
     display:block;
  }
 
+ .col-1, .col-2 {
+  float:left;
+  width: 50%;
+  height: 100%;
+  }
+
+@media screen and (max-width:450px){
+    #salad img{
+        display: none;
+    }
+}
+
+@media (min-width: 250px) and (max-width: 1150px) {
+  #salad img {
+    display: none;
+  }
+}
+
+/* @media (min-width: 700px){
+  #salad img {
+    display: block;
+  }
+
+} */
+
+ 
 .App-header {
   background-color: #f8f8f8;
   min-height: 100vh;
@@ -20,6 +46,7 @@
   font-size: calc(10px + 2vmin);
   color: rgb(0, 0, 0);
 }
+
 
 .settings{
   width:100%;
@@ -86,9 +113,8 @@
   overflow-y: auto;
   padding-left: 0;
   width: calc(300px + 1rem);
-
   display:inline-block;
-  position:relative;
+  position: absolute;
 
 }
 
