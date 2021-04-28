@@ -91,7 +91,15 @@ const SearchBar = ({searchPosts, shuffle, preferredTags}) => {
                     <label for="search by diet tags" className="flterLabel">Diet Tags</label>
                     <input id="search by calorie" className="filter" type="checkbox" value="calorie" checked={searchCalorie} onChange={e => setFilter("calorie")} onKeyPress={e => checkOnEnter(e.key, "calorie")}/>
                     <label for="search by calorie" className="flterLabel">Calories</label>
-                </div>   
+                </div> 
+                <img
+                    src={Heart}
+                    tabIndex="0"
+                    alt="preferrence"
+                    className="shuffleButton preferenceButton"
+                    onKeyPress={e => sortPrefOnKey(e.key)}
+                    onClick={e => preferredTags()}
+                />  
                 <img
                     src={ShuffleImage}
                     tabIndex="0"
@@ -99,16 +107,6 @@ const SearchBar = ({searchPosts, shuffle, preferredTags}) => {
                     className="shuffleButton"
                     onKeyPress={e => shuffleOnKey(e.key)}
                     onClick={e => shuffle()}
-                />
-            </div>
-            <div className="preferrenceButton" >
-                <img
-                    src={Heart}
-                    tabIndex="0"
-                    alt="preferrence"
-                    className="shuffleButton"
-                    onKeyPress={e => sortPrefOnKey(e.key)}
-                    onClick={e => preferredTags()}
                 />
             </div>
 

@@ -346,6 +346,12 @@ const Allergies = () => {
     else{
         return (
             <div className="pref">
+                <Link to="/settings/preferences">   
+                    <button className="backButton backButtonCreate">
+                        <i className="arrow left"/>
+                        Back
+                    </button>
+                </Link>
                 <div className="allergy-choices">
                     <fieldset>
                     <legend className="legend">Please check off items and then click submit to save!</legend>
@@ -396,7 +402,7 @@ const Allergies = () => {
                         
                     </fieldset>
                     </div>
-                <button id="btn" onClick={() => updateAllergies(allergies,cornChecked,eggChecked,fishChecked,glutenChecked,milkChecked,peanutChecked,sesameChecked,shellfishChecked,soyChecked, treeNChecked, wheatChecked)}>Submit</button>
+                <button className="prefButton" id="btn" onClick={() => updateAllergies(allergies,cornChecked,eggChecked,fishChecked,glutenChecked,milkChecked,peanutChecked,sesameChecked,shellfishChecked,soyChecked, treeNChecked, wheatChecked)}>Submit</button>
             </div>
         );
         

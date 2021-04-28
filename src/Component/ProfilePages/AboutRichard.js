@@ -2,10 +2,17 @@ import React from "react";
 import image from "../../Images/richard.jpg"
 import "./AboutAndrew.css";
 import "../Settings/Settings.css";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 const AboutRichard = () => {
     return (
         <div className="settingsContainer">
+            <Link to="/settings/general/aboutus">   
+                <button className="backButton backButtonCreate">
+                    <i className="arrow left"/>
+                    Back
+                </button>
+            </Link>
             <img className="imaging" src={image} alt="Picture of Richard Wu" />
             <h2>Richard Wu</h2>
             <h3 className="subheader">Computer Science BS, Junior</h3>

@@ -7,11 +7,18 @@ import feedback from "../../Videos/feedback.mp4";
 import layout from "../../Videos/layout.mp4";
 import inlineError from "../../Videos/inlineError.mp4";
 import popup from "../../Videos/popup.mp4";
-import "./StyleGuide.css"
+import "./StyleGuide.css";
+import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
 
 const StyleGuide = () => {
     return (
         <div className="styleGuideContainer">
+            <Link to="/settings/general">   
+                <button className="backButton backButtonCreate">
+                    <i className="arrow left"/>
+                    Back
+                </button>
+            </Link>
             <h2> Logo </h2>
             <img src = {logoimage} alt = "logo" className = "logosize"/>
 
