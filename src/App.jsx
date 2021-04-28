@@ -231,8 +231,8 @@ class App extends React.Component {
               </Route>   
               <Route path="/settings/notifications">
                 <SideMenu />
-                <div className="maincontent" id="mainContent">
-                  <Banner title={"Notifications"} />
+                <div className="mainHome">
+                  <Banner title={"Alerts"} />
                     <Notifications />
                 </div>
               </Route>
@@ -353,8 +353,8 @@ class App extends React.Component {
               </Route>
               <Route path="/notifications">
                 <SideMenu />
-                <div className="maincontent" id="mainContent">
-                  <Banner title={"Notifications"} />
+                <div className="mainHome">
+                  <Banner title={"Alerts"} />
                     <Notifications />
                 </div>
               </Route>

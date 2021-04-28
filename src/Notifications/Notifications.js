@@ -41,21 +41,19 @@ function Notifications() {
 
   return (
       
-    <div >
+    <div className={styles.container}>
+        <div className={styles.notifications}>
+            {notifArray.length > 0 && (
 
-        {notifArray.length > 0 && (
+            notifArray.map(notif=>(
+                <NotificationComponent key={notifArray.indexOf(notif)} message={notif}/>
+            ))
+            )}
 
-        notifArray.map(notif=>(
-          <NotificationComponent key={notifArray.indexOf(notif)} message={notif}/>
-        ))
-        )}
-
-        <div className={styles.container}>
-        {notifArray.length === 0 && (
-            <p>You do not have any notifications.</p>
-        )}
+            {notifArray.length === 0 && (
+                <p>You do not have any notifications.</p>
+            )}
         </div>
-
     </div>
   );
 }
@@ -64,12 +62,9 @@ function Notifications() {
 
 function NotificationComponent({key, message}){
     return(
-        <div className={styles.container}>
             <div key ={key} className={styles.notification}>
-            <p className={styles.text }>{message} </p>
-
+                <p className={styles.text }>{message} </p>
             </div>
-        </div>
     )
 }
 export default Notifications;

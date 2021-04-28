@@ -443,7 +443,6 @@ const Posts = ({userId}) => {
                         setID(-1); //if there is nothing there setID to -1 
 
                     }else{
-                        var hold = result[0][0].value.split("~")
                         setID(result[0][0].id); //an array of arrays
                         setDietTags(result[0][0].value.split("~"));
                         console.log(dietTags, "DIET TAGS")

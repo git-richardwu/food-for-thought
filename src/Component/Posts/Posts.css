@@ -28,6 +28,7 @@
     justify-content: flex-start;
     margin-left: 200px;
     overflow-y: auto;
+    overflow-x: hidden;
     height: 100vh;
 }
 
