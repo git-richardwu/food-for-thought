@@ -122,7 +122,7 @@ export default class LoginForm extends React.Component {
         // <form onSubmit={this.submitHandler}>
         <div className="signUpContainer">
           <div class="col-1">
-            <h2 style={{textAlign: "left"}}>Login</h2>
+            <h1 className="header" style={{textAlign: "left"}}>Login</h1>
             <form onSubmit={this.submitHandler}>
                 <label>
                     Email:
@@ -140,7 +140,7 @@ export default class LoginForm extends React.Component {
             </form>
             </div>
             <div id="salad" class="col-2">
-            <img style={{ right: "0" ,position: "fixed", height: "110vh"}} src={salad}></img>
+            <img style={{ right: "0" ,position: "fixed", height: "110vh"}} src={salad} alt="Fruit Salad"></img>
             </div>
             <Modal
                 show={this.state.openModal}

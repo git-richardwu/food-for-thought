@@ -62,6 +62,7 @@ function Banner({title}){
             <div>
             <form onChange={e => updateField(e.target.value)}>
                 <div className="autocomplete">
+                    <label for="find users" hidden>Find user</label>
                     <Autocomplete suggestions={users} selectAutocomplete={e => selectAutocomplete(e)} />
                 </div>
             </form>

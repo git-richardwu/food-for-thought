@@ -48,7 +48,7 @@ function FollowingList() {
             <div>
                 <Link style={{ textDecoration: 'none' }} to={`/profile/${followPicture}`}>
                   <div className={styles.divList} key={index}>
-                    <h3>{e}</h3>
+                    <h2 className="header3">{e}</h2>
                   </div>
                 </Link>
             </div>

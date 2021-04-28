@@ -438,7 +438,8 @@ const fetchUser = async () => {
                 <h2 className="modal-header-text">Update Profile Picture</h2>
             </div>
             <div className="modal-body">
-                <input className="addImageButton" type="file" accept=".png,.jpg,.jpeg,.gif"/>
+                <label for="addImageInput" hidden>Select an image</label>
+                <input id="addImageInput" className="addImageButton" type="file" accept=".png,.jpg,.jpeg,.gif"/>
             </div>
             <div className="modal-footer">
                 <button  className="yesButton" onClick={e => updateImage()}>Submit</button>
