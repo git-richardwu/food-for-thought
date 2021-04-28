@@ -3,7 +3,11 @@
     height: 271px;
     width: 271px;
 }
- 
+
+.profilePictureContainer{
+    display: inline-block;
+}
+
 /* .img1:hover {
     opacity: 0.7;
 } */

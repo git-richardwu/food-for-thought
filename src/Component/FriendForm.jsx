@@ -75,7 +75,7 @@ export default class FriendForm extends React.Component {
         }}>
           <button>Submit</button>
         </Link> */}
-        <Link to={`/user/${this.state.friendid}`}>
+        <Link to={`/profile/${this.state.friendid}`}>
           <button>Submit</button>
          </Link>
         {this.state.responseMessage}
