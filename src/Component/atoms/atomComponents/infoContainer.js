@@ -98,7 +98,7 @@ function InfoContainer({
 
             <label for="bio edit" hidden>Bio</label>
             {editBio === true && (
-                    <textarea className={styles.bioText} id="bio edit" type="text" rows="10" cols="20" value={bio}/>
+                    <textarea className={styles.bioText} id="bio edit" type="text" rows="10" cols="20"/>
             )}
 
             {userID === sessionStorage.getItem("user") && editBio === false && (
