@@ -11,7 +11,7 @@ function Notifications() {
 
   function recieveNotificationData(userID) {
       let notifArray1 = []
-    fetch(process.env.REACT_APP_API_PATH + "/messages?recipientUser="+userID, {
+    fetch(process.env.REACT_APP_API_PATH + "/messages?recipientUserID="+userID, {
       method: "get",
       headers: {
         "Content-Type": "application/json",
