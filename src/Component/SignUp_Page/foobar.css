@@ -21,6 +21,11 @@
     font-size: 50px;
 }
 
+.labeling {
+    font-family: RubikMonoOne;
+    font-size: 20px;
+}
+
 .buttonStyle {
     font-family: RubikMonoOne;
     color: black;
