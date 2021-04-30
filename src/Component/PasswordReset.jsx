@@ -1,6 +1,8 @@
 import React from "react";
 import Modal from "./Modal.jsx"
 import {Redirect} from "react-router-dom";
+import "../App.css";
+import "./SignUp_Page/foobar.css";
 import { faAssistiveListeningSystems } from "@fortawesome/free-solid-svg-icons";
 
 function toggleModal1(app) {
@@ -144,31 +146,38 @@ export default class PasswordReset extends React.Component {
 
       return (
         <div className="signUpContainer">
-                <h1> Reset Password </h1>
+                <h1 className="header" style={{textAlign: "left"}}>Reset Password</h1>
                 <p>
-                  <label for="reset email"> Email: </label>
+                  <label className="labeling" for="reset email"> Email:</label>
                   <input id="reset email" name = 'email' type='email' onChange ={this.emailHandler} value = {this.state.email}></input>
                 </p>
                 {this.state.invalidEmail && <p className="errorMessage">Please enter a valid buffalo.edu email!</p>}
-                <button className="buttonStyle1" onClick = {this.submitHandler}>Get One Time Password!</button>
+                <button className="buttonStyle1" onClick = {this.submitHandler}>Get One-Time Token</button>
 
                 <p>
-                  <label for="reset token"> Token: </label>
+                  <label className="labeling" for="reset token"> Token:</label>
                   <input id="reset token" name = 'token' type='token' onChange ={this.tokenHandler} value = {this.state.token}></input>
                 </p>
                 
                 <p>
-                  <label for="reset password"> New Password: </label>
+                  <label className="labeling" for="reset password"> New Password:</label>
                   <input id="reset password" name = 'new password' type='password' onChange ={this.passwordHandler} value = {this.state.password}></input>
                 </p>
                 {this.state.invalidPassword && <p className="errorMessage">Please make sure your password is at least 6 
                     characters and contains at least one capital letter!</p>}
-                <button className="buttonStyle1" onClick = {this.submitHandler2}>Submit New Password!</button>
+                <button className="buttonStyle1" onClick = {this.submitHandler2}>Submit New Password</button>
 
-                <p>Note: </p>
+                <p className="labeling">Note: </p>
                 <p>Make sure your token is typed correctly, otherwise the submitted password will not reset the old password.</p>
-                <p> Once the new password is submitted, please sign in again.</p>
-                <p> If you are unable to login, please try resetting the password again and make sure that the token is typed correctly</p>
+                <p>Once the new password is submitted, please sign in again.</p>
+                <p>If you are unable to login, please try resetting the password again and make sure that the token is typed correctly.</p>
+
+                <button className="buttonStyle1" onClick = {this.redirect.bind(this)}>Exit Password Reset</button>
+
+                <p> </p>
+                <p> </p>
+                <p> </p>
+
             <Modal
                 show={this.state.openModal1}
                 onClose={(e) => toggleModal1(this, e)}>
